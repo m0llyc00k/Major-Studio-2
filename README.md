@@ -2,7 +2,7 @@
 
 <h3>Overview:</h3>
 <p>The core of my thesis will be centered around how the opioid epidemic changed the trajectory of how we view pain. While pain has always been and remains a highly subjective human experience, regardless of how pharmaceutical companies sought to deem it the ‘5th vital sign’, that hasn’t stopped modern medicine from trying to quantify and diagnose pain itself. The arc of my thesis will ground itself in the perception of pain, beginning with historical perceptions to the evolution of opioids and how the epidemic changed our collective perception of pain. </p>
-<br>
+
 <h3>Pt. 1: The History of Pain</h3>
 <p>The secularization of pain is where this story begins. Before pain could be ‘treated’, it was spiritual and thought to be divine punishment. Before treatment, religious officials and enlightenment thinkers interpreted pain through the human experience, defining it differently for gender, class, religion, and other demographic markers.  Once medicine evolved to use substances to control pain, such as opium or chloroform, the division between medicine and science grew and pain was now a symptom of illness which could be treated as such. Before we could numb our pain, we allowed it to inexplicably tell us something about ourselves.</p>
 
