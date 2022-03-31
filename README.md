@@ -1,5 +1,7 @@
 ![image](https://user-images.githubusercontent.com/86888346/155444223-a9ef2489-11ef-4f80-830e-64d260d26a7c.png)
 
+<a href="https://www.figma.com/file/NXHv6o0oNTPrZkzT1LEE6r/Ex3---Prototyping?node-id=0%3A1">High Fidelity Prototype: In Progress</a>
+
 
 <h2>Pain and the Morphine Molecule: How Did Quantifying Pain Actually Silence It?</h2>
 
@@ -22,9 +24,6 @@
 <h3>Pt. 5: Contemporary Perception of Pain</h3>
 <p>Preceding widespread opioid use, pain was treated more holistically. In the aftermath of the opioid epidemic, we are left with stigma for chronic pain patients as well as mistrust in doctors. While opioids are continued to be debated in medicine and government, opioid overdoses continue to increase while pain is stigmatized with little progress made in diagnosing or objectively quantifying it. </p>
 <br>
-
-<a href="https://app.mural.co/t/newschool14/m/newschool14/1644164076276/57cd9ae1a8873e01cf031968ecc4f5ad2afda8e3?sender=u54b82929285b77d1439b0975">Mural Outline in Progress</a>
-
 
 
 <h4>Thesis References</h4>
