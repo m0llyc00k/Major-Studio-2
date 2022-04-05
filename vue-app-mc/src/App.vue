@@ -2,7 +2,8 @@
   <div>
     <h1>Opioid Timeline</h1>
     <div class="recommendation-group"></div>
-    <arcTimeline :data="data" :height="2000" :width="1300" />
+    <arcTimeline :data="data" :height="2000" :width="1300" class="arc" />
+    <div id="chart"></div>
   </div>
 </template>
 
@@ -16,14 +17,17 @@ export default {
   components: {
     arcTimeline,
   },
+
   data() {
     return {
       data: data,
-      nodes: [],
-      links: [],
     };
   },
   computed: {},
+
+  mounted() {
+    console.log("i am mounted");
+  },
 };
 </script>
 
