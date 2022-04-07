@@ -9,7 +9,13 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+<<<<<<< HEAD
     "vue": "^3.0.0"
+=======
+    "intersection-observer": "^0.12.0",
+    "vue": "^3.0.0",
+    "vue-scrollama": "^2.0.6"
+>>>>>>> 9cdd626d541449c7a1198eb26e3028085d4d0a6c
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -1,0 +1,111 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "name": "1840",
+      "text": "Due to the rapid acceptance of anesthesia in 1846, pain becomes secularized. “…perception of disease and pain; both lost religious connotations and became biologic phenomena as part of a process of secularization that affected all aspects of Western society.” (https://pubmed.ncbi.nlm.nih.gov/3885792/)"
+    },
+    {
+      "id": 2,
+      "name": "1850"
+    },
+    {
+      "id": 3,
+      "name": "1860"
+    },
+    {
+      "id": 4,
+      "name": "1870"
+    },
+    {
+      "id": 5,
+      "name": "1880"
+    },
+    {
+      "id": 6,
+      "name": "1890"
+    },
+    {
+      "id": 7,
+      "name": "1900"
+    },
+    {
+      "id": 8,
+      "name": "1910"
+    },
+    {
+      "id": 9,
+      "name": "1920"
+    },
+    {
+      "id": 10,
+      "name": "1930"
+    },
+    {
+      "id": 11,
+      "name": "1940"
+    },
+    {
+      "id": 12,
+      "name": "1950"
+    },
+    {
+      "id": 13,
+      "name": "1960"
+    },
+    {
+      "id": 14,
+      "name": "1970"
+    },
+    {
+      "id": 15,
+      "name": "1980"
+    },
+    {
+      "id": 16,
+      "name": "1990"
+    },
+    {
+      "id": 17,
+      "name": "2000"
+    },
+    {
+      "id": 18,
+      "name": "2010"
+    },
+    {
+      "id": 19,
+      "name": "2020"
+    }
+  ],
+  "links": [
+
+    {
+      "source": 1,
+      "target": 16
+    },
+    {
+      "source": 3,
+      "target": 16
+    },
+    {
+      "source": 6,
+      "target": 16
+    },
+
+    {
+      "source": 6,
+      "target": 17
+    },
+            {
+      "source": 8,
+      "target": 18
+    }
+    
+
+
+    
+
+   
+  ]
+}
