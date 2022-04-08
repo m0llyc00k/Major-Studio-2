@@ -7,7 +7,6 @@
     <div class="main">
       <!-- <div class="main__graphic">{{ currStep }}</div> -->
       <arcTimeline :data="data" :height="height" :width="width" class="arc" />
-
       <Scrollama
         :debug="true"
         :offset="0.5"
@@ -83,66 +82,39 @@ export default {
 }
 
 /* // additions and overrides of DOM elements vue-scrollama sets up */
-.main {
-  display: flex;
-}
-.main__graphic {
-  flex: 1;
-  height: 80vh;
-  top: 10vh;
-  position: sticky;
-}
+/* .main {
+  display: flex; 
+} */
+
 .main__scrollama {
   flex: 1;
 }
+
 .arc {
-  flex: 4;
-  height: 80vh;
+  /* flex: 4; */
+  height: 100vh;
   top: 10vh;
   position: sticky;
+  display: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 15vh 0;
+  width: 90%;
+  margin: 0 auto 30vh;
+  display: flex;
 }
-/* // your elements styles */
-/* .main__graphic {
-  height: 100%;
-  margin: 0 3rem;
-  border: 1px solid #ccc;
-  background-color: #eee;
-  font-size: 10rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-.main__graphic {
-  position: sticky;
-  top: 20;
-  height: 50vh;
-  border: 1px solid #ccc;
-  background-color: #eee;
-  font-size: 10rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* .step {
-  padding: 20vh 0;
-  margin: 0 3rem;
-  margin-bottom: 30vh;
-  background-color: beige;
-  border: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 .step {
   padding: 15vh 0;
-  width: 50%;
+  width: 30%;
   margin: 0 auto 30vh;
-  background-color: beige;
+  background-color: darkgray;
+  opacity: 0.5;
+  color: #dfdfdf;
   border: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 :last-child {
   margin-bottom: 0;
