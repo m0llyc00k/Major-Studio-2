@@ -1,22 +1,41 @@
 <template>
   <div id="app">
     <div class="intro">
+      <h1>In Crisis, Again</h1>
+      <h2>
+        Understanding the Endurance of Opioids<br />& Combatting the Modern
+        Epidemic
+      </h2>
+
       <p>SCROLL TO CONTINUE</p>
     </div>
-    <h1>Opioid Timeline</h1>
     <div class="main">
       <!-- <div class="main__graphic">{{ currStep }}</div> -->
       <arcTimeline :data="data" :height="height" :width="width" class="arc" />
       <Scrollama
         :debug="true"
         :offset="0.5"
-        @step-enter="({ element }) => (currStep = element.data.stepNo)"
+        @step-enter="setGraphicContent"
         class="main__scrollama"
       >
-        <div class="step" data-step-no="1">step 1</div>
-        <div class="step" data-step-no="2">step 2</div>
-        <div class="step" data-step-no="3">step 3</div>
-        <div class="step" data-step-no="4">step 4</div>
+        <div :data="data" class="step" data-step-no="1">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
+        <div :data="data" class="step" data-step-no="2">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
+        <div :data="data" class="step" data-step-no="3">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
+        <div :data="data" class="step" data-step-no="4">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
+        <div :data="data" class="step" data-step-no="5">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
+        <div :data="data" class="step" data-step-no="6">
+          <div class="step-text">{{ this.data.nodes[0].text }}</div>
+        </div>
       </Scrollama>
     </div>
     <div class="outro">
@@ -39,14 +58,13 @@ export default {
   name: "App",
   components: {
     arcTimeline,
-    // Scroll,
     // Scrollama,
   },
 
   data() {
     return {
       data: data,
-      currStep: 1,
+      currStep: 0,
       height: "100%",
       width: "100%",
     };
@@ -74,20 +92,22 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
-.intro,
+.intro {
+  min-height: 100vh;
+  text-align: center;
+  background-color: darkslategray;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #dfdfdf;
+  font-family: monospace;
+}
 .outro {
   padding: 20vh;
-}
-
-/* // additions and overrides of DOM elements vue-scrollama sets up */
-/* .main {
-  display: flex; 
-} */
-
-.main__scrollama {
-  flex: 1;
 }
 
 .arc {
@@ -103,21 +123,56 @@ export default {
   margin: 0 auto 30vh;
   display: flex;
 }
-.step {
+
+.step-text {
+  max-width: 520px;
+  border-radius: 5px;
+  background-color: rgba(98, 108, 109, 0.9);
+  /* background: rgba(38, 47, 49, 0.932); */
+  color: white;
+  padding: 25px 30px 25px 35px;
+  pointer-events: all;
+}
+
+/* .step {
   padding: 15vh 0;
   width: 30%;
-  margin: 0 auto 30vh;
-  background-color: darkgray;
-  opacity: 0.5;
-  color: #dfdfdf;
-  border: 1px solid #ccc;
+  margin: 0 auto 50vh;
+  background-color: rgba(149, 165, 166, 0.9);
+  color: white;
+  font-family: monospace;
+  font-size: 18px;
+  border: 3px solid darkgray;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+} */
+
+.step {
+  padding: 0 0;
+  height: 100vh;
+  position: relative;
+  padding: 20vh 0;
+  margin: 0 3rem;
+  margin-bottom: 10vh;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-family: monospace;
+  font-weight: 00;
+  font-size: 15px;
+  pointer-events: none;
 }
 :last-child {
   margin-bottom: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>
 

@@ -205,14 +205,58 @@ export default {
       // Cool, now if I do idToNode["2"].name I've got the name of the node with id 2
 
       // Add the links
-      svg
+      var links = svg
         .selectAll("mylinks")
         .data(this.data.links)
         .enter()
         .append("path")
-        .attr("d", function (d) {
+        .attr("d", (d) => {
           const start = x(idToNode[d.source].name); // X position of start node on the X axis
-          const end = x(idToNode[d.target].name); // X position of end node
+          const end = x(idToNode[d.target].name);
+          // const middle =
+
+          // console.log(start)
+          // X position of end node
+          const firstLine = [
+            "M",
+            start,
+            50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
+            "L", // This means we're gonna build an elliptical arc
+            (start - end) / 4,
+            ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
+            (start - end) / 4,
+            0,
+            0,
+            ",",
+            end < start ? 0 : 0,
+            end,
+            ",",
+            800,
+            // middle, 0, 0, ',', 50
+          ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
+            .join(" ");
+
+          console.log(firstLine);
+
+          return firstLine;
+        })
+        // .style("opacity", 0)
+
+        .transition()
+        // .ease(d3.easeLinear)
+        .duration(2000)
+        .ease(d3.easeLinear)
+        .style("fill", "none")
+        .style("opacity", 1)
+        .attr("stroke", "darkgray")
+        .attr("stroke-width", 1);
+
+      links
+        .attr("d", (d) => {
+          const start = x(idToNode[d.source].name); // X position of start node on the X axis
+          const end = x(idToNode[d.target].name);
+
+          // X position of end node
           return [
             "M",
             start,
@@ -224,13 +268,20 @@ export default {
             0,
             0,
             ",",
-            end < start ? 1 : 0,
+            end < start ? 0 : 0,
             end,
             ",",
             50,
           ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
             .join(" ");
         })
+        // .style("opacity", 0.5)
+
+        .transition()
+        // .ease(d3.easeLinear)
+        .duration(2000)
+        .ease(d3.easeLinear)
+        .style("opacity", 1)
         .style("fill", "none")
         .attr("stroke", "darkgray")
         .attr("stroke-width", 3);
