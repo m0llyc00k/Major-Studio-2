@@ -11,8 +11,7 @@
 import * as d3 from "d3";
 
 const rectWidth = 30;
-const rectHeight = 5;
-
+const rectHeight = 2;
 var margin = { top: 20, right: 30, bottom: 20, left: 30 },
   width = 1350 - margin.left - margin.right,
   height = 800 - margin.top - margin.bottom;
@@ -247,13 +246,18 @@ export default {
         .enter()
         .append("rect")
         .attr("id", "rects")
-        .attr("y", 50)
+        .attr("y", 0)
         .attr("x", function (d) {
           return x(d.name) - rectWidth / 2;
         })
         .attr("width", rectWidth)
         .attr("height", rectHeight)
-        .style("fill", "darkgray");
+        .style("fill", "darkgray")
+        .attr("id", (d) => d.id)
+        .transition()
+        .ease(d3.easeBounce)
+        .duration((d, i) => i * 200)
+        .attr("y", height - 714);
 
       // And give them a label
       svg
@@ -272,14 +276,7 @@ export default {
         .style("alignment-baseline", "middle")
         .style("font-family", "monospace")
         .attr("fill", "#dfdfdf");
-
-      // Add links between nodes. Here is the tricky part.
-      // In my input data, links are provided between nodes -id-, NOT between node names.
-      // So I have to do a link between this id and the name
-      var idToNode = {};
-      this.nodes.forEach(function (n) {
-        idToNode[n.id] = n;
-      });
+      //add gradient color to paths
       var defs = svg.append("defs");
       var linearGradient = defs
         .append("linearGradient")
@@ -301,87 +298,76 @@ export default {
         .attr("offset", "100%")
         .attr("stop-color", "#9eb4ca"); //dark blue
 
+      // Add links between nodes. Here is the tricky part.
+      // In my input data, links are provided between nodes -id-, NOT between node names.
+      // So I have to do a link between this id and the name
+      var idToNode = {};
+      this.nodes.forEach(function (n) {
+        idToNode[n.id] = n;
+      });
+
       // Cool, now if I do idToNode["2"].name I've got the name of the node with id 2
 
       // Add the links
-      var links = svg
-        .selectAll("mylinks")
+      function buildArc(d) {
+        const start = x(idToNode[d.source].name); // X position of start node on the X axis
+        const end = x(idToNode[d.target].name);
+        // const middle =
+
+        // console.log(start)
+        // X position of end node
+        const arcPath = [
+          "M",
+          start,
+          50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
+          "A", // This means we're gonna build an elliptical arc
+          (start - end) / 4,
+          ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
+          (start - end) / 4,
+          0,
+          0,
+          ",",
+          end < start ? 0 : 0,
+          end,
+          ",",
+          50,
+        ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
+          .join(" ");
+        return arcPath;
+      }
+
+      const arcs = svg
+        .selectAll("arcs")
         .data(this.data.links)
         .enter()
         .append("path")
-        .attr("d", (d) => {
-          const start = x(idToNode[d.source].name); // X position of start node on the X axis
-          const end = x(idToNode[d.target].name);
-          // const middle =
-
-          // console.log(start)
-          // X position of end node
-          const firstLine = [
-            "M",
-            start,
-            50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
-            "L", // This means we're gonna build an elliptical arc
-            (start - end) / 4,
-            ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
-            (start - end) / 4,
-            0,
-            0,
-            ",",
-            end < start ? 0 : 0,
-            end,
-            ",",
-            800,
-            // middle, 0, 0, ',', 50
-          ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
-            .join(" ");
-
-          return firstLine;
-        })
-        // .style("opacity", 0)
-
-        .transition()
-        // .ease(d3.easeLinear)
-        .duration(2000)
-        .ease(d3.easeLinear)
         .style("fill", "none")
-        .style("opacity", 1)
-        .attr("stroke", "url(#linear-gradient")
-        .attr("stroke-width", 1);
+        .attr("d", (d) => buildArc(d));
 
-      links
-        .attr("d", (d) => {
-          const start = x(idToNode[d.source].name); // X position of start node on the X axis
-          const end = x(idToNode[d.target].name);
-
-          // X position of end node
-          return [
-            "M",
-            start,
-            50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
-            "A", // This means we're gonna build an elliptical arc
-            (start - end) / 4,
-            ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
-            (start - end) / 4,
-            0,
-            0,
-            ",",
-            end < start ? 0 : 0,
-            end,
-            ",",
-            50,
-          ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
-            .join(" ");
+      // do the animation; see the posts on arc animation for explanation
+      arcs
+        // hide the arcs
+        .attr("stroke-dasharray", function () {
+          return this.getTotalLength();
         })
-        // .style("opacity", 0.5)
-
-        .transition()
-        // .ease(d3.easeLinear)
-        .duration(2000)
-        .ease(d3.easeLinear)
-        .style("opacity", 1)
-        .style("fill", "none")
+        .attr("stroke-dashoffset", function () {
+          return this.getTotalLength();
+        })
         .attr("stroke", "url(#linear-gradient")
-        .attr("stroke-width", 3);
+        // reveal the arcs
+        .transition()
+        .duration(4000)
+        .attr("stroke-dashoffset", 0);
+      // hide them again
+      // .transition()
+      // .attr("stroke-dasharray", function () {
+      //   return this.getTotalLength();
+      // })
+      // .attr("stroke-dashoffset", function () {
+      //   return this.getTotalLength();
+      // });
+
+      return svg.node();
     },
   },
   mounted() {
