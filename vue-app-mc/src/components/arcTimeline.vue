@@ -12,9 +12,8 @@ import * as d3 from "d3";
 
 const rectWidth = 30;
 const rectHeight = 2;
-var margin = { top: 20, right: 30, bottom: 20, left: 30 },
-  width = 1350 - margin.left - margin.right,
-  height = 800 - margin.top - margin.bottom;
+var margin = { top: 20, right: 30, bottom: 20, left: 30 };
+var height = 800 - margin.top - margin.bottom;
 
 export default {
   name: "arcTimeline",
@@ -105,7 +104,7 @@ export default {
           target: 16,
           year1: "1846",
           text1:
-            "The rapid acceptance of anesthesia in 1846 aided in the secularization of pain. Perception of disease and pain lost religious connotations, gaining more notoriety as biological phenomena which could be treated successfully with drugs such as opium and morphine. (Gaton 498) ",
+            "The rapid acceptance of anesthesia in 1846 aided in the secularization of pain. Perception of disease and pain lost religious connotations, gaining more notoriety as biological phenomena which could be treated successfully with drugs such as opium and morphine.",
           year2: "1996",
           text2:
             "The American Pain Society develops 'Pain as the Fifth Vital Sign' to diagnose pain patients. After our nation's first opioid crisis subsided and retreated from modern memory, studies showing inadequate treatment of chronic non-cancer pain by physicians started to surface and pharmaceutical companies motivated and encouraged the questioning of opioid restrictions.",
@@ -116,10 +115,10 @@ export default {
           target: 16,
           year1: "1898",
           text1:
-            "Heroin was created in 1898 and sold commercially by Bayer. It was marketed as a cough suppressant, used in the treatment of pneumonia and tuberculosis, and frequently used in the treatment of morphine addiction. Heroin and morphine were substitutable, although Heroin was much more potent and therefore a smaller dose was required, delaying the onset of addiction. For these reasons, Heroin was seen as the 'non-addictive' alternative to morphine. ",
+            "Heroin was created in 1898 and sold commercially by Bayer. It was marketed as a cough suppressant and used in the treatment of pneumonia, tuberculosis, morphine addiction, and more. Heroin was more potent than Morphine which mean doses could be smaller and less frequent, delaying the onset of addiction. This gave the illusion that Heroin was the 'non-addictive' alternative to Morphine.",
           year2: "1995",
           text2:
-            "OxyContin (oxycodone controlled-release) is approved as first formulation of oxycodone that allowed dosing every 12 hours instead of every 4 to 6 hours, marketing it as non-addictive.",
+            "OxyContin (oxycodone controlled-release) is approved as first formulation of oxycodone that allowed dosing every 12 hours instead of every 4 to 6 hours. Purdue claimed that this meant less 'peaks and valleys' marketing it as non-addictive.",
           title: "'Non-Addictive' Alternatives",
         },
         {
@@ -218,16 +217,19 @@ export default {
 
   methods: {
     drawChart() {
-      var allNodes = this.data.nodes.map(function (d) {
+      var allNodes = this.nodes.map(function (d) {
         return d.name;
       });
 
-      var x = d3.scalePoint().range([0, width]).domain(allNodes);
+      var x = d3
+        .scalePoint()
+        .range([0, this.width - margin.right - margin.left])
+        .domain(allNodes);
 
       var svg = d3
         .select(".arc")
         .selectAll("g.arc")
-        .attr("width", width + margin.left + margin.right)
+        .attr("width", this.width - margin.right - margin.left)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -242,7 +244,7 @@ export default {
 
       svg
         .selectAll("mynodes")
-        .data(this.data.nodes)
+        .data(this.nodes)
         .enter()
         .append("rect")
         .attr("id", "rects")
@@ -262,7 +264,7 @@ export default {
       // And give them a label
       svg
         .selectAll("mylabels")
-        .data(this.data.nodes)
+        .data(this.nodes)
         .enter()
         .append("text")
         .attr("y", 30)
@@ -338,7 +340,7 @@ export default {
 
       const arcs = svg
         .selectAll("arcs")
-        .data(this.data.links)
+        .data(this.links)
         .enter()
         .append("path")
         .style("fill", "none")

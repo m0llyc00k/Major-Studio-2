@@ -8,94 +8,28 @@
       </h2>
       <p>SCROLL TO CONTINUE</p>
     </div>
+    <arcTimeline :data="arcs" :height="height" :width="width" class="arc" />
     <div class="main">
       <Scrollama :offset="0.8" @step-enter="handler">
-        <arcTimeline :data="data" :height="height" :width="width" class="arc" />
-        <div :data="data" class="step" data-step-no="1">
+        <div
+          :data="data"
+          class="step"
+          data-step-no="1"
+          v-for="arc in arcs"
+          :key="arc"
+        >
           <div class="step-text">
-            <h2 class="step-title">{{ this.data.links[0].title }}</h2>
+            <h2 class="step-title">{{ arc.title }}</h2>
             <div class="flex-container">
               <div class="flex-child">
-                <h3>{{ this.data.links[0].year1 }}</h3>
-                <p>{{ this.data.links[0].text1 }}</p>
+                <h3>{{ arc.year1 }}</h3>
+                <p>{{ arc.text1 }}</p>
               </div>
               <div class="flex-child">
-                <h3>{{ this.data.links[0].year2 }}</h3>
-                <p>{{ this.data.links[0].text2 }}</p>
+                <h3>{{ arc.year1 }}</h3>
+                <p>{{ arc.text2 }}</p>
               </div>
             </div>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="2">
-          <div class="step-text">
-            <h2>{{ this.data.links[1].title }}</h2>
-            <h3>{{ this.data.links[1].year1 }}</h3>
-            <p>{{ this.data.links[1].text1 }}</p>
-            <h3>{{ this.data.links[1].year2 }}</h3>
-            <p>{{ this.data.links[1].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="3">
-          <div class="step-text">
-            <h2>{{ this.data.links[2].title }}</h2>
-            <h3>{{ this.data.links[2].year1 }}</h3>
-            <p>{{ this.data.links[2].text1 }}</p>
-            <h3>{{ this.data.links[2].year2 }}</h3>
-            <p>{{ this.data.links[2].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="4">
-          <div class="step-text">
-            <h2>{{ this.data.links[3].title }}</h2>
-            <h3>{{ this.data.links[3].year1 }}</h3>
-            <p>{{ this.data.links[3].text1 }}</p>
-            <h3>{{ this.data.links[3].year2 }}</h3>
-            <p>{{ this.data.links[3].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="5">
-          <div class="step-text">
-            <h2>{{ this.data.links[4].title }}</h2>
-            <h3>{{ this.data.links[4].year1 }}</h3>
-            <p>{{ this.data.links[4].text1 }}</p>
-            <h3>{{ this.data.links[4].year2 }}</h3>
-            <p>{{ this.data.links[4].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="6">
-          <div class="step-text">
-            <h2>{{ this.data.links[5].title }}</h2>
-            <h3>{{ this.data.links[5].year1 }}</h3>
-            <p>{{ this.data.links[5].text1 }}</p>
-            <h3>{{ this.data.links[5].year2 }}</h3>
-            <p>{{ this.data.links[5].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="6">
-          <div class="step-text">
-            <h2>{{ this.data.links[6].title }}</h2>
-            <h3>{{ this.data.links[6].year1 }}</h3>
-            <p>{{ this.data.links[6].text1 }}</p>
-            <h3>{{ this.data.links[6].year2 }}</h3>
-            <p>{{ this.data.links[6].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="6">
-          <div class="step-text">
-            <h2>{{ this.data.links[7].title }}</h2>
-            <h3>{{ this.data.links[7].year1 }}</h3>
-            <p>{{ this.data.links[7].text1 }}</p>
-            <h3>{{ this.data.links[7].year2 }}</h3>
-            <p>{{ this.data.links[7].text2 }}</p>
-          </div>
-        </div>
-        <div :data="data" class="step" data-step-no="6">
-          <div class="step-text">
-            <h2>{{ this.data.links[8].title }}</h2>
-            <h3>{{ this.data.links[8].year1 }}</h3>
-            <p>{{ this.data.links[8].text1 }}</p>
-            <h3>{{ this.data.links[8].year2 }}</h3>
-            <p>{{ this.data.links[8].text2 }}</p>
           </div>
         </div>
       </Scrollama>
@@ -108,6 +42,9 @@
 </template>
 
 <script>
+// const margin = { top: 20, right: 30, bottom: 20, left: 30 };
+const MAX_SVG_WIDTH = 1350;
+
 import arcTimeline from "./components/arcTimeline.vue";
 import data from "../data.json";
 import "intersection-observer";
@@ -124,25 +61,35 @@ export default {
 
   data() {
     return {
-      data: data,
+      arcs: data.links,
+      currTitle: null,
       currStep: 0,
       height: "100%",
-      width: "100%",
+      width: MAX_SVG_WIDTH,
     };
   },
   computed: {},
 
   mounted() {
     console.log("i am mounted");
-    this.drawChart();
-    // this.handler();
+    console.log(this.arcs[0]);
+    // this.drawChart();
+    this.currTitle = this.arcs[0].title;
+    window.addEventListener("resize", this.onResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     handler({ element, index, direction }) {
-      console.log("hello world");
       console.log(element, index, direction);
-      if (direction === "down") element.classList.add("active");
+      if (direction === "down")
+        element.classList.add("active"),
+          (this.currTitle = element.dataset.title);
       // else element.classList.remove("active"); //comment this if you want reveals only while scrolling down
+    },
+    onResize() {
+      this.width = Math.min(MAX_SVG_WIDTH, window.innerWidth);
     },
   },
 };
@@ -184,8 +131,8 @@ export default {
   position: sticky;
   display: relative;
   padding: 15vh 0;
-  width: 90%;
-  margin: 0 auto 30vh;
+  /* width: 90%; */
+  /* margin: 0 auto 30vh; */
   /* display: flex; */
 }
 
@@ -273,7 +220,7 @@ p {
 body {
   margin: 0;
   padding: 0;
-  background-color: #2c3e50;
+  background-color: rgba(35, 49, 64);
 }
 </style>
 
