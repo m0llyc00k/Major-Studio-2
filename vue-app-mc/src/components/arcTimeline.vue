@@ -1,204 +1,54 @@
 <template>
-  <div id="container">
-    <svg :height="height" :width="width">
-      <!-- <rect x="50" y="200" width="50" height="50" /> -->
+  <Scrollama :offset="0.8" @step-enter="handler">
+    <svg :height="height" :width="width" class="arc">
       <g class="arc"></g>
     </svg>
-  </div>
+    <div class="step" data-step-no="1" v-for="link in links" :key="link">
+      <div class="step-text">
+        <h2 class="step-title">{{ link.title }}</h2>
+        <div class="flex-container">
+          <div class="flex-child">
+            <h3>{{ link.year1 }}</h3>
+            <p>{{ link.text1 }}</p>
+          </div>
+          <div class="flex-child">
+            <h3>{{ link.year2 }}</h3>
+            <p>{{ link.text2 }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Scrollama>
 </template>
 
 <script>
 import * as d3 from "d3";
+import data from "../../data.json";
+import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
+import "intersection-observer";
+
+<style src="vue-scrollama/dist/vue-scrollama.css"></style>;
+
+const MAX_SVG_WIDTH = 1400;
 
 const rectWidth = 30;
 const rectHeight = 2;
 var margin = { top: 20, right: 30, bottom: 20, left: 30 };
-var height = 800 - margin.top - margin.bottom;
 
 export default {
   name: "arcTimeline",
+  components: {
+    Scrollama,
+  },
 
   data() {
     return {
-      nodes: [
-        {
-          id: 1,
-          name: "1840",
-        },
-        {
-          id: 2,
-          name: "1850",
-        },
-        {
-          id: 3,
-          name: "1860",
-        },
-        {
-          id: 4,
-          name: "1870",
-        },
-        {
-          id: 5,
-          name: "1880",
-        },
-        {
-          id: 6,
-          name: "1890",
-        },
-        {
-          id: 7,
-          name: "1900",
-        },
-        {
-          id: 8,
-          name: "1910",
-        },
-        {
-          id: 9,
-          name: "1920",
-        },
-        {
-          id: 10,
-          name: "1930",
-        },
-        {
-          id: 11,
-          name: "1940",
-        },
-        {
-          id: 12,
-          name: "1950",
-        },
-        {
-          id: 13,
-          name: "1960",
-        },
-        {
-          id: 14,
-          name: "1970",
-        },
-        {
-          id: 15,
-          name: "1980",
-        },
-        {
-          id: 16,
-          name: "1990",
-        },
-        {
-          id: 17,
-          name: "2000",
-        },
-        {
-          id: 18,
-          name: "2010",
-        },
-        {
-          id: 19,
-          name: "2020",
-        },
-      ],
-      links: [
-        {
-          source: 1,
-          target: 16,
-          year1: "1846",
-          text1:
-            "The rapid acceptance of anesthesia in 1846 aided in the secularization of pain. Perception of disease and pain lost religious connotations, gaining more notoriety as biological phenomena which could be treated successfully with drugs such as opium and morphine.",
-          year2: "1996",
-          text2:
-            "The American Pain Society develops 'Pain as the Fifth Vital Sign' to diagnose pain patients. After our nation's first opioid crisis subsided and retreated from modern memory, studies showing inadequate treatment of chronic non-cancer pain by physicians started to surface and pharmaceutical companies motivated and encouraged the questioning of opioid restrictions.",
-          title: "Prescribing Pain",
-        },
-        {
-          source: 6,
-          target: 16,
-          year1: "1898",
-          text1:
-            "Heroin was created in 1898 and sold commercially by Bayer. It was marketed as a cough suppressant and used in the treatment of pneumonia, tuberculosis, morphine addiction, and more. Heroin was more potent than Morphine which mean doses could be smaller and less frequent, delaying the onset of addiction. This gave the illusion that Heroin was the 'non-addictive' alternative to Morphine.",
-          year2: "1995",
-          text2:
-            "OxyContin (oxycodone controlled-release) is approved as first formulation of oxycodone that allowed dosing every 12 hours instead of every 4 to 6 hours. Purdue claimed that this meant less 'peaks and valleys' marketing it as non-addictive.",
-          title: "'Non-Addictive' Alternatives",
-        },
-        {
-          source: 3,
-          target: 16,
-          year1: "1898-1924",
-          text1:
-            "Heroin was marketed as a cough suppressant, used in the treatment of pneumonia and tuberculosis, and frequently used in the treatment of morphine addiction.  the While there was some knowledge and understanding that morphine and opium could be abused, due to lack of alternative treatments, doctors widely prescribed them for a variety of ailments, believing that the relief patients felt outweighed the adverse side effects",
-          year2: "1995-2010",
-          text2:
-            "Just as morphine, opium, and heroin came into widespread use for common ailments, OxyContin was promoted in an extensive national commercial campaign that claimed it was safe for use in moderate to severe pain.  Consequentially, Morphine prescriptions increase by 73%, Hydromorphone increase by 96%, Fentanyl prescriptions increase by a whopping 226%, and Oxycodone prescriptions increase by 402%. OxyContin is reformulated in 2010 after concerns of addiction.",
-          title: "Widespread Medical Use of Opiates",
-        },
-        {
-          source: 6,
-          target: 17,
-          year1: "Late 1800s",
-          text1:
-            "While concern for addiction and long-term effects escalated for decades, they were brushed aside due to the lack of alternative treatments and absence of necessary, universal education for medical practitioners and communities in distress. Throughout the late 19th century, medical journals filled with warnings about the dangers of addiction.",
-          year2: "2001",
-          text2:
-            "Art Van Zee writes Purdue with his concerns on OxyContin, “…he and others here launched a petition drive in 2001 to convince the F.D.A. to take OxyContin off the market until it could be reformulated and made safer.” (NYT Meier) ",
-          title: "Doctor's Raise their Concerns",
-        },
-        {
-          source: 7,
-          target: 17,
-          year1: "1906",
-          text1:
-            "The American Medical Association finally sounds an alarm on heroin due the the increase of abuse. (Macy 25) ",
-          year2: "2007",
-          text2:
-            "After years of doctors, communities, and officials 'sounding the alarm' on OxyContin, Purdue admits in trial that it fraudulently marketed OxyContin by falsely claiming that OxyContin was less addictive, less subject to abuse and less likely to cause withdrawal symptoms than other pain medications when there was no supporting medical research and no FDA approval of these claims.",
-          title: "Sounding the Alarm",
-        },
-        {
-          source: 8,
-          target: 19,
-          year1: "1915",
-          text1:
-            "The Harrison Act severely restricted the sale and possession of heroin and other narcotic drugs but did little else or address the ongoing crisis. An article written in the American Journal of Public Health at the time claimed that this could have been due to the affiliations that patent medicine and doctors had with congress. By 1924, Heroin is outlawed.",
-          year2: "2010s - Present Day",
-          text2:
-            "New guidelines for treating pain outlined by the CDC have been in development for the past 2 decades. Initially, guidelines from 2016 were reactive to the agony that overprescribing caused, limiting the prescription of opioids so much that many medical professionals felt that the pendulum was being swung too far in the opposite direction. Since then, the guidelines have been reformulated and are considering a more middle of the road approach, acknowledging the benefits of certain opioid use while still considering the crisis at hand. (Hoffman, NYT 2022)  Despite this effort, the destruction of the modern epidemic continues.",
-          title: "Too Little too Late Legislation",
-        },
-        {
-          source: 6,
-          target: 18,
-          year1: "1895",
-          year2: "2012",
-          text1:
-            "Opioid prescribing drops due to concern from doctors and state legislation. The demand for opioids was high and only around the peak of the epidemic in 1895 did doctors begin slow prescribing and reduce the use of opiates.",
-          text2:
-            "Opioid prescribing drops due to public concern over oxycontin's mismarketing, per CDC data https://www.cdc.gov/drugoverdose/rxrate-maps/index.html",
-          title: "A Drop in Prescriptions",
-        },
-        {
-          source: 4,
-          target: 18,
-          year1: "1870-1900",
-          text1:
-            "Opium smoking spread across the US. 1910, Americans report crushing opioid pills and inhaling them for pleasure.",
-          year2: "2010s - Present",
-          text2:
-            "There is a noticeable shift in the kinds of overdoses being reported—prescription opioids remain a problem, but a large surge in heroin usage also has a hand in addiction rates.",
-          title: "Addicts Turn to Illicit Drugs",
-        },
-        {
-          source: 10,
-          target: 18,
-          year1: "1930",
-          text1:
-            "The upper- and middle-class addicts had begun to die out and the remaining addicted were reclassified as 'junkies' and 'criminals'. (Macy 25, 26) The stigmatization and disregard for those remaining struggling with an opioid use disorder made room for the devastation caused by the nation's first epidemic to recede from memory.",
-          year2: "2001",
-          text2:
-            "Richard Sackler, president of Purdue Pharma at the time, wrote in an email to his constituents in 2001 that “We have to hammer on abusers in every way possible… They are the culprits and the problem. They are reckless criminals.” (Meier, New York Times 2019) Purdue uses this same stigma born in the 19th century to their advantaged and weaponized the century long discrimination of people with addiction, making false claims that opioid abuse was no fault of the pharmaceutical industry.",
-          title: "Blame the Users and Introduce Stigma",
-        },
-      ],
+      links: data.links,
+      nodes: data.nodes,
+      currStep: 0,
+      currLink: data.links.target,
+      width: MAX_SVG_WIDTH,
+      height: 800,
     };
   },
   props: {
@@ -206,14 +56,7 @@ export default {
       nodes: Array,
       links: Array,
     },
-    height: Number,
-    width: Number,
   },
-  //   computed: {
-  // xScale() {
-  //   return d3.scalePoint().range([0, width]).domain(allNodes);
-  // },
-  // },
 
   methods: {
     drawChart() {
@@ -230,17 +73,9 @@ export default {
         .select(".arc")
         .selectAll("g.arc")
         .attr("width", this.width - margin.right - margin.left)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", this.height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      // svg
-      //   .append("circle")
-      //   .attr("cx", 100)
-      //   .attr("cy", 100)
-      //   .attr("r", 50)
-      //   .attr("stroke", "black")
-      //   .attr("fill", "#69a3b2");
 
       svg
         .selectAll("mynodes")
@@ -259,7 +94,7 @@ export default {
         .transition()
         .ease(d3.easeBounce)
         .duration((d, i) => i * 200)
-        .attr("y", height - 714);
+        .attr("y", this.height - 752);
 
       // And give them a label
       svg
@@ -345,6 +180,7 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d));
+      // .attr("class", "invisible");
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -360,7 +196,8 @@ export default {
         .transition()
         .duration(4000)
         .attr("stroke-dashoffset", 0);
-      // hide them again
+
+      // // hide them again
       // .transition()
       // .attr("stroke-dasharray", function () {
       //   return this.getTotalLength();
@@ -371,13 +208,133 @@ export default {
 
       return svg.node();
     },
+
+    handler({ element, index, direction }) {
+      // console.log(element, index, direction);
+      if (direction === "down")
+        element.classList.add("active"), this.drawChart();
+      else element.classList.remove("active"); //comment this if you want reveals only while scrolling down
+      console.log(this.links[index].target);
+      // console.log(index);
+      // if (this.index === index) this.links[index].target === true;
+    },
+    onResize() {
+      this.width = Math.min(MAX_SVG_WIDTH, window.innerWidth);
+    },
   },
   mounted() {
     console.log("component mounted");
-    this.drawChart();
+    // this.drawChart();
+    console.log("i am mounted");
+    // console.log(this.links[0]);
+    this.currTitle = this.links[0].title;
+    window.addEventListener("resize", this.onResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.onResize);
   },
 };
 </script>
 
 <style>
+.step-text {
+  max-width: 100%;
+  border-radius: 15px;
+  /* background-color: rgba(98, 108, 109, 0.9); */
+  /* background-color: rgba(35, 49, 64, 0.932); */
+  /* background: rgba(38, 47, 49, 0.932); */
+  background: rgba(50, 47, 49, 0.9);
+  color: white;
+  padding: 15px 15px 15px 15px;
+  pointer-events: all;
+}
+
+.step-title {
+  background: -webkit-linear-gradient(left, cornsilk, #9eb4ca);
+  background: -o-linear-gradient(right, cornsilk, #9eb4ca);
+  background: -moz-linear-gradient(right, cornsilk, #9eb4ca);
+  background: linear-gradient(to right, cornsilk, #9eb4ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0;
+}
+p {
+  border: 2px solid darkgray;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 10px;
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+}
+
+.flex-child {
+  flex: 1;
+  /* align-items: flex-start; */
+  justify-content: center;
+  color: #eaeff4;
+}
+
+.flex-child:first-child {
+  flex: 1;
+  /* align-items: flex-start; */
+  justify-content: center;
+  color: cornsilk;
+}
+
+.step {
+  padding: 0 0;
+  height: 100vh;
+  position: relative;
+  padding: 10vh 0;
+  margin: 0 3rem;
+  margin-bottom: 10vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  display: flex;
+  /* align-items: flex-start; */
+  /* justify-content: center; */
+  font-family: monospace;
+  font-weight: 00;
+  font-size: 15px;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1000ms;
+  transform: translateY(60px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.step.active {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline {
+  /* flex: 4; */
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 10vh;
+  position: sticky;
+  display: relative;
+  padding: 15vh 0;
+  /* width: 90%; */
+  /* margin: 0 auto 30vh; */
+  /* display: flex; */
+}
+
+.invisible {
+  opacity: 0;
+}
+.visible {
+  opacity: 1;
+}
 </style>

@@ -1,0 +1,145 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "name": "1840"
+        },
+        {
+            "id": 2,
+            "name": "1850"
+        },
+        {
+            "id": 3,
+            "name": "1860"
+        },
+        {
+            "id": 4,
+            "name": "1870"
+        },
+        {
+            "id": 5,
+            "name": "1880"
+        },
+        {
+            "id": 6,
+            "name": "1890"
+        },
+        {
+            "id": 7,
+            "name": "1900"
+        },
+        {
+            "id": 8,
+            "name": "1910"
+        },
+        {
+            "id": 9,
+            "name": "1920"
+        },
+        {
+            "id": 10,
+            "name": "1930"
+        },
+        {
+            "id": 11,
+            "name": "1940"
+        },
+        {
+            "id": 12,
+            "name": "1950"
+        },
+        {
+            "id": 13,
+            "name": "1960"
+        },
+        {
+            "id": 14,
+            "name": "1970"
+        },
+        {
+            "id": 15,
+            "name": "1980"
+        },
+        {
+            "id": 16,
+            "name": "1990"
+        },
+        {
+            "id": 17,
+            "name": "2000"
+        },
+        {
+            "id": 18,
+            "name": "2010"
+        },
+        {
+            "id": 19,
+            "name": "2020"
+        }
+    ],
+    "links": [
+        {
+            "source": 1,
+            "target": 16,
+            "text-1st": "1846: Due to the rapid acceptance of anesthesia in, pain becomes secularized. “…perception of disease and pain; both lost religious connotations and became biologic phenomena as part of a process of secularization that affected all aspects of Western society.”",
+            "text-2nd": "1996: The American Pain Society develops 'Pain as the Fifth Vital Sign' to diagnose pain patients.",
+            "title": "Prescribing Pain"
+        },
+        {
+            "source": 3,
+            "target": 16,
+            "text-1st": "1960s: Opium and other related substances are used to treat soldiers during the Civil War—400,000 of those treated with morphine eventually became addicted to opioids.",
+            "text-2nd": "1990s: Morphine prescriptions increase by 73 percent, Hydromorphone increase by 96 percent, Fentanyl prescriptions increase by a whopping 226 percent, and Oxycodone prescriptions increase by 402 percent. All are incredibly potent, synthetic opioids, and all are linked with increased risk of addiction in the patients that use them.",
+            "title": "Widespread Use"
+        },
+        {
+            "source": 6,
+            "target": 16,
+            "text-1st": "1898: Heroin was created in 1898 and sold commercially by Bayer. It was marketed as a cough suppressant, used in the treatment of pneumonia and tuberculosis, and frequently used in the treatment of morphine addiction. Heroin and morphine are highly substitutable because upon entering the body they are virtually the same. The advantage of heroin is that it sis far more potent per dose, making it a cheaper alternative per ounce. This smaller dosage also led people to believe that it was not addictive because the onset of addiction took longer. (Inciardi 1986, 10) For all of these reasons, heroin emerged as a preferred “nonaddictive” alternative to morphine. (519)",
+            "text-2nd": "1995: OxyContin (oxycodone controlled-release) approved; first formulation of oxycodone that allowed dosing every 12 hours instead of every 4 to 6 hours. Believed to be non-addictive.",
+            "title": "'Non-Addictive' Alternatives"
+        },
+        {
+            "source": 7,
+            "target": 17,
+            "text-1st": "1906: American Medical Association sounds an alarm on heroin (macy 25).",
+            "text-2nd": "2007: After years of doctors, communities, and officials ‘sounding the alarm’ on oxycontin, Purdue admits in trial  that it fraudulently marketed OxyContin by falsely claiming that OxyContin was less addictive, less subject to abuse and less likely to cause withdrawal symptoms than other pain medications when there was no medical research to support these claims and without Food and Drug Administration approval of these claims.",
+            "title": "Sounding the Alarm"
+        },
+        {
+            "source": 6,
+            "target": 17,
+            "text-1st": "1895: Advances in medicine and public health played a role: acceptance of the germ theory of disease, vaccines, x-rays, and the debut of new pain relievers, such as aspirin in 1899. Better sanitation meant fewer patients contracting dysentery or other gastrointestinal diseases, then turning to opiates for their constipating and pain-relieving effects.",
+            "text-2nd": "2001: Art Van Zee writes Purdue with his concerns on OxyContin, “…he and others here launched a petition drive in 2001 to convince the F.D.A. to take OxyContin off the market until it could be reformulated and made safer.” (NYT Meier) ",
+            "title": "Doctor's Begin to Show Concern"
+        },
+        {
+            "source": 6,
+            "target": 18,
+            "text-1st": "1895: Opioid prescribing drops due to concern from doctors and state legislation",
+            "text-2nd": "2012: Opioid prescribing drops due to public concern over oxycontin’s mismarketing, per CDC data https://www.cdc.gov/drugoverdose/rxrate-maps/index.html",
+            "title": "A Drop in Prescriptions"
+        },
+        {
+            "source": 4,
+            "target": 18,
+            "text-1st": "1870-1900: Opium smoking spread across the US. 1910, Americans report crushing opioid pills and inhaling them for pleasure.",
+            "text-2nd": "2010: There is a noticeable shift in the kinds of overdoses being reported—prescription opioids remain a problem, but a large surge in heroin usage also has a hand in addiction rates.",
+            "title": "Addicts Turn to Illicit Drugs"
+        },
+        {
+            "source": 8,
+            "target": 18,
+            "text-1st": "1915: The Harrison Narcotics Act make opioids available only by prescription to curb recreational usage rates.",
+            "text-2nd": "2010s - Present Day: Medical restrictions on opioids (opioid guidelines) are released and addicts are forced to find cheaper, more potent, and available illicit drugs. Guidelines continue to be updated and the stigma from pain and addiction are contributing factors once again to opioid hesitancy.",
+            "title": "Legislation"
+        },
+        {
+            "source": 10,
+            "target": 18,
+            "text-1st": "1930: - the upper- and middle-class addicts had begun to die out and the remaining addicted were reclassified as junkies and criminals. (Macy 25, 26) The stigmatization and disregard for those remaining struggling with an opioid use disorder made room for the devastation caused by the nation’s first epidemic to recede from memory.",
+            "text-2nd": "2001: Richard Sackler, president of Purdue Pharma at the time, wrote in an email to his constituents in 2001 that “We have to hammer on abusers in every way possible… They are the culprits and the problem. They are reckless criminals.” (Meier, New York Times 2019)",
+            "title": "Blame the Users and Introduce Stigma"
+        }
+    ]
+}
