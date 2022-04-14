@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
 </template>
 
@@ -49,6 +50,8 @@ export default {
       currLink: data.links.target,
       width: MAX_SVG_WIDTH,
       height: 800,
+      drawnLinks: [],
+      arcNumber: 9,
     };
   },
   props: {
@@ -94,7 +97,8 @@ export default {
         .transition()
         .ease(d3.easeBounce)
         .duration((d, i) => i * 200)
-        .attr("y", this.height - 752);
+        .attr("y", this.height - 752)
+        .attr("class", "timelineNodes");
 
       // And give them a label
       svg
@@ -112,7 +116,9 @@ export default {
         .style("text-anchor", "middle")
         .style("alignment-baseline", "middle")
         .style("font-family", "monospace")
-        .attr("fill", "#dfdfdf");
+        .attr("fill", "#dfdfdf")
+        .attr("class", "timelineNodes");
+
       //add gradient color to paths
       var defs = svg.append("defs");
       var linearGradient = defs
@@ -143,15 +149,11 @@ export default {
         idToNode[n.id] = n;
       });
 
-      // Cool, now if I do idToNode["2"].name I've got the name of the node with id 2
-
       // Add the links
       function buildArc(d) {
         const start = x(idToNode[d.source].name); // X position of start node on the X axis
         const end = x(idToNode[d.target].name);
-        // const middle =
 
-        // console.log(start)
         // X position of end node
         const arcPath = [
           "M",
@@ -179,8 +181,8 @@ export default {
         .enter()
         .append("path")
         .style("fill", "none")
-        .attr("d", (d) => buildArc(d));
-      // .attr("class", "invisible");
+        .attr("d", (d) => buildArc(d))
+        .attr("opacity", 0.1);
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -192,10 +194,19 @@ export default {
           return this.getTotalLength();
         })
         .attr("stroke", "url(#linear-gradient")
+        .attr("id", function (d, i) {
+          return "arc-no-" + i;
+        })
         // reveal the arcs
         .transition()
         .duration(4000)
         .attr("stroke-dashoffset", 0);
+
+      const selectedArc = d3.selectAll(".singleArc");
+      // selectedArc.attr("stroke", "red");
+      console.log(selectedArc);
+
+      // console.log(selectedArc);
 
       // // hide them again
       // .transition()
@@ -209,19 +220,137 @@ export default {
       return svg.node();
     },
 
+    tracePath(index) {
+      var allNodes = this.nodes.map(function (d) {
+        return d.name;
+      });
+
+      var x = d3
+        .scalePoint()
+        .range([0, this.width - margin.right - margin.left])
+        .domain(allNodes);
+
+      var svg = d3
+        .select(".arc")
+        .selectAll("g.arc")
+        .attr("width", this.width - margin.right - margin.left)
+        .attr("height", this.height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      //add gradient color to paths
+      var defs = svg.append("defs");
+      var linearGradient = defs
+        .append("linearGradient")
+        .attr("id", "linear-gradient");
+      linearGradient
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%");
+      //Set the color for the start (0%)
+      linearGradient
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "cornsilk"); //cornsilk
+
+      //Set the color for the end (100%)
+      linearGradient
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#9eb4ca"); //light blue
+
+      // Add links between nodes. Here is the tricky part.
+      // In my input data, links are provided between nodes -id-, NOT between node names.
+      // So I have to do a link between this id and the name
+      var idToNode = {};
+      this.nodes.forEach(function (n) {
+        idToNode[n.id] = n;
+      });
+
+      // Add the links
+      function buildArc(d) {
+        const start = x(idToNode[d.source].name); // X position of start node on the X axis
+        const end = x(idToNode[d.target].name);
+
+        // X position of end node
+        const arcPath = [
+          "M",
+          start,
+          50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
+          "A", // This means we're gonna build an elliptical arc
+          (start - end) / 4,
+          ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
+          (start - end) / 4,
+          0,
+          0,
+          ",",
+          end < start ? 0 : 0,
+          end,
+          ",",
+          50,
+        ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
+          .join(" ");
+        return arcPath;
+      }
+
+      const arcs = svg
+        .selectAll("arcs")
+        .data(this.links.slice(0, index))
+        .enter()
+        .append("path")
+        .style("fill", "none")
+        .attr("d", (d) => buildArc(d))
+        .attr("opacity", 1);
+
+      // do the animation; see the posts on arc animation for explanation
+      arcs
+        // hide the arcs
+        .attr("stroke-dasharray", function () {
+          return this.getTotalLength();
+        })
+        .attr("stroke-dashoffset", function () {
+          return this.getTotalLength();
+        })
+        .attr("stroke", "url(#linear-gradient")
+        .attr("id", function (d, i) {
+          return "arc-no-" + i;
+        })
+        // reveal the arcs
+        .transition()
+        .duration(4000)
+        .attr("stroke-dashoffset", 0);
+
+      // hide them again
+      // .transition()
+      // .attr("stroke-dasharray", function () {
+      //   return this.getTotalLength();
+      // })
+      // .attr("stroke-dashoffset", function () {
+      //   return this.getTotalLength();
+      // });
+
+      return svg.node();
+    },
+
     handler({ element, index, direction }) {
       // console.log(element, index, direction);
+      // const arc0 = document.getElementById("arc-no-0");
+
+      if (index === 0) this.drawChart();
+      // if (index !== 0) this.tracePath(index);
+      // else this.removeNodes();
       if (direction === "down")
-        element.classList.add("active"), this.drawChart();
+        element.classList.add("active"), this.tracePath(index);
       else element.classList.remove("active"); //comment this if you want reveals only while scrolling down
-      console.log(this.links[index].target);
-      // console.log(index);
-      // if (this.index === index) this.links[index].target === true;
+      console.log(index);
     },
+
     onResize() {
       this.width = Math.min(MAX_SVG_WIDTH, window.innerWidth);
     },
   },
+
   mounted() {
     console.log("component mounted");
     // this.drawChart();
@@ -230,11 +359,13 @@ export default {
     this.currTitle = this.links[0].title;
     window.addEventListener("resize", this.onResize);
   },
+
   beforeUnmount() {
     window.removeEventListener("resize", this.onResize);
   },
 };
 </script>
+
 
 <style>
 .step-text {
@@ -336,5 +467,10 @@ p {
 }
 .visible {
   opacity: 1;
+}
+
+.arcHighlight {
+  opacity: 1;
+  stroke-width: 3;
 }
 </style>
