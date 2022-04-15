@@ -8,11 +8,11 @@
         <h2 class="step-title">{{ link.title }}</h2>
         <div class="flex-container">
           <div class="flex-child">
-            <h3>{{ link.year1 }}</h3>
+            <h3 class="year-text">{{ link.year1 }}</h3>
             <p class="timeline-desc">{{ link.text1 }}</p>
           </div>
           <div class="flex-child">
-            <h3>{{ link.year2 }}</h3>
+            <h3 class="year-text">{{ link.year2 }}</h3>
             <p class="timeline-desc">{{ link.text2 }}</p>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default {
         })
         .attr("width", rectWidth)
         .attr("height", rectHeight)
-        .style("fill", "darkgray")
+        .style("fill", "#b2b2b2")
         .attr("id", (d) => d.id)
         .transition()
         .ease(d3.easeBounce)
@@ -128,7 +128,7 @@ export default {
         .style("font-family", "monospace")
         .style("font-size", "16px")
         // .style("font-weight", 100)
-        .attr("fill", "#dfdfdf")
+        .attr("fill", "#b2b2b2")
         .attr("class", "timelineNodes");
 
       //add gradient color to paths
@@ -145,13 +145,13 @@ export default {
       linearGradient
         .append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "cornsilk"); //light blue
+        .attr("stop-color", "#8cacac"); //light blue
 
       //Set the color for the end (100%)
       linearGradient
         .append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#9eb4ca"); //dark blue
+        .attr("stop-color", "#af8c9d"); //light purple
 
       // Add links between nodes. Here is the tricky part.
       // In my input data, links are provided between nodes -id-, NOT between node names.
@@ -259,13 +259,13 @@ export default {
       linearGradient
         .append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "cornsilk"); //cornsilk
+        .attr("stop-color", "#8cacac"); //lightblue
 
       //Set the color for the end (100%)
       linearGradient
         .append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#9eb4ca"); //light blue
+        .attr("stop-color", "#af8c9d"); //light purple
 
       // Add links between nodes. Here is the tricky part.
       // In my input data, links are provided between nodes -id-, NOT between node names.
@@ -309,7 +309,7 @@ export default {
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
         .attr("stroke-width", 2)
-        .attr("opacity", 0.6)
+        .attr("opacity", 0.7)
         .attr("class", "drawnArc")
         .attr("id", function (d, i) {
           return "arc-no-" + i;
@@ -349,7 +349,6 @@ export default {
       if (index === 0 && direction === "down") this.drawChart();
       if (index === index && direction === "down") this.tracePath(index);
       if (direction === "down") element.classList.add("active");
-      else element.classList.remove("active"); //comment this if you want reveals only while scrolling down
       console.log(index);
     },
 
@@ -376,39 +375,36 @@ export default {
 
 <style>
 .step-text {
-  max-width: 100%;
-  border-radius: 15px;
-  color: white;
-  padding: 15px 15px 15px 15px;
-  pointer-events: all;
-}
-
-.step-text {
   max-width: 75%;
   border-radius: 10px;
-  background: #283544;
+  background: #212b38;
   backface-visibility: inherit;
-  color: white;
   padding: 0px 10px 15px 10px;
   pointer-events: all;
   font-family: monospace;
+  border: 0.5px solid rgba(169, 169, 169, 0.2);
 }
 
 .step-title {
-  background: -webkit-linear-gradient(left, cornsilk, #9eb4ca);
-  background: -o-linear-gradient(right, cornsilk, #9eb4ca);
-  background: -moz-linear-gradient(right, cornsilk, #9eb4ca);
-  background: linear-gradient(to right, cornsilk, #9eb4ca);
+  background: -webkit-linear-gradient(left, #bacdcd, #cfbac4);
+  background: -o-linear-gradient(right, #bacdcd, #cfbac4);
+  background: -moz-linear-gradient(right, #bacdcd, #cfbac4);
+  background: linear-gradient(to right, #bacdcd, #cfbac4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  padding: 0;
-  margin-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  font-size: 20px;
 }
 .timeline-desc {
-  border: 1px solid darkgray;
+  border: 0.5px solid rgba(169, 169, 169, 0.6);
   padding: 15px;
   margin: 12px;
   border-radius: 10px;
+}
+.year-text {
+  padding: 0;
+  margin: 0;
 }
 .flex-container {
   display: flex;
@@ -420,18 +416,18 @@ export default {
   flex: 1;
   /* align-items: flex-start; */
   justify-content: center;
-  color: #eaeff4;
+  color: #cfbac4;
 }
 
 .flex-child:first-child {
   flex: 1;
   /* align-items: flex-start; */
   justify-content: center;
-  color: cornsilk;
+  color: #bacdcd;
 }
 
 .step {
-  padding: 1vh 0;
+  padding: 2vh 0;
   /* height: 100vh; */
   /* position: relative; */
   margin: 0 3rem;
