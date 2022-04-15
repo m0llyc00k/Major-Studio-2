@@ -9,14 +9,24 @@
         <div class="flex-container">
           <div class="flex-child">
             <h3>{{ link.year1 }}</h3>
-            <p>{{ link.text1 }}</p>
+            <p class="timeline-desc">{{ link.text1 }}</p>
           </div>
           <div class="flex-child">
             <h3>{{ link.year2 }}</h3>
-            <p>{{ link.text2 }}</p>
+            <p class="timeline-desc">{{ link.text2 }}</p>
           </div>
         </div>
       </div>
+    </div>
+    <div class="step" data-step-no="1"></div>
+    <div class="step last-step" data-step-no="1">
+      <p>
+        Pharmaceutical companies blame 'recreational users', framing them as
+        criminals, and advocate for 'medical users'. <br />This manipulation of
+        fact plays a role in history repeating itself, but
+        <b>what really happens when your brain becomes addicted to opioids?</b>
+      </p>
+      <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p>
     </div>
     <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
@@ -24,7 +34,7 @@
 
 <script>
 import * as d3 from "d3";
-import data from "../../data.json";
+import data from "../../timeline-data.json";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
 import "intersection-observer";
 
@@ -116,6 +126,8 @@ export default {
         .style("text-anchor", "middle")
         .style("alignment-baseline", "middle")
         .style("font-family", "monospace")
+        .style("font-size", "16px")
+        // .style("font-weight", 100)
         .attr("fill", "#dfdfdf")
         .attr("class", "timelineNodes");
 
@@ -182,7 +194,8 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 0.1);
+        .attr("opacity", 0.1)
+        .attr("stroke-width", 1);
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -194,17 +207,11 @@ export default {
           return this.getTotalLength();
         })
         .attr("stroke", "url(#linear-gradient")
-        .attr("id", function (d, i) {
-          return "arc-no-" + i;
-        })
+
         // reveal the arcs
         .transition()
         .duration(4000)
         .attr("stroke-dashoffset", 0);
-
-      const selectedArc = d3.selectAll(".singleArc");
-      // selectedArc.attr("stroke", "red");
-      console.log(selectedArc);
 
       // console.log(selectedArc);
 
@@ -296,12 +303,17 @@ export default {
 
       const arcs = svg
         .selectAll("arcs")
-        .data(this.links.slice(0, index))
+        .data(this.links.slice(index - 1, index))
         .enter()
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 1);
+        .attr("stroke-width", 2)
+        .attr("opacity", 0.6)
+        .attr("class", "drawnArc")
+        .attr("id", function (d, i) {
+          return "arc-no-" + i;
+        });
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -334,14 +346,9 @@ export default {
     },
 
     handler({ element, index, direction }) {
-      // console.log(element, index, direction);
-      // const arc0 = document.getElementById("arc-no-0");
-
-      if (index === 0) this.drawChart();
-      // if (index !== 0) this.tracePath(index);
-      // else this.removeNodes();
-      if (direction === "down")
-        element.classList.add("active"), this.tracePath(index);
+      if (index === 0 && direction === "down") this.drawChart();
+      if (index === index && direction === "down") this.tracePath(index);
+      if (direction === "down") element.classList.add("active");
       else element.classList.remove("active"); //comment this if you want reveals only while scrolling down
       console.log(index);
     },
@@ -371,13 +378,20 @@ export default {
 .step-text {
   max-width: 100%;
   border-radius: 15px;
-  /* background-color: rgba(98, 108, 109, 0.9); */
-  /* background-color: rgba(35, 49, 64, 0.932); */
-  /* background: rgba(38, 47, 49, 0.932); */
-  background: rgba(50, 47, 49, 0.9);
   color: white;
   padding: 15px 15px 15px 15px;
   pointer-events: all;
+}
+
+.step-text {
+  max-width: 75%;
+  border-radius: 10px;
+  background: #283544;
+  backface-visibility: inherit;
+  color: white;
+  padding: 0px 10px 15px 10px;
+  pointer-events: all;
+  font-family: monospace;
 }
 
 .step-title {
@@ -388,11 +402,12 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   padding: 0;
+  margin-top: 5px;
 }
-p {
-  border: 2px solid darkgray;
-  padding: 10px;
-  margin: 15px;
+.timeline-desc {
+  border: 1px solid darkgray;
+  padding: 15px;
+  margin: 12px;
   border-radius: 10px;
 }
 .flex-container {
@@ -416,17 +431,15 @@ p {
 }
 
 .step {
-  padding: 0 0;
-  height: 100vh;
-  position: relative;
-  padding: 10vh 0;
+  padding: 1vh 0;
+  /* height: 100vh; */
+  /* position: relative; */
   margin: 0 3rem;
-  margin-bottom: 10vh;
+  margin-bottom: 100vh;
   margin-left: 5vw;
   margin-right: 5vw;
   display: flex;
   /* align-items: flex-start; */
-  /* justify-content: center; */
   font-family: monospace;
   font-weight: 00;
   font-size: 15px;
@@ -439,12 +452,15 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top: 0;
 }
 
 .step.active {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+  position: -webkit-sticky;
 }
 
 .timeline {
@@ -462,15 +478,7 @@ p {
   /* display: flex; */
 }
 
-.invisible {
-  opacity: 0;
-}
-.visible {
-  opacity: 1;
-}
-
-.arcHighlight {
-  opacity: 1;
-  stroke-width: 3;
+.highlight-arc {
+  stroke-width: 6px;
 }
 </style>

@@ -10,6 +10,11 @@
         <p>SCROLL TO CONTINUE</p>
       </div>
       <div>
+        <div class="second-intro">
+          <div class="chapter-title">
+            <h2>Chapter 1: Repeating The Past, Again</h2>
+          </div>
+        </div>
         <arcTimeline class="arc" />
       </div>
       <div class="outro">
@@ -55,9 +60,28 @@ export default {
   color: #dfdfdf;
   font-family: monospace;
 }
+
+.second-intro {
+  min-height: 100vh;
+  text-align: center;
+  background-color: #1b242e;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #dfdfdf;
+  font-family: monospace;
+  vertical-align: baseline;
+}
 .outro {
   padding-top: 50vh;
   padding-bottom: 20vh;
+}
+
+.chapter-text {
+  position: sticky;
+  bottom: 0;
 }
 
 .arc {
@@ -83,7 +107,7 @@ body {
   margin: 0;
   padding: 0;
   /* background-color: rgba(35, 49, 64); */
-  background: rgba(50, 47, 49, 0.95);
+  background: #151c24;
 }
 </style>
 
