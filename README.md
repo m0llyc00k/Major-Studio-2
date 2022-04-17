@@ -1,13 +1,12 @@
+<h1>In Crisis, Again: Understanding the Endurance of Opioids and Combatting the Modern Epidemic</h2>
+
+
 ![image](https://user-images.githubusercontent.com/86888346/155444223-a9ef2489-11ef-4f80-830e-64d260d26a7c.png)
 
 ![image](https://user-images.githubusercontent.com/86888346/163730863-23d6552f-cf42-406c-ad11-5fc650663b58.png)  ![image](https://user-images.githubusercontent.com/86888346/163730897-74a8034b-ddb3-46e6-a4d6-051cb95bde46.png)
 
 ![image](https://user-images.githubusercontent.com/86888346/163730921-369391f0-271e-44cc-89ac-19d1284dc599.png) ![image](https://user-images.githubusercontent.com/86888346/163730939-a3137361-8daf-4525-ba17-f3fa1ec7276a.png)
 
-
-
-
-<h2In Crisis, Again: Understanding the Endurance of Opioids and Combatting the Modern Epidemic</h2>
 
 
 <h4>Thesis References</h4>
