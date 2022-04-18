@@ -325,9 +325,9 @@ export default {
           return this.getTotalLength();
         })
         .attr("stroke", "url(#linear-gradient")
-        .attr("id", function (d, i) {
-          return "arc-no-" + i;
-        })
+        // .attr("id", function (d, i) {
+        //   return "arc-no-" + i;
+        // })
         // reveal the arcs
         .transition()
         .duration(4000)

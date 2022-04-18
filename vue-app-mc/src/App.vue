@@ -17,6 +17,14 @@
         </div>
         <arcTimeline class="arc" />
       </div>
+      <div>
+        <div class="second-intro">
+          <div class="chapter-title">
+            <h2>Chapter 2: Your Brain on Drugs, Actually</h2>
+          </div>
+        </div>
+        <brain />
+      </div>
       <div class="outro">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
         velit sint facere ipsam doloremque placeat vel impedit sapiente alias.
@@ -27,6 +35,7 @@
 
 <script>
 import arcTimeline from "./components/arcTimeline.vue";
+import brain from "./components/brain.vue";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
@@ -35,6 +44,7 @@ export default {
   name: "App",
   components: {
     arcTimeline,
+    brain,
   },
 };
 </script>
@@ -58,7 +68,7 @@ export default {
   justify-content: center;
   align-items: center;
   color: #dfdfdf;
-  font-family: monospace;
+  font-family: "futura";
 }
 
 .second-intro {
