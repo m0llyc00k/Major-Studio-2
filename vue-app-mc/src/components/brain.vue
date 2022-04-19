@@ -18,7 +18,7 @@
             <animateTransform
               attributeName="transform"
               type="scale"
-              values=".13; .13; .13; .13; .13"
+              values=".13; .132; .13; .132; .13"
               dur="7s"
               repeatCount="indefinite"
               additive="sum"
@@ -500,6 +500,7 @@ export default {
       if (index === 2) this.phase2();
       if (index === 3) this.phase3();
       if (index === 4) this.phase4();
+      if (index === 5) this.phase5();
     },
 
     brainStart() {
@@ -508,6 +509,7 @@ export default {
       d3.select("#LC-center").attr("opacity", 0);
       d3.select("#front-lobe-arrows-2").attr("opacity", 0);
       d3.select("#VTA-2").attr("opacity", 0);
+      d3.select("#brain-base").attr("opacity", 0.85);
     },
     phase0() {
       d3.select("#front-lobe").attr("opacity", 0);
@@ -518,7 +520,7 @@ export default {
         .transition()
         .ease(d3.easeLinear)
         .duration(2000)
-        .attr("opacity", 1);
+        .attr("opacity", 0.85);
       brainFill1.style("fill", "#f6adcd");
     },
 
@@ -596,38 +598,115 @@ export default {
         .attr("opacity", 1);
     },
     phase4() {
+      const arrowLineDrawn = d3.selectAll(".cls-5").attr("opacity", 1);
+      const arrowDrawn = d3.selectAll(".cls-6");
+      arrowLineDrawn
+        .transition()
+        .delay(0)
+        .on("start", function repeat() {
+          d3.active(this)
+            .duration(1000)
+            .attr("stroke-dasharray", function () {
+              return this.getTotalLength();
+            })
+            .attr("stroke-dashoffset", function () {
+              return this.getTotalLength();
+            })
+            .transition()
+            .delay(200)
+            .duration(1000)
+            .attr("stroke-dasharray", function () {
+              return this.getTotalLength();
+            })
+            .attr("stroke-dashoffset", function () {
+              return this.getTotalLength();
+            })
+            // reveal the paths
+            .transition()
+            .duration(1000)
+            .attr("stroke-dashoffset", 0)
+            .transition()
+            .delay(200)
+            .duration(1000)
+            .attr("stroke-dasharray", function () {
+              return this.getTotalLength();
+            })
+            .attr("stroke-dashoffset", function () {
+              return this.getTotalLength();
+            })
+            .transition()
+            .delay(200)
+            .duration(1000)
+            .attr("stroke-dasharray", function () {
+              return this.getTotalLength();
+            })
+            .attr("stroke-dashoffset", function () {
+              return this.getTotalLength();
+            })
+            // reveal the paths
+            .transition()
+            .duration(2000)
+            .attr("stroke-dashoffset", 0)
+            .on("start", repeat);
+        });
+
+      arrowDrawn.transition().duration(2000).attr("opacity", 0);
+
+      d3.select("#brain-base")
+        .transition()
+        .delay(350)
+        .on("start", function repeat() {
+          d3.active(this)
+            .attr("opacity", 0.5)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 1)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 0.5)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 1)
+            .transition()
+            .delay(350)
+            .on("start", repeat);
+        });
+
       d3.select("#front-lobe").attr("opacity", 0);
       d3.select("#LC-arrows-3").attr("opacity", 1);
       d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#front-lobe-arrows-2").attr("opacity", 0);
 
       //animate arrows
+    },
+
+    phase5() {
+      d3.select("#brain-base")
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(2000)
+        .attr("opacity", 0.7);
+
+      //animate arrows
       const arrowLineDrawn = d3.selectAll(".cls-5").attr("opacity", 1);
-      const arrowDrawn = d3.selectAll(".cls-6").attr("opacity", 0);
+      const arrowDrawn = d3.selectAll(".cls-6");
       arrowLineDrawn
+        .transition()
+        .duration(4000)
         .attr("stroke-dasharray", function () {
           return this.getTotalLength();
         })
         .attr("stroke-dashoffset", function () {
           return this.getTotalLength();
-        })
-        // reveal the paths
+        });
+      arrowDrawn
         .transition()
         .duration(4000)
-        .attr("stroke-dashoffset", 0);
-      arrowDrawn
-        .transition()
-        .duration(6000)
-        .attr("stroke-width", 5)
-        .transition()
-        .duration(2000)
-        .attr("stroke-width", 1);
-
-      arrowDrawn
-        //reveal the arrow heads
-        .transition()
-        .duration(6000)
-        .attr("opacity", 1);
+        .attr("transform", "translate(0,140)")
+        .attr("opacity", 0);
     },
   },
 
