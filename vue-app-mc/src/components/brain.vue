@@ -444,7 +444,7 @@
             </p>
           </div>
         </div>
-        <div class="step-brain" data-step-no="6">
+        <div class="step-brain invisible" data-step-no="6">
           <div class="step-brain-text">
             <h2 class="brain-title">Phase 1: The Normal Brain</h2>
             <p>
@@ -650,7 +650,28 @@ export default {
             .on("start", repeat);
         });
 
-      arrowDrawn.transition().duration(2000).attr("opacity", 0);
+      arrowDrawn
+        .transition()
+        .delay(350)
+        .on("start", function repeat() {
+          d3.active(this)
+            .attr("opacity", 0)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 1)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 0)
+            .transition()
+            .delay(350)
+            .duration(2500)
+            .attr("opacity", 1)
+            .transition()
+            .delay(350)
+            .on("start", repeat);
+        });
 
       d3.select("#brain-base")
         .transition()
@@ -705,7 +726,7 @@ export default {
       arrowDrawn
         .transition()
         .duration(4000)
-        .attr("transform", "translate(0,140)")
+        .attr("transform", "translate(0,200)")
         .attr("opacity", 0);
     },
   },
@@ -808,5 +829,9 @@ export default {
 }
 .cls-7 {
   fill: #ed516b;
+}
+
+.invisible {
+  opacity: 0;
 }
 </style>

@@ -68,7 +68,8 @@ export default {
   justify-content: center;
   align-items: center;
   color: #dfdfdf;
-  font-family: "futura";
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  letter-spacing: 3px;
 }
 
 .second-intro {

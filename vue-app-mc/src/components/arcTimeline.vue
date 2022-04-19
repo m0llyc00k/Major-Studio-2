@@ -26,7 +26,7 @@
         fact plays a role in history repeating itself, but
         <b>what really happens when your brain becomes addicted to opioids?</b>
       </p>
-      <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p>
+      <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
     </div>
     <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
@@ -42,8 +42,8 @@ import "intersection-observer";
 
 const MAX_SVG_WIDTH = 1400;
 
-const rectWidth = 30;
-const rectHeight = 2;
+const rectWidth = 10;
+const rectHeight = 10;
 var margin = { top: 20, right: 30, bottom: 20, left: 30 };
 
 export default {
@@ -98,11 +98,12 @@ export default {
         .attr("id", "rects")
         .attr("y", 0)
         .attr("x", function (d) {
-          return x(d.name) - rectWidth / 2;
+          return x(d.name) - rectWidth / 2 + 3;
         })
         .attr("width", rectWidth)
         .attr("height", rectHeight)
         .style("fill", "#b2b2b2")
+        .attr("opacity", 0.8)
         .attr("id", (d) => d.id)
         .transition()
         .ease(d3.easeBounce)
@@ -259,13 +260,13 @@ export default {
       linearGradient
         .append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "#8cacac"); //lightblue
+        .attr("stop-color", "#adcdf6"); //lightblue
 
       //Set the color for the end (100%)
       linearGradient
         .append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#af8c9d"); //light purple
+        .attr("stop-color", "#94104a"); //light pink
 
       // Add links between nodes. Here is the tricky part.
       // In my input data, links are provided between nodes -id-, NOT between node names.
@@ -401,6 +402,7 @@ export default {
   padding: 15px;
   margin: 12px;
   border-radius: 10px;
+  color: #dfdfdf;
 }
 .year-text {
   padding: 0;
