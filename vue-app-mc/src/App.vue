@@ -10,7 +10,7 @@
         <p>SCROLL TO CONTINUE</p>
       </div>
       <div>
-        <div class="second-intro">
+        <div class="sub-intro first-chapter">
           <div class="chapter-title">
             <h2>Chapter 1: Repeating The Past, Again</h2>
           </div>
@@ -18,12 +18,15 @@
         <arcTimeline class="arc" />
       </div>
       <div>
-        <div class="second-intro">
+        <div class="sub-intro second-chapter">
           <div class="chapter-title">
             <h2>Chapter 2: Your Brain on Drugs, Actually</h2>
           </div>
         </div>
         <brain />
+      </div>
+      <div class="third-chapter">
+        <img src="../opioid-mat-dark.svg" alt="opioid-map" />
       </div>
       <div class="outro">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
@@ -72,7 +75,7 @@ export default {
   letter-spacing: 3px;
 }
 
-.second-intro {
+.sub-intro {
   min-height: 100vh;
   text-align: center;
   background-color: #1b242e;

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    .path-null {
+        stroke: white;
+        stroke-width: 0.25px;
+        fill: gray;
+    }
+
+    body {
+        background-color: #151c24;
+
+    }
+</style>
+
+<body>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+    <script src='jenks.js'></script>
+
+    <script>
+        var width = 960,
+            height = 500;
+
+        var projection = d3.geoAlbersUsa()
+            .translate([width / 2, height / 2])
+            .scale([1000]);
+        // .center([0, 5])
+        // .scale(1)
+        // .translate([0, 0])
+        // .rotate([-180, 0]);
+
+
+
+        var path = d3.geoPath()
+            .projection(projection);
+
+        const url = "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json"
+
+        function getData() {
+            d3.json(url).then(function (geojson) {
+
+                const geoData = geojson.features;
+
+                drawMap(geoData)
+
+                console.log(geoData[0].properties)
+                // Asynchronous JavaScript waiting for data promise to complete before moving on to .then() 
+                if (geojson.features) {
+                    console.log('Number of features:', geojson.features.length)
+                    objects = geojson
+                }
+            })
+
+        }
+
+        function drawMap(data) {
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+            // .attr("viewBox", [0, 0, 975, 610]);
+
+            var g = svg.append("g");
+
+            const matAccessor = d => d.properties.MAT
+            const pillAccessor = d => d.properties.PILLS
+            const deathAcessor = d => d.properties.DEATHSPER
+
+            // var myColor = d3.scaleQuantize()
+            //     .domain(d3.extent(data, matAccessor))
+            //     .range(d3.schemeGreens[9]);
+
+            // var myColor2 = d3.scaleQuantize()
+            //     .domain(d3.extent(data, pillAccessor))
+            //     .range(d3.schemeBlues[9]);
+
+            console.log(d3.extent(data, matAccessor))
+
+            const color = d3.scaleQuantile()
+                .range([
+                    'rgb(247,251,255)',
+                    'rgb(222,235,247)',
+                    'rgb(198,219,239)',
+                    'rgb(158,202,225)',
+                    'rgb(107,174,214)',
+                    'rgb(66,146,198)',
+                    'rgb(33,113,181)',
+                    'rgb(8,81,156)',
+                    'rgb(8,48,107)',
+                    'rgb(3,19,43)'
+                ]);
+
+            // calculate jenks natural breaks'
+            // const colorVariable = pillAccessor;
+            const numberOfClasses = color.range().length - 4;
+            const jenksNaturalBreaks = jenks(data.map(pillAccessor), numberOfClasses);
+            console.log('numberOfClasses', numberOfClasses);
+            console.log('jenksNaturalBreaks', jenksNaturalBreaks);
+
+            // set the domain of the color scale based on our data
+            color
+                .domain(jenksNaturalBreaks);
+
+            var nullColor = 'none'
+
+            g.selectAll("path")
+                .data(data)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("class", "counties-pills")
+                .attr('stroke', 'none')
+                .attr("fill", function (d) {
+                    if (d.properties.PILLS != null) {
+                        return color(d.properties.PILLS)
+                    } else {
+                        return nullColor
+                    }
+                })
+                .attr("opacity", .8)
+        }
+
+
+
+
+
+
+
+        getData()
+
+    </script>
+</body>
+
+</html>

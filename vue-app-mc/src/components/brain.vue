@@ -730,7 +730,6 @@ export default {
         .attr("opacity", 0);
     },
   },
-
   mounted() {
     this.brainStart();
   },
