@@ -9,7 +9,19 @@
 
     body {
         background-color: #151c24;
+    }
 
+    /* #pill-overlay {
+        mix-blend-mode: multiply;
+    } */
+
+    .multiplied {
+        mix-blend-mode: multiply;
+        opacity: 0.7;
+    }
+
+    .notMultiplied {
+        opacity: 1;
     }
 </style>
 
@@ -25,12 +37,6 @@
         var projection = d3.geoAlbersUsa()
             .translate([width / 2, height / 2])
             .scale([1000]);
-        // .center([0, 5])
-        // .scale(1)
-        // .translate([0, 0])
-        // .rotate([-180, 0]);
-
-
 
         var path = d3.geoPath()
             .projection(projection);
@@ -43,6 +49,7 @@
                 const geoData = geojson.features;
 
                 drawMap(geoData)
+                drawMap2(geoData)
 
                 console.log(geoData[0].properties)
                 // Asynchronous JavaScript waiting for data promise to complete before moving on to .then() 
@@ -54,32 +61,112 @@
 
         }
 
+
+
         function drawMap(data) {
 
             var svg = d3.select("body").append("svg")
                 .attr("width", width)
                 .attr("height", height)
-            // .attr("viewBox", [0, 0, 975, 610]);
+                .attr("id", "map-overlay")
 
             var g = svg.append("g");
 
             const matAccessor = d => d.properties.MAT
             const pillAccessor = d => d.properties.PILLS
-            const deathAcessor = d => d.properties.DEATHSPER
-
-            // var myColor = d3.scaleQuantize()
-            //     .domain(d3.extent(data, matAccessor))
-            //     .range(d3.schemeGreens[9]);
-
-            // var myColor2 = d3.scaleQuantize()
-            //     .domain(d3.extent(data, pillAccessor))
-            //     .range(d3.schemeBlues[9]);
+            const deathAccessor = d => d.properties.DEATHSPER
 
             console.log(d3.extent(data, matAccessor))
 
-            const color = d3.scaleQuantile()
+
+            //pinks
+            const colorPink = d3.scaleQuantile()
                 .range([
-                    'rgb(247,251,255)',
+                    "#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"
+                ]);
+
+
+            // calculate jenks natural breaks'
+            // const colorVariable = pillAccessor;
+            const numberOfClasses = colorPink.range().length;
+            const jenksNaturalBreaks = jenks(data.map(deathAccessor), numberOfClasses);
+            console.log('numberOfClasses', numberOfClasses);
+            console.log('jenksNaturalBreaks', jenksNaturalBreaks);
+
+            // set the domain of the color scale based on our data
+            colorPink
+                .domain(jenksNaturalBreaks);
+
+            var nullColor = 'none'
+
+            g.selectAll("path")
+                .data(data)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("class", "pills")
+                .attr('stroke', 'none')
+                .attr("fill", function (d) {
+                    if (d.properties.DEATHSPER != null) {
+                        return colorPink(d.properties.DEATHSPER)
+                    } else {
+                        return nullColor
+                    }
+                })
+                .attr("opacity", 1)
+
+
+
+        }
+
+
+        // function drawBackground(data) {
+        //     var svgBackground = d3.select('#map-overlay').append("svg")
+        //         .attr("width", width)
+        //         .attr("height", height)
+
+        //     var whiteBackground = 'white'
+        //     var nullColor = 'none'
+
+        //     var backgroundGroup = svgBackground.append("g");
+        //     const pillAccessor = d => d.properties.PILLS
+        //     backgroundGroup.selectAll("path")
+        //         .data(data)
+        //         .enter().append("path")
+        //         .attr("id", "whiteback")
+        //         .attr("d", path)
+        //         .attr('stroke', 'none')
+        //         .attr("fill", function (d) {
+        //             if (d.properties.PILLS != null) {
+        //                 return '#dfdfdf'
+        //             } else {
+        //                 return nullColor
+        //             }
+        //         })
+        //         .attr("opacity", 1)
+        // }
+
+
+        function drawMap2(data) {
+
+
+
+            var svgPill = d3.select("#map-overlay").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+            // .attr("viewBox", [0, 0, 975, 610]);
+
+            var pillGroup = svgPill.append("g");
+
+            const matAccessor = d => d.properties.MAT
+            const pillAccessor = d => d.properties.PILLS
+            const deathAccessor = d => d.properties.DEATHSPER
+
+
+            console.log(d3.extent(data, matAccessor))
+
+            const colorBlue = d3.scaleQuantile()
+                .range([
+
                     'rgb(222,235,247)',
                     'rgb(198,219,239)',
                     'rgb(158,202,225)',
@@ -91,40 +178,53 @@
                     'rgb(3,19,43)'
                 ]);
 
+            //green/ blues
+            const colorTurq = d3.scaleQuantile()
+                .range([
+                    "#cee2e2", "#b3dcdc", "#97d6d6", "#7acfcf", "#5ac8c8"
+                ]);
+
             // calculate jenks natural breaks'
             // const colorVariable = pillAccessor;
-            const numberOfClasses = color.range().length - 4;
+            const numberOfClasses = colorBlue.range().length;
             const jenksNaturalBreaks = jenks(data.map(pillAccessor), numberOfClasses);
             console.log('numberOfClasses', numberOfClasses);
             console.log('jenksNaturalBreaks', jenksNaturalBreaks);
 
             // set the domain of the color scale based on our data
-            color
+            colorBlue
                 .domain(jenksNaturalBreaks);
 
             var nullColor = 'none'
 
-            g.selectAll("path")
+            pillGroup.selectAll("path")
                 .data(data)
                 .enter().append("path")
                 .attr("d", path)
-                .attr("class", "counties-pills")
+                .attr("class", function (d) {
+                    if ((d.properties.PILLS != null) && (d.properties.DEATHSPER == null)) {
+                        return "notMultiplied"
+                    } else {
+                        return "multiplied"
+                    }
+                })
                 .attr('stroke', 'none')
                 .attr("fill", function (d) {
                     if (d.properties.PILLS != null) {
-                        return color(d.properties.PILLS)
+                        return colorBlue(d.properties.PILLS)
                     } else {
                         return nullColor
                     }
                 })
-                .attr("opacity", .8)
+                // .attr("opacity", .7)
+
+
+                .attr("id", "pill-overlay")
+
+
+
+
         }
-
-
-
-
-
-
 
         getData()
 
