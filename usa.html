@@ -23,6 +23,16 @@
     .notMultiplied {
         opacity: 1;
     }
+
+    .multiplied-mat {
+        mix-blend-mode: multiply;
+        opacity: 1;
+    }
+
+    .notMultiplied-mat {
+        mix-blend-mode: multiply;
+        opacity: 0.7;
+    }
 </style>
 
 <body>
@@ -31,44 +41,49 @@
     <script src='jenks.js'></script>
 
     <script>
-        var width = 960,
-            height = 500;
+        var width = 1000,
+            height = 600;
 
         var projection = d3.geoAlbersUsa()
             .translate([width / 2, height / 2])
-            .scale([1000]);
+            .scale([1300]);
 
         var path = d3.geoPath()
             .projection(projection);
 
         const url = "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json"
 
-        function getData() {
-            d3.json(url).then(function (geojson) {
+        async function getData() {
+            await d3.json(url)
+                .then(function (geojson) {
 
-                const geoData = geojson.features;
+                    const geoData = geojson.features;
 
-                drawMap(geoData)
-                drawMap2(geoData)
+                    drawDeaths(geoData)
+                    drawPills(geoData)
+                    // drawMat(geoData)
 
-                console.log(geoData[0].properties)
-                // Asynchronous JavaScript waiting for data promise to complete before moving on to .then() 
-                if (geojson.features) {
-                    console.log('Number of features:', geojson.features.length)
-                    objects = geojson
-                }
-            })
+                    console.log(geoData[0].properties)
+                    // Asynchronous JavaScript waiting for data promise to complete before moving on to .then() 
+                    if (geojson.features) {
+                        console.log('Number of features:', geojson.features.length)
+                        objects = geojson
+                    }
+                })
 
         }
 
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("id", "map-overlay")
 
+        function drawDeaths(deathData) {
 
-        function drawMap(data) {
-
-            var svg = d3.select("body").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("id", "map-overlay")
+            // var svg = d3.select("body").append("svg")
+            //     .attr("width", width)
+            //     .attr("height", height)
+            //     .attr("id", "map-overlay")
 
             var g = svg.append("g");
 
@@ -76,7 +91,7 @@
             const pillAccessor = d => d.properties.PILLS
             const deathAccessor = d => d.properties.DEATHSPER
 
-            console.log(d3.extent(data, matAccessor))
+            console.log(d3.extent(deathData, matAccessor))
 
 
             //pinks
@@ -89,7 +104,7 @@
             // calculate jenks natural breaks'
             // const colorVariable = pillAccessor;
             const numberOfClasses = colorPink.range().length;
-            const jenksNaturalBreaks = jenks(data.map(deathAccessor), numberOfClasses);
+            const jenksNaturalBreaks = jenks(deathData.map(deathAccessor), numberOfClasses);
             console.log('numberOfClasses', numberOfClasses);
             console.log('jenksNaturalBreaks', jenksNaturalBreaks);
 
@@ -100,7 +115,7 @@
             var nullColor = 'none'
 
             g.selectAll("path")
-                .data(data)
+                .data(deathData)
                 .enter().append("path")
                 .attr("d", path)
                 .attr("class", "pills")
@@ -113,42 +128,11 @@
                     }
                 })
                 .attr("opacity", 1)
-
-
-
         }
 
 
-        // function drawBackground(data) {
-        //     var svgBackground = d3.select('#map-overlay').append("svg")
-        //         .attr("width", width)
-        //         .attr("height", height)
 
-        //     var whiteBackground = 'white'
-        //     var nullColor = 'none'
-
-        //     var backgroundGroup = svgBackground.append("g");
-        //     const pillAccessor = d => d.properties.PILLS
-        //     backgroundGroup.selectAll("path")
-        //         .data(data)
-        //         .enter().append("path")
-        //         .attr("id", "whiteback")
-        //         .attr("d", path)
-        //         .attr('stroke', 'none')
-        //         .attr("fill", function (d) {
-        //             if (d.properties.PILLS != null) {
-        //                 return '#dfdfdf'
-        //             } else {
-        //                 return nullColor
-        //             }
-        //         })
-        //         .attr("opacity", 1)
-        // }
-
-
-        function drawMap2(data) {
-
-
+        function drawPills(pillData) {
 
             var svgPill = d3.select("#map-overlay").append("svg")
                 .attr("width", width)
@@ -162,7 +146,7 @@
             const deathAccessor = d => d.properties.DEATHSPER
 
 
-            console.log(d3.extent(data, matAccessor))
+            console.log(d3.extent(pillData, matAccessor))
 
             const colorBlue = d3.scaleQuantile()
                 .range([
@@ -187,7 +171,7 @@
             // calculate jenks natural breaks'
             // const colorVariable = pillAccessor;
             const numberOfClasses = colorBlue.range().length;
-            const jenksNaturalBreaks = jenks(data.map(pillAccessor), numberOfClasses);
+            const jenksNaturalBreaks = jenks(pillData.map(pillAccessor), numberOfClasses);
             console.log('numberOfClasses', numberOfClasses);
             console.log('jenksNaturalBreaks', jenksNaturalBreaks);
 
@@ -198,7 +182,7 @@
             var nullColor = 'none'
 
             pillGroup.selectAll("path")
-                .data(data)
+                .data(pillData)
                 .enter().append("path")
                 .attr("d", path)
                 .attr("class", function (d) {
@@ -216,13 +200,72 @@
                         return nullColor
                     }
                 })
-                // .attr("opacity", .7)
-
-
                 .attr("id", "pill-overlay")
+        }
 
 
+        function drawMat(matData) {
 
+            var svgMat = d3.select("#map-overlay").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+            // .attr("viewBox", [0, 0, 975, 610]);
+
+            var matGroup = svgMat.append("g");
+
+            const matAccessor = d => d.properties.MAT
+            const pillAccessor = d => d.properties.PILLS
+            const deathAccessor = d => d.properties.DEATHSPER
+
+            const colorBlue = d3.scaleQuantile()
+                .range([
+
+                    'rgb(222,235,247)',
+                    'rgb(198,219,239)',
+                    'rgb(158,202,225)',
+                    'rgb(107,174,214)',
+                    'rgb(66,146,198)',
+                    'rgb(33,113,181)',
+                    'rgb(8,81,156)',
+                    'rgb(8,48,107)',
+                    'rgb(3,19,43)'
+                ]);
+
+
+            // calculate jenks natural breaks'
+            // const colorVariable = pillAccessor;
+            const numberOfClasses = colorBlue.range().length;
+            const jenksNaturalBreaks = jenks(matData.map(matAccessor), numberOfClasses);
+            console.log('numberOfClasses', numberOfClasses);
+            console.log('jenksNaturalBreaks', jenksNaturalBreaks);
+
+            // set the domain of the color scale based on our data
+            colorBlue
+                .domain(jenksNaturalBreaks);
+
+            var nullColor = 'none'
+
+            matGroup.selectAll("path")
+                .data(matData)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("class", function (d) {
+                    if ((d.properties.MAT != null) && (d.properties.DEATHSPER == null)) {
+                        return "multiplied-mat"
+                    } else {
+                        return "notMultiplied-mat"
+                    }
+                })
+                .attr('stroke', 'none')
+                .attr("fill", function (d) {
+                    if (d.properties.MAT != null) {
+                        return colorBlue(d.properties.MAT)
+                    } else {
+                        return nullColor
+                    }
+                })
+                // .attr("opacity", .7)
+                .attr("id", "mat-overlay")
 
         }
 

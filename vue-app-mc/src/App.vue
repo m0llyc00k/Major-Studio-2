@@ -25,8 +25,13 @@
         </div>
         <brain />
       </div>
-      <div class="third-chapter">
-        <img src="../opioid-mat-dark.svg" alt="opioid-map" />
+      <div>
+        <div class="sub-intro third-chapter">
+          <div class="chapter-title">
+            <h2>Chapter 3: Inaccessibility to MAT Treatment, Unfortunately</h2>
+          </div>
+        </div>
+        <matMap />
       </div>
       <div class="outro">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
@@ -39,6 +44,7 @@
 <script>
 import arcTimeline from "./components/arcTimeline.vue";
 import brain from "./components/brain.vue";
+import matMap from "./components/matMap.vue";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
@@ -48,6 +54,7 @@ export default {
   components: {
     arcTimeline,
     brain,
+    matMap,
   },
 };
 </script>
