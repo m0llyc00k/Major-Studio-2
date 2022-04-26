@@ -11,7 +11,7 @@
 ![image](https://user-images.githubusercontent.com/86888346/165307831-47040626-c9b7-413e-a5da-fdf6da495209.png)
 
 
-<h4>Overdose Deaths [2010 - 2020]</h4>
+<p>Overdose Deaths [2010 - 2020]</p>
 ![image](https://user-images.githubusercontent.com/86888346/165308130-c02d735a-92f8-47c7-8f56-34dc3b2f1858.png)
 
 <h4>Overdose Deaths [2010 - 2020] & Pills per 100 people [2012]</h4>
