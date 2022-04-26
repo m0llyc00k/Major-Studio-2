@@ -8,6 +8,21 @@
 
 ![image](https://user-images.githubusercontent.com/86888346/163730921-369391f0-271e-44cc-89ac-19d1284dc599.png) ![image](https://user-images.githubusercontent.com/86888346/163730939-a3137361-8daf-4525-ba17-f3fa1ec7276a.png)
 
+![image](https://user-images.githubusercontent.com/86888346/165307831-47040626-c9b7-413e-a5da-fdf6da495209.png)
+
+
+<h4>Overdose Deaths [2010 - 2020]</h4>
+![image](https://user-images.githubusercontent.com/86888346/165308130-c02d735a-92f8-47c7-8f56-34dc3b2f1858.png)
+
+<h4>Overdose Deaths [2010 - 2020] & Pills per 100 people [2012]</h4>
+![image](https://user-images.githubusercontent.com/86888346/165308317-4ac1f5fa-eae7-40fa-bf4c-66e8c5297cb8.png)
+
+<h4>Overdose Deaths [2010 - 2020] & MAT providers [2022]</h4>
+![image](https://user-images.githubusercontent.com/86888346/165308393-4a93c6cd-952c-43df-8885-6519147c323b.png)
+
+<h4>All Providers [2022]</h4><h4>All Providers taking New Patients [2022]</h4>
+![image](https://user-images.githubusercontent.com/86888346/165308562-457792f8-a88d-4a68-886c-48eb4d7d5776.png) ![image](https://user-images.githubusercontent.com/86888346/165308466-35d5f96a-548c-45a1-b129-82d52bb1b137.png)
+
 
 
 <h4>Thesis References</h4>
