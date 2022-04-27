@@ -5,7 +5,7 @@
     <!-- <div class="step" data-step-no="1"></div> -->
     <div class="step" data-step-no="2">
       <div class="step-map">
-        <h2 class="step-title-map"></h2>
+        <h2 class="step-title-map">Overdose Deaths [2010-2020]</h2>
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
@@ -13,9 +13,6 @@
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
             </p>
           </div>
         </div>
@@ -23,7 +20,9 @@
     </div>
     <div class="step" data-step-no="3">
       <div class="step-map">
-        <h2 class="step-title-map"></h2>
+        <h2 class="step-title-map">
+          Pills per 100 people [2012] & Overdose Deaths [2010-2020]
+        </h2>
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
@@ -31,9 +30,6 @@
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
             </p>
           </div>
         </div>
@@ -41,7 +37,9 @@
     </div>
     <div class="step" data-step-no="4">
       <div class="step-map">
-        <h2 class="step-title-map"></h2>
+        <h2 class="step-title-map">
+          MAT Treatment Providers [2022] & Overdose deaths [2010-2020]
+        </h2>
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
@@ -49,9 +47,6 @@
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
             </p>
           </div>
         </div>
@@ -67,9 +62,6 @@
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
             </p>
           </div>
         </div>
@@ -85,9 +77,6 @@
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
             </p>
           </div>
         </div>
@@ -116,6 +105,30 @@ import "intersection-observer";
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
 const MAX_SVG_WIDTH = 1400;
+//blues
+const colorBlue = d3
+  .scaleQuantile()
+  .range([
+    "rgb(222,235,247)",
+    "rgb(198,219,239)",
+    "rgb(158,202,225)",
+    "rgb(107,174,214)",
+    "rgb(66,146,198)",
+    "rgb(33,113,181)",
+    "rgb(8,81,156)",
+    "rgb(8,48,107)",
+    "rgb(3,19,43)",
+  ]);
+//pinks
+const colorPink = d3
+  .scaleQuantile()
+  .range(["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"]);
+
+//green/ blues
+//   const colorTurq = d3
+//     .scaleQuantile()
+//     .range(["#cee2e2", "#b3dcdc", "#97d6d6", "#7acfcf", "#5ac8c8"]);
+
 const url =
   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json";
 
@@ -149,17 +162,17 @@ export default {
     },
   },
 
-  //   computed: {
-  //     projection() {
-  //       return d3
-  //         .geoAlbersUsa()
-  //         .translate([this.mapWidth / 2, this.mapHeight / 2])
-  //         .scale([1300]);
-  //     },
-  //     path() {
-  //       return d3.geoPath().projection(this.projection());
-  //     },
-  //   },
+  computed: {
+    projection() {
+      return d3
+        .geoAlbersUsa()
+        .translate([this.mapWidth / 2, this.mapHeight / 2])
+        .scale([1300]);
+    },
+    path() {
+      return d3.geoPath().projection(this.projection);
+    },
+  },
 
   methods: {
     async getData() {
@@ -167,15 +180,12 @@ export default {
         const geoData = geojson.features;
         this.geoData = geoData;
 
-        // Asynchronous JavaScript waiting for data promise to complete before moving on to .then()
         if (geojson.features) {
           console.log("Number of features:", geojson.features.length);
-          console.log(geoData);
-          //   objects = geojson;
+          // console.log(geoData);
         }
       });
     },
-
     jenks(data, n_classes) {
       function getMatrices(data, n_classes) {
         var lower_class_limits = [],
@@ -277,19 +287,10 @@ export default {
     },
 
     drawDeaths() {
-      var projection = d3
-        .geoAlbersUsa()
-        .translate([this.mapWidth / 2, this.mapHeight / 2])
-        .scale([1300]);
-
-      var path = d3.geoPath().projection(projection);
+      d3.selectAll("#pill-overlay").remove();
+      d3.selectAll("#mat-overlay").remove();
 
       var deathGroup = d3.select(".map-overlay").append("g");
-
-      //pinks
-      const colorPink = d3
-        .scaleQuantile()
-        .range(["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"]);
 
       // calculate jenks natural breaks'
       // const colorVariable = pillAccessor;
@@ -298,8 +299,8 @@ export default {
         this.geoData.map((d) => d.properties.DEATHSPER),
         numberOfClasses
       );
-      console.log("numberOfClasses", numberOfClasses);
-      console.log("jenksNaturalBreaks", jenksNaturalBreaks);
+      // console.log("numberOfClasses", numberOfClasses);
+      // console.log("jenksNaturalBreaks", jenksNaturalBreaks);
 
       // set the domain of the color scale based on our data
       colorPink.domain(jenksNaturalBreaks);
@@ -311,7 +312,7 @@ export default {
         .data(this.geoData)
         .enter()
         .append("path")
-        .attr("d", path)
+        .attr("d", this.path)
         .attr("stroke", "none")
         .attr("fill", function (d) {
           if (d.properties.DEATHSPER != null) {
@@ -325,12 +326,8 @@ export default {
     },
 
     drawPills() {
-      var projection = d3
-        .geoAlbersUsa()
-        .translate([this.mapWidth / 2, this.mapHeight / 2])
-        .scale([1300]);
+      d3.selectAll("#mat-overlay").remove();
 
-      var path = d3.geoPath().projection(projection);
       var svgPill = d3
         .select(".map-overlay")
         .append("svg")
@@ -340,25 +337,6 @@ export default {
       // .attr("viewBox", [0, 0, 975, 610]);
 
       var pillGroup = svgPill.append("g");
-
-      const colorBlue = d3
-        .scaleQuantile()
-        .range([
-          "rgb(222,235,247)",
-          "rgb(198,219,239)",
-          "rgb(158,202,225)",
-          "rgb(107,174,214)",
-          "rgb(66,146,198)",
-          "rgb(33,113,181)",
-          "rgb(8,81,156)",
-          "rgb(8,48,107)",
-          "rgb(3,19,43)",
-        ]);
-
-      //green/ blues
-      //   const colorTurq = d3
-      //     .scaleQuantile()
-      //     .range(["#cee2e2", "#b3dcdc", "#97d6d6", "#7acfcf", "#5ac8c8"]);
 
       // calculate jenks natural breaks'
       const numberOfClasses = colorBlue.range().length - 2;
@@ -379,7 +357,7 @@ export default {
         .data(this.geoData)
         .enter()
         .append("path")
-        .attr("d", path)
+        .attr("d", this.path)
         .attr("class", function (d) {
           if (d.properties.PILLS != null && d.properties.DEATHSPER == null) {
             return "notMultiplied";
@@ -401,12 +379,6 @@ export default {
     drawMat() {
       d3.selectAll("#pill-overlay").remove();
 
-      var projection = d3
-        .geoAlbersUsa()
-        .translate([this.mapWidth / 2, this.mapHeight / 2])
-        .scale([1300]);
-
-      var path = d3.geoPath().projection(projection);
       var svgMat = d3
         .select(".map-overlay")
         .append("svg")
@@ -416,20 +388,6 @@ export default {
       // .attr("viewBox", [0, 0, 975, 610]);
 
       var matGroup = svgMat.append("g");
-
-      const colorBlue = d3
-        .scaleQuantile()
-        .range([
-          "rgb(222,235,247)",
-          "rgb(198,219,239)",
-          "rgb(158,202,225)",
-          "rgb(107,174,214)",
-          "rgb(66,146,198)",
-          "rgb(33,113,181)",
-          "rgb(8,81,156)",
-          "rgb(8,48,107)",
-          "rgb(3,19,43)",
-        ]);
 
       // calculate jenks natural breaks'
       // const colorVariable = pillAccessor;
@@ -451,7 +409,7 @@ export default {
         .data(this.geoData)
         .enter()
         .append("path")
-        .attr("d", path)
+        .attr("d", this.path)
         .attr("class", function (d) {
           if (d.properties.MAT != null && d.properties.DEATHSPER == null) {
             return "multiplied-mat";
@@ -476,8 +434,8 @@ export default {
 
     handler({ element, index, direction }) {
       if (index === 0 && direction === "down") this.drawDeaths();
-      if (index === 1 && direction === "down") this.drawPills();
-      if (index === 2 && direction === "down") this.drawMat();
+      if (index === 2 && direction === "down") this.drawPills();
+      if (index === 3 && direction === "down") this.drawMat();
       if (direction === "down") element.classList.add("active");
       console.log(index);
       console.log(this.geoData[0].properties.DEATHSPER);
@@ -497,7 +455,7 @@ export default {
 
 <style>
 .step-map {
-  max-width: 75%;
+  max-width: 60%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;

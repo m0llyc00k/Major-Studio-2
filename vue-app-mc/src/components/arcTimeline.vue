@@ -18,16 +18,19 @@
         </div>
       </div>
     </div>
-    <div class="step" data-step-no="1"></div>
-    <div class="step last-step" data-step-no="1">
+    <div class="step"></div>
+    <div class="last-step">
       <p>
-        Pharmaceutical companies blame 'recreational users', framing them as
-        criminals, and advocate for 'medical users'. <br />This manipulation of
-        fact plays a role in history repeating itself, but
+        Pharmaceutical companies blame <em>'recreational users'</em>, framing
+        them as criminals,<br />
+        while advocating for <em>'medical users'</em>, positioning them as
+        victims. <br />This manipulation of fact plays a role in history
+        repeating itself, but <br />
         <b>what really happens when your brain becomes addicted to opioids?</b>
       </p>
       <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
     </div>
+    <div class="step"></div>
     <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
 </template>
@@ -386,6 +389,53 @@ export default {
   border: 0.5px solid rgba(169, 169, 169, 0.2);
 }
 
+.last-step {
+  border-radius: 10px;
+  background: #212b38;
+  max-width: 60%;
+  padding: 25vh 0;
+  line-height: 1.6;
+  /* backface-visibility: inherit; */
+  padding: 20px 10px 30px 10px;
+  font-family: monospace;
+  font-size: 18px;
+  margin: 0 25rem;
+  border: 0.5px solid rgba(169, 169, 169, 0.2);
+}
+
+.step {
+  padding: 2vh 0;
+  /* height: 100vh; */
+  /* position: relative; */
+  margin: 0 3rem;
+  margin-bottom: 100vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  display: flex;
+  /* align-items: flex-start; */
+  font-family: monospace;
+  font-weight: 00;
+  font-size: 15px;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1000ms;
+  transform: translateY(60px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+}
+
+.step.active {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  position: -webkit-sticky;
+}
+
 .step-title {
   background: -webkit-linear-gradient(left, #bacdcd, #cfbac4);
   background: -o-linear-gradient(right, #bacdcd, #cfbac4);
@@ -426,39 +476,6 @@ export default {
   /* align-items: flex-start; */
   justify-content: center;
   color: #bacdcd;
-}
-
-.step {
-  padding: 2vh 0;
-  /* height: 100vh; */
-  /* position: relative; */
-  margin: 0 3rem;
-  margin-bottom: 100vh;
-  margin-left: 5vw;
-  margin-right: 5vw;
-  display: flex;
-  /* align-items: flex-start; */
-  font-family: monospace;
-  font-weight: 00;
-  font-size: 15px;
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 1000ms;
-  transform: translateY(60px);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: sticky;
-  top: 0;
-}
-
-.step.active {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
-  position: -webkit-sticky;
 }
 
 .timeline {
