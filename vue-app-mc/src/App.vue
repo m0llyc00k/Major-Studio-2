@@ -15,6 +15,25 @@
             <h2>Chapter 1: Repeating The Past, Again</h2>
           </div>
         </div>
+        <Scrollama :offset="0.8" @step-enter="handler">
+          <div class="step step-app">
+            <div class="app-text">
+              <p class="para-text">
+                The United States faced what would be the first national opioid
+                crisis a century before the infamous mismarketing of OxyContin
+                devastated communities with widespread opioid addiction.
+                <br /><br />The onset of both crises follow similar arcs in
+                history, yet the first epidemic has faded into distant memory
+                and recovery from the current crisis has yet to be seen.
+              </p>
+            </div>
+          </div>
+          <div class="step step-app">
+            <div class="app-text">
+              <h2>Let's draw the connections between both epidemics</h2>
+            </div>
+          </div>
+        </Scrollama>
         <arcTimeline class="arc" />
       </div>
       <div>
@@ -46,6 +65,7 @@ import arcTimeline from "./components/arcTimeline.vue";
 import brain from "./components/brain.vue";
 import matMap from "./components/matMap.vue";
 import "intersection-observer";
+import Scrollama from "../vue-scrollama/src/Scrollama.vue";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
@@ -55,6 +75,14 @@ export default {
     arcTimeline,
     brain,
     matMap,
+    Scrollama,
+  },
+
+  methods: {
+    handler({ element, index, direction }) {
+      if (direction === "down") element.classList.add("active");
+      console.log(index);
+    },
   },
 };
 </script>
@@ -78,7 +106,9 @@ export default {
   justify-content: center;
   align-items: center;
   color: #dfdfdf;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+  font-family: "Inter var", sans-serif;
+
   letter-spacing: 3px;
 }
 
@@ -95,6 +125,7 @@ export default {
   font-family: monospace;
   vertical-align: baseline;
 }
+
 .outro {
   padding-top: 50vh;
   padding-bottom: 20vh;
@@ -129,6 +160,47 @@ body {
   padding: 0;
   /* background-color: rgba(35, 49, 64); */
   background: #151c24;
+}
+
+.step-app {
+  padding: 2vh 0;
+  height: 100vh;
+  margin: 0 3rem;
+  margin-bottom: 50vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  display: flex;
+  /* align-items: flex-start; */
+  font-weight: 00;
+  font-size: 15px;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1000ms;
+  transform: translateY(60px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* top: 50; */
+}
+
+.app-text {
+  max-width: 60%;
+  padding: 20px;
+  border-radius: 10px;
+  background: #151c24;
+  backface-visibility: inherit;
+  padding: 0px 10px 15px 10px;
+  pointer-events: all;
+  font-family: "Inter var", sans-serif;
+  border: 0.5px solid rgba(169, 169, 169, 0.2);
+}
+
+.para-text {
+  font-size: 1.4em;
+  padding: 10px 10px 15px 10px;
 }
 </style>
 

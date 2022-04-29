@@ -2,17 +2,51 @@
   <Scrollama :offset="0.8" @step-enter="handler">
     <!-- <Scrollama :offset="0.8"> -->
     <svg :height="mapHeight" :width="mapWidth" class="map-overlay"></svg>
-    <!-- <div class="step" data-step-no="1"></div> -->
+
+    <div class="step" data-step-no="1">
+      <div class="step-map">
+        <p class="map-text">
+          As a result of the overprescription of opioids, overdoses have been
+          steadily increasing since the 1990s. The map below shows national
+          <br />
+          <b class="big-bold">overdose deaths per 100,000 people</b> <br />from
+          2010 - 2020.
+        </p>
+        <!-- <p class="map-desc">As a result of the overpre</p> -->
+      </div>
+    </div>
     <div class="step" data-step-no="2">
       <div class="step-map">
-        <h2 class="step-title-map">Overdose Deaths [2010-2020]</h2>
         <div class="flex-container">
+          <div class="map-desc">
+            <input
+              type="radio"
+              id="pills"
+              value="pills"
+              @change="pillOpacity1"
+              v-model="medication"
+            />
+            <label for="pills">Pills per person [2012]</label>
+            <br /><br />
+            <input
+              type="radio"
+              id="mat"
+              value="mat"
+              @change="matOpacity1"
+              v-model="medication"
+            />
+            <label for="mat">MAT Treatment Providers [2022]</label>
+          </div>
           <div class="flex-child">
             <p class="map-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              There is a direct correlation between
+              <b>pills prescribed per person</b> and <b>overdose deaths</b> from
+              the last decade. In counties where prescriptions were higher,
+              overdoses are also more prevelant. Alternatively, we would expect
+              recovery providers to follow the same pattern and be as available
+              in counties that are vulnerable to overdose deaths. This
+              unfortunately is not the case. Toggle between Pills per person and
+              MAT centers to see the difference.
             </p>
           </div>
         </div>
@@ -20,68 +54,19 @@
     </div>
     <div class="step" data-step-no="3">
       <div class="step-map">
-        <h2 class="step-title-map">
-          Pills per 100 people [2012] & Overdose Deaths [2010-2020]
-        </h2>
+        <h2 class="step-title-map">Conclusion</h2>
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              The gripping effect that opioids have on the brain combined with
+              the inaccessibility of MAT leaves the nation crippled with little
+              chance of recovery.
             </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="step" data-step-no="4">
-      <div class="step-map">
-        <h2 class="step-title-map">
-          MAT Treatment Providers [2022] & Overdose deaths [2010-2020]
-        </h2>
-        <div class="flex-container">
-          <div class="flex-child">
-            <p class="map-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="step" data-step-no="5">
-      <div class="step-map">
-        <h2 class="step-title-map"></h2>
-        <div class="flex-container">
-          <div class="flex-child">
-            <p class="map-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="step" data-step-no="6">
-      <div class="step-map">
-        <h2 class="step-title-map"></h2>
-        <div class="flex-container">
-          <div class="flex-child">
-            <p class="map-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="step" data-step-no="7"></div>
     <div class="step last-step" data-step-no="8">
       <p>outro</p>
@@ -94,13 +79,9 @@
 
 <script>
 import * as d3 from "d3";
-// import * as jenks from "./../jenks.js";
-// import data from "../../../mainland_counties.json";
-// import jenks from "./jenks.vue";
+import jenks from "./../jenks.js";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
 import "intersection-observer";
-// import axios from "axios";
-// import { defineComponent, onMounted, ref } from "vue";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
@@ -124,11 +105,6 @@ const colorPink = d3
   .scaleQuantile()
   .range(["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"]);
 
-//green/ blues
-//   const colorTurq = d3
-//     .scaleQuantile()
-//     .range(["#cee2e2", "#b3dcdc", "#97d6d6", "#7acfcf", "#5ac8c8"]);
-
 const url =
   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json";
 
@@ -136,8 +112,9 @@ export default {
   name: "matMap",
   components: {
     Scrollama,
-    // jenks,
+    jenks,
   },
+
   data() {
     return {
       //   geoData: data.features,
@@ -146,12 +123,18 @@ export default {
       width: MAX_SVG_WIDTH,
       mapHeight: 600,
       mapWidth: 1000,
+      medication: null,
     };
   },
+
   mounted() {
     this.getData();
+    // this.makeOpacity();
     window.addEventListener("resize", this.onResize);
   },
+  // created() {
+  //   this.getData();
+  // },
 
   props: {
     data: {
@@ -179,6 +162,13 @@ export default {
       await d3.json(url).then((geojson) => {
         const geoData = geojson.features;
         this.geoData = geoData;
+        this.drawDeaths();
+        this.drawPills();
+        this.drawMat();
+
+        d3.selectAll("#deaths-overlay").attr("opacity", 0);
+        d3.selectAll("#pill-overlay").attr("opacity", 0);
+        d3.selectAll("#mat-overlay").attr("opacity", 0);
 
         if (geojson.features) {
           console.log("Number of features:", geojson.features.length);
@@ -186,121 +176,40 @@ export default {
         }
       });
     },
-    jenks(data, n_classes) {
-      function getMatrices(data, n_classes) {
-        var lower_class_limits = [],
-          variance_combinations = [],
-          i,
-          j,
-          variance = 0;
 
-        for (i = 0; i < data.length + 1; i++) {
-          var tmp1 = [],
-            tmp2 = [];
-          for (j = 0; j < n_classes + 1; j++) {
-            tmp1.push(0);
-            tmp2.push(0);
-          }
-          lower_class_limits.push(tmp1);
-          variance_combinations.push(tmp2);
-        }
+    deathOpacity1() {
+      d3.selectAll("#deaths-overlay").attr("opacity", 1);
+    },
 
-        for (i = 1; i < n_classes + 1; i++) {
-          lower_class_limits[1][i] = 1;
-          variance_combinations[1][i] = 0;
+    pillOpacity1() {
+      d3.selectAll("#mat-overlay").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("opacity", 1);
+    },
 
-          for (j = 2; j < data.length + 1; j++) {
-            variance_combinations[j][i] = Infinity;
-          }
-        }
-
-        for (var l = 2; l < data.length + 1; l++) {
-          var sum = 0,
-            sum_squares = 0,
-            w = 0,
-            i4 = 0;
-
-          for (var m = 1; m < l + 1; m++) {
-            var lower_class_limit = l - m + 1,
-              val = data[lower_class_limit - 1];
-
-            w++;
-
-            sum += val;
-            sum_squares += val * val;
-
-            variance = sum_squares - (sum * sum) / w;
-
-            i4 = lower_class_limit - 1;
-
-            if (i4 !== 0) {
-              for (j = 2; j < n_classes + 1; j++) {
-                if (
-                  variance_combinations[l][j] >=
-                  variance + variance_combinations[i4][j - 1]
-                ) {
-                  lower_class_limits[l][j] = lower_class_limit;
-                  variance_combinations[l][j] =
-                    variance + variance_combinations[i4][j - 1];
-                }
-              }
-            }
-          }
-
-          lower_class_limits[l][1] = 1;
-          variance_combinations[l][1] = variance;
-        }
-
-        return {
-          lower_class_limits: lower_class_limits,
-          variance_combinations: variance_combinations,
-        };
-      }
-
-      function breaks(data, lower_class_limits, n_classes) {
-        var k = data.length - 1,
-          kclass = [],
-          countNum = n_classes;
-
-        kclass[n_classes] = data[data.length - 1];
-        kclass[0] = data[0];
-
-        while (countNum > 1) {
-          kclass[countNum - 1] = data[lower_class_limits[k][countNum] - 2];
-          k = lower_class_limits[k][countNum] - 1;
-          countNum--;
-        }
-
-        return kclass;
-      }
-
-      if (n_classes > data.length) return null;
-
-      data = data.slice().sort(function (a, b) {
-        return a - b;
-      });
-
-      var matrices = getMatrices(data, n_classes),
-        lower_class_limits = matrices.lower_class_limits;
-
-      return breaks(data, lower_class_limits, n_classes);
+    matOpacity1() {
+      d3.selectAll("#pill-overlay").attr("opacity", 0);
+      d3.selectAll("#mat-overlay").attr("opacity", 1);
     },
 
     drawDeaths() {
-      d3.selectAll("#pill-overlay").remove();
-      d3.selectAll("#mat-overlay").remove();
+      // d3.selectAll("#pill-overlay").remove();
+      // d3.selectAll("#mat-overlay").remove();
 
-      var deathGroup = d3.select(".map-overlay").append("g");
+      var deathGroup = d3
+        .select(".map-overlay")
+        .append("g")
+        .attr("id", "death-group");
 
       // calculate jenks natural breaks'
       // const colorVariable = pillAccessor;
       const numberOfClasses = colorPink.range().length;
-      const jenksNaturalBreaks = this.jenks(
+      const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.DEATHSPER),
         numberOfClasses
       );
-      // console.log("numberOfClasses", numberOfClasses);
-      // console.log("jenksNaturalBreaks", jenksNaturalBreaks);
+      // console.log( this.geoData.map((d) => d.properties.DEATHSPER)
+      console.log("numberOfClasses", numberOfClasses);
+      console.log("jenksNaturalBreaks", jenksNaturalBreaks);
 
       // set the domain of the color scale based on our data
       colorPink.domain(jenksNaturalBreaks);
@@ -326,7 +235,7 @@ export default {
     },
 
     drawPills() {
-      d3.selectAll("#mat-overlay").remove();
+      // d3.selectAll("#mat-overlay").remove();
 
       var svgPill = d3
         .select(".map-overlay")
@@ -336,11 +245,11 @@ export default {
         .attr("id", "pill-overlay");
       // .attr("viewBox", [0, 0, 975, 610]);
 
-      var pillGroup = svgPill.append("g");
+      var pillGroup = svgPill.append("g").attr("id", "pill-group");
 
       // calculate jenks natural breaks'
       const numberOfClasses = colorBlue.range().length - 2;
-      const jenksNaturalBreaks = this.jenks(
+      const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.PILLS),
         numberOfClasses
       );
@@ -377,7 +286,7 @@ export default {
     },
 
     drawMat() {
-      d3.selectAll("#pill-overlay").remove();
+      // d3.selectAll("#pill-overlay").remove();
 
       var svgMat = d3
         .select(".map-overlay")
@@ -387,12 +296,12 @@ export default {
         .attr("id", "mat-overlay");
       // .attr("viewBox", [0, 0, 975, 610]);
 
-      var matGroup = svgMat.append("g");
+      var matGroup = svgMat.append("g").attr("id", "mat-group");
 
       // calculate jenks natural breaks'
       // const colorVariable = pillAccessor;
       const numberOfClasses = colorBlue.range().length - 2;
-      const jenksNaturalBreaks = this.jenks(
+      const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.MAT),
         numberOfClasses
       );
@@ -425,20 +334,15 @@ export default {
             return nullColor;
           }
         })
-
-        // .attr("opacity", .7)
         .attr("id", "mat-overlay");
     },
 
-    // getData()
-
     handler({ element, index, direction }) {
-      if (index === 0 && direction === "down") this.drawDeaths();
-      if (index === 2 && direction === "down") this.drawPills();
-      if (index === 3 && direction === "down") this.drawMat();
+      if (index === (0 || 1)) this.deathOpacity1();
+      // if (index === 2) this.pillOpacity1();
+      // if (index === 3) this.matOpacity1();
       if (direction === "down") element.classList.add("active");
       console.log(index);
-      console.log(this.geoData[0].properties.DEATHSPER);
     },
 
     onResize() {
@@ -454,6 +358,11 @@ export default {
 
 
 <style>
+.big-bold {
+  font-size: 1.5em;
+  font-weight: 500;
+  /* line-height: 1.8; */
+}
 .step-map {
   max-width: 60%;
   border-radius: 10px;
@@ -461,8 +370,9 @@ export default {
   backface-visibility: inherit;
   padding: 0px 10px 15px 10px;
   pointer-events: all;
-  font-family: monospace;
+  font-family: "Inter var", sans-serif;
   border: 0.5px solid rgba(169, 169, 169, 0.2);
+  background: #151c24;
 }
 
 .step-title-map {
@@ -476,6 +386,7 @@ export default {
   margin-top: 10px;
   font-size: 20px;
 }
+
 .map-desc {
   border: 0.5px solid rgba(169, 169, 169, 0.6);
   padding: 15px;
@@ -484,16 +395,25 @@ export default {
   color: #dfdfdf;
 }
 
+.map-text {
+  padding: 15px;
+  margin: 12px;
+  border-radius: 10px;
+  color: #dfdfdf;
+  font-size: 1.4em;
+  line-height: 1.4;
+}
+
 .flex-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: top;
 }
 
 .flex-child {
   flex: 1;
   /* align-items: flex-start; */
-  justify-content: center;
+  justify-content: left;
   color: #cfbac4;
 }
 

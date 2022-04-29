@@ -368,7 +368,10 @@
         <div class="step-brain" style="opacity: 0"></div>
         <div class="step-brain" data-step-no="1">
           <div class="step-brain-text">
-            <h2 class="brain-title">Phase 1: The Normal Brain</h2>
+            <h2 class="brain-title">
+              Phase 1:<br />
+              The Normal Brain
+            </h2>
             <p>
               Your body naturally produces endorphins, which is the body’s
               natural version of opioids, and this is the same reward circuit
@@ -381,80 +384,75 @@
         <div class="step-brain" data-step-no="2">
           <div class="step-brain-text">
             <h2 class="brain-title">
-              Phase 2: The Mesolimbic (middle brain) Reward System
+              Phase 2:<br />
+              The Mesolimbic Reward System
             </h2>
             <p>
               When an opioid is first taken, it “…creates a tidal wave in the
-              reward circuits of the brain”. It floods your brain with dopamine
-              and replaces pain receptors with euphoria- encouraging repeated
-              use and making the user seek the same high as their first dose.
-              “The brain balances its own endorphins like a thermostat. When an
-              external source keeps flooding the brain, it throws that system
-              off.” (NYT)
+              reward circuits of the brain”. It floods your frontal lobe with
+              dopamine and replaces pain receptors with euphoria- encouraging
+              repeated use and making the user seek the same high as their first
+              dose. “The brain balances its own endorphins like a thermostat.
+              When an external source keeps flooding the brain, it throws that
+              system off.” (NYT)
             </p>
           </div>
         </div>
         <div class="step-brain" data-step-no="3">
           <div class="step-brain-text">
             <h2 class="brain-title">
-              Phase 3: “The Locus Coeruleus” & Dependence to Feel Normal
+              Phase 3:<br />
+              “The Locus Coeruleus” & Dependence to Feel Normal
             </h2>
             <p>
               The locus coeruleus (LC) is an area of the brain that is
               critically involved in the production of opioid dependence and
-              withdrawal. The mesolimbic reward system changes, and the
-              dependence means that users no longer feel pleasure in activities
-              they used to without opioids. The brain functions more or less
-              normally when the drugs are present and abnormally when they are
-              not. Opioid tolerance occurs because the brain cells that have
-              opioid receptors on them gradually become less responsive to the
-              opioid stimulation.
+              withdrawal. The mesolimbic reward system changes, and dependence
+              means that users no longer feel pleasure in activities they used
+              to without opioids. The brain functions more or less normally when
+              the drugs are present and abnormally when they are not. Opioid
+              tolerance occurs because the brain cells that have opioid
+              receptors on them gradually become less responsive to the opioid
+              stimulation.
             </p>
           </div>
         </div>
         <div class="step-brain" data-step-no="4">
           <div class="step-brain-text">
-            <h2 class="brain-title">Phase 4: The Changed Set Point Model</h2>
+            <h2 class="brain-title">
+              Phase 4:<br />
+              The Changed Set Point Model
+            </h2>
             <p>
-              DA neurons become dysfunctional and your baseline is altered, no
-              longer producing natural opioids and depending entirely on the
-              medication to regulate. This is the addiction. Under this model,
-              both the positive (drug liking) and negative (drug withdrawal)
-              aspects of drug addiction are accounted for. Withdrawal symptoms
-              become unbearable. Cortisol, the stress hormone, is increased,
-              making stress a driver for many addicts.
+              Your baseline is altered, no longer producing natural opioids and
+              depending entirely on the medication to regulate. This is the
+              addiction. Withdrawal symptoms become unbearable, known as
+              'dopesick'. Cortisol, the stress hormone, is increased, making
+              stress a driver for many addicts.
             </p>
           </div>
         </div>
         <div class="step-brain" data-step-no="5">
           <div class="step-brain-text">
             <h2 class="brain-title">
-              Phase 5: The Noralizing Effects of MAT Medications
+              Phase 5:<br />
+              The Noralizing Effects of MAT Medications
             </h2>
             <p>
-              Methadone is a long-acting opioid medication. Methadone causes
-              dependence, but because of its steadier influence on the MU opioid
-              receptors, it produces minimal tolerance and alleviates cravings
-              and compulsive drug use. It moderates the exaggerated cortisol
-              stress response that increases the danger of relapse in stressful
-              situations. Pharmacological interventions for opioid addiction are
-              highly effective; however, given the complex biological,
-              psychological, and social aspects of the disease, they must be
-              accompanied by appropriate psychosocial treatments.
+              Medication-Assisted Treatment, or MAT, causes dependence, but
+              because of its steadier influence on opioid receptors, it
+              alleviates cravings and compulsive drug use. It moderates the
+              exaggerated cortisol stress response that increases the danger of
+              relapse in stressful situations. Pharmacological interventions for
+              opioid addiction are highly effective; however, given the complex
+              biological, psychological, and social aspects of the disease, they
+              are most effective whien combined with appropriate psychosocial
+              treatments.
             </p>
           </div>
         </div>
         <div class="step-brain invisible" data-step-no="6">
-          <div class="step-brain-text">
-            <h2 class="brain-title">Phase 1: The Normal Brain</h2>
-            <p>
-              Your body naturally produces endorphins, which is the body’s
-              natural version of opioids, and this is the same reward circuit
-              that is accessed after working out, falling in love, or eating a
-              good meal. They relieve pain and a create a general feeling of
-              wellbeing.
-            </p>
-          </div>
+          <div class="step-brain-text"></div>
         </div>
       </Scrollama>
     </div>
@@ -497,6 +495,7 @@ export default {
       if (direction === "down") element.classList.add("active");
       console.log(index);
       if (index === 0) this.phase0();
+      if (index === 1) this.phase0();
       if (index === 2) this.phase2();
       if (index === 3) this.phase3();
       if (index === 4) this.phase4();
@@ -511,10 +510,12 @@ export default {
       d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#brain-base").attr("opacity", 0.85);
     },
+
     phase0() {
       d3.select("#front-lobe").attr("opacity", 0);
       d3.select("#LC-arrows-3").attr("opacity", 0);
       d3.select("#LC-center").attr("opacity", 0);
+      d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#front-lobe-arrows-2").attr("opacity", 0);
       d3.select("#brain-base")
         .transition()
@@ -748,14 +749,16 @@ export default {
   position: sticky;
   height: 100vh;
 }
+
 .step-brain-text {
-  max-width: 50%;
+  max-width: 80%;
   border-radius: 10px;
   /* background: white; */
   backface-visibility: inherit;
-  padding: 0px 10px 15px 10px;
+  padding: 0;
   pointer-events: all;
-  font-family: monospace;
+  font-family: "Inter var", sans-serif;
+  text-align: left;
   /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
 }
 
@@ -767,7 +770,7 @@ export default {
   border: 1px solid #ccc;
   display: flex;
   flex: 1;
-  align-items: center;
+  align-items: left;
   justify-content: center;
 }
 

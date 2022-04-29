@@ -1,9 +1,9 @@
 <template>
-  <Scrollama :offset="0.8" @step-enter="handler">
+  <Scrollama :offset="0.5" @step-enter="handler">
     <svg :height="height" :width="width" class="arc">
       <g class="arc"></g>
     </svg>
-    <div class="step" data-step-no="1" v-for="link in links" :key="link">
+    <div class="step step-arc" v-for="link in links" :key="link">
       <div class="step-text">
         <h2 class="step-title">{{ link.title }}</h2>
         <div class="flex-container">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="step"></div>
+    <div class="step step-arc"></div>
     <div class="last-step">
       <p>
         Pharmaceutical companies blame <em>'recreational users'</em>, framing
@@ -63,8 +63,6 @@ export default {
       currLink: data.links.target,
       width: MAX_SVG_WIDTH,
       height: 800,
-      drawnLinks: [],
-      arcNumber: 9,
     };
   },
   props: {
@@ -312,12 +310,9 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("stroke-width", 2)
         .attr("opacity", 0.7)
         .attr("class", "drawnArc")
-        .attr("id", function (d, i) {
-          return "arc-no-" + i;
-        });
+        .attr("stroke-width", 2);
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -329,31 +324,33 @@ export default {
           return this.getTotalLength();
         })
         .attr("stroke", "url(#linear-gradient")
-        // .attr("id", function (d, i) {
-        //   return "arc-no-" + i;
-        // })
+
         // reveal the arcs
         .transition()
         .duration(4000)
         .attr("stroke-dashoffset", 0);
 
-      // hide them again
-      // .transition()
-      // .attr("stroke-dasharray", function () {
-      //   return this.getTotalLength();
-      // })
-      // .attr("stroke-dashoffset", function () {
-      //   return this.getTotalLength();
-      // });
-
       return svg.node();
     },
 
     handler({ element, index, direction }) {
+      // const currArc = document.getElementsByClassName("drawnArc");
+      // let highlightArc = document.getElementsByClassName("highlight-arc");
+
       if (index === 0 && direction === "down") this.drawChart();
       if (index === index && direction === "down") this.tracePath(index);
       if (direction === "down") element.classList.add("active");
-      console.log(index);
+      // if (index) {
+      //   let highlightArc = document.getElementsByClassName("highlight-arc");
+      //   if (highlightArc.length == 0) {
+      //     currArc[index - 1].classList.add("highlight-arc");
+      //   } else {
+      //     highlightArc[0].classList.remove("highlight-arc");
+      //     currArc[index - 1].classList.add("highlight-arc");
+      //   }
+      // }
+
+      // console.log(currArc[index - 1]);
     },
 
     onResize() {
@@ -378,14 +375,33 @@ export default {
 
 
 <style>
+@import url("https://rsms.me/inter/inter.css");
+html {
+  font-family: "Inter", sans-serif;
+}
+
+.para-text {
+  font-size: 1.2em;
+}
 .step-text {
   max-width: 75%;
+  border-radius: 10px;
+  background: #151c24;
+  backface-visibility: inherit;
+  padding: 0px 10px 15px 10px;
+  pointer-events: all;
+  font-family: "Inter var", sans-serif;
+  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
+}
+
+.step-text-intro {
+  max-width: 50%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;
   padding: 0px 10px 15px 10px;
   pointer-events: all;
-  font-family: monospace;
+  font-family: "Inter var", sans-serif;
   border: 0.5px solid rgba(169, 169, 169, 0.2);
 }
 
@@ -397,13 +413,12 @@ export default {
   line-height: 1.6;
   /* backface-visibility: inherit; */
   padding: 20px 10px 30px 10px;
-  font-family: monospace;
   font-size: 18px;
   margin: 0 25rem;
   border: 0.5px solid rgba(169, 169, 169, 0.2);
 }
 
-.step {
+.step-arc {
   padding: 2vh 0;
   /* height: 100vh; */
   /* position: relative; */
@@ -413,7 +428,6 @@ export default {
   margin-right: 5vw;
   display: flex;
   /* align-items: flex-start; */
-  font-family: monospace;
   font-weight: 00;
   font-size: 15px;
   pointer-events: none;
@@ -453,10 +467,12 @@ export default {
   margin: 12px;
   border-radius: 10px;
   color: #dfdfdf;
+  background: #212b38;
 }
 .year-text {
   padding: 0;
   margin: 0;
+  font-family: monospace;
 }
 .flex-container {
   display: flex;
@@ -495,5 +511,6 @@ export default {
 
 .highlight-arc {
   stroke-width: 6px;
+  opacity: 1;
 }
 </style>
