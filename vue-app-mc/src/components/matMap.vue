@@ -8,45 +8,66 @@
         <p class="map-text">
           As a result of the overprescription of opioids, overdoses have been
           steadily increasing since the 1990s. The map below shows national
-          <br />
-          <b class="big-bold">overdose deaths per 100,000 people</b> <br />from
+
+          <b class="emphasize-color">overdose deaths per 100,000 people</b> from
           2010 - 2020.
         </p>
-        <!-- <p class="map-desc">As a result of the overpre</p> -->
       </div>
     </div>
     <div class="step" data-step-no="2">
       <div class="step-map">
         <div class="flex-container">
-          <div class="map-desc">
-            <input
-              type="radio"
-              id="pills"
-              value="pills"
-              @change="pillOpacity1"
-              v-model="medication"
-            />
-            <label for="pills">Pills per person [2012]</label>
-            <br /><br />
-            <input
-              type="radio"
-              id="mat"
-              value="mat"
-              @change="matOpacity1"
-              v-model="medication"
-            />
-            <label for="mat">MAT Treatment Providers [2022]</label>
+          <div class="map-desc radio-text">
+            <ul>
+              <li>
+                <input
+                  type="radio"
+                  id="radio"
+                  value="deaths"
+                  @change="noOpacityButDeath"
+                  v-model="medication"
+                />
+                <label for="mat">Overdose Deaths [2010 - 2020]</label>
+              </li>
+              <li>
+                <p class="inline-title">
+                  MAT Provider vs. Prescription Availability:
+                </p>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="radio"
+                  value="pills"
+                  @change="pillOpacity1"
+                  v-model="medication"
+                />
+                <label for="pills">Pills per person [2012]</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="radio"
+                  value="mat"
+                  @change="matOpacity1"
+                  v-model="medication"
+                />
+                <label for="deaths">MAT Treatment Providers [2022]</label>
+              </li>
+            </ul>
           </div>
           <div class="flex-child">
             <p class="map-desc">
               There is a direct correlation between
-              <b>pills prescribed per person</b> and <b>overdose deaths</b> from
-              the last decade. In counties where prescriptions were higher,
-              overdoses are also more prevelant. Alternatively, we would expect
-              recovery providers to follow the same pattern and be as available
-              in counties that are vulnerable to overdose deaths. This
-              unfortunately is not the case. Toggle between Pills per person and
-              MAT centers to see the difference.
+              <b class="emphasize-color">pills prescribed per person</b> and
+              <b class="emphasize-color">overdose deaths</b> from the last
+              decade. In counties where prescriptions were higher, overdoses are
+              also more prevelant. Alternatively, we would expect
+              <b class="emphasize-color">recovery providers</b> to follow the
+              same pattern and be just as available in counties that are
+              vulnerable to overdose deaths. <br /><b class="big-bold"
+                >This unfortunately is not the case.</b
+              >
             </p>
           </div>
         </div>
@@ -124,6 +145,7 @@ export default {
       mapHeight: 600,
       mapWidth: 1000,
       medication: null,
+      checked: null,
     };
   },
 
@@ -178,6 +200,16 @@ export default {
     },
 
     deathOpacity1() {
+      d3.selectAll("#deaths-overlay").attr("opacity", 1);
+      console.log("i'm clicked");
+    },
+    deathOpacity0() {
+      d3.selectAll("#deaths-overlay").attr("opacity", 0);
+      console.log("i'm not clicked");
+    },
+    noOpacityButDeath() {
+      d3.selectAll("#mat-overlay").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("opacity", 0);
       d3.selectAll("#deaths-overlay").attr("opacity", 1);
     },
 
@@ -338,7 +370,7 @@ export default {
     },
 
     handler({ element, index, direction }) {
-      if (index === (0 || 1)) this.deathOpacity1();
+      if (index == (0 || 1 || 2)) this.deathOpacity1();
       // if (index === 2) this.pillOpacity1();
       // if (index === 3) this.matOpacity1();
       if (direction === "down") element.classList.add("active");
@@ -359,19 +391,53 @@ export default {
 
 <style>
 .big-bold {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: 500;
-  /* line-height: 1.8; */
+  line-height: 2;
 }
+
+.emphasize-color {
+  color: #8097b5;
+}
+
+.inline-title {
+  /* padding: 2px; */
+  line-height: 2.5;
+  font-weight: 500;
+  text-decoration: underline overline #324155 8px;
+}
+
+ul {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+  line-height: 1.6;
+  margin-left: 0;
+}
+
+.radio-text {
+  line-height: 4;
+  font-size: 1.2em;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0px;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin: 6px;
+}
+
 .step-map {
-  max-width: 60%;
+  max-width: 70%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;
   padding: 0px 10px 15px 10px;
   pointer-events: all;
   font-family: "Inter var", sans-serif;
-  border: 0.5px solid rgba(169, 169, 169, 0.2);
+  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
   background: #151c24;
 }
 
@@ -388,26 +454,29 @@ export default {
 }
 
 .map-desc {
-  border: 0.5px solid rgba(169, 169, 169, 0.6);
-  padding: 15px;
+  /* border: 0.5px solid rgba(169, 169, 169, 0.6); */
+  padding: 5px 5px 0px 5px;
   margin: 12px;
   border-radius: 10px;
   color: #dfdfdf;
+  line-height: 1.4;
+  text-align: justify;
 }
 
 .map-text {
   padding: 15px;
   margin: 12px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   color: #dfdfdf;
   font-size: 1.4em;
   line-height: 1.4;
+  text-align: justify;
 }
 
 .flex-container {
   display: flex;
   justify-content: left;
-  align-items: top;
+  /* align-items: top; */
 }
 
 .flex-child {
