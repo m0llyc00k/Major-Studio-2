@@ -17,18 +17,8 @@
     <div class="step" data-step-no="2">
       <div class="step-map">
         <div class="flex-container">
-          <div class="map-desc radio-text">
+          <div class="map-desc radio-text\">
             <ul>
-              <li>
-                <input
-                  type="radio"
-                  id="radio"
-                  value="deaths"
-                  @change="noOpacityButDeath"
-                  v-model="medication"
-                />
-                <label for="mat">Overdose Deaths [2010 - 2020]</label>
-              </li>
               <li>
                 <p class="inline-title">
                   MAT Provider vs. Prescription Availability:
@@ -53,6 +43,16 @@
                   v-model="medication"
                 />
                 <label for="deaths">MAT Treatment Providers [2022]</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="radio"
+                  value="deaths"
+                  @change="noOpacityButDeath"
+                  v-model="medication"
+                />
+                <label for="mat">Remove MAT / Pill Overlay</label>
               </li>
             </ul>
           </div>
@@ -403,8 +403,10 @@ export default {
 .inline-title {
   /* padding: 2px; */
   line-height: 2.5;
-  font-weight: 500;
-  text-decoration: underline overline #324155 8px;
+  font-weight: 600;
+  font-size: 1.2em;
+  text-decoration: underline #8097b5 2px;
+  letter-spacing: 1.3px;
 }
 
 ul {
@@ -413,11 +415,12 @@ ul {
   margin: 0; /* Remove margins */
   line-height: 1.6;
   margin-left: 0;
+  letter-spacing: 1.3px;
 }
 
 .radio-text {
-  line-height: 4;
-  font-size: 1.2em;
+  line-height: 3;
+  font-size: 1.1em;
   align-items: center;
   margin: 0 auto;
   padding: 0px;

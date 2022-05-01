@@ -19,17 +19,6 @@
       </div>
     </div>
     <div class="step step-arc"></div>
-    <div class="last-step">
-      <p>
-        Pharmaceutical companies blame <em>'recreational users'</em>, framing
-        them as criminals,<br />
-        while advocating for <em>'medical users'</em>, positioning them as
-        victims. <br />This manipulation of fact plays a role in history
-        repeating itself, but <br />
-        <b>what really happens when your brain becomes addicted to opioids?</b>
-      </p>
-      <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
-    </div>
     <div class="step"></div>
     <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
@@ -45,8 +34,8 @@ import "intersection-observer";
 
 const MAX_SVG_WIDTH = 1400;
 
-const rectWidth = 10;
-const rectHeight = 10;
+const rectWidth = 12;
+const rectHeight = 12;
 var margin = { top: 20, right: 30, bottom: 20, left: 30 };
 
 export default {
@@ -99,7 +88,7 @@ export default {
         .attr("id", "rects")
         .attr("y", 0)
         .attr("x", function (d) {
-          return x(d.name) - rectWidth / 2 + 3;
+          return x(d.name) - rectWidth / 2;
         })
         .attr("width", rectWidth)
         .attr("height", rectHeight)
@@ -334,21 +323,21 @@ export default {
     },
 
     handler({ element, index, direction }) {
-      // const currArc = document.getElementsByClassName("drawnArc");
+      const currArc = document.getElementsByClassName("drawnArc");
       // let highlightArc = document.getElementsByClassName("highlight-arc");
 
       if (index === 0 && direction === "down") this.drawChart();
       if (index === index && direction === "down") this.tracePath(index);
       if (direction === "down") element.classList.add("active");
-      // if (index) {
-      //   let highlightArc = document.getElementsByClassName("highlight-arc");
-      //   if (highlightArc.length == 0) {
-      //     currArc[index - 1].classList.add("highlight-arc");
-      //   } else {
-      //     highlightArc[0].classList.remove("highlight-arc");
-      //     currArc[index - 1].classList.add("highlight-arc");
-      //   }
-      // }
+      if (index) {
+        let highlightArc = document.getElementsByClassName("highlight-arc");
+        if (highlightArc.length == 0) {
+          currArc[index - 1].classList.add("highlight-arc");
+        } else {
+          highlightArc[0].classList.remove("highlight-arc");
+          currArc[index - 1].classList.add("highlight-arc");
+        }
+      }
 
       // console.log(currArc[index - 1]);
     },
@@ -461,6 +450,7 @@ html {
   margin-top: 10px;
   font-size: 20px;
 }
+
 .timeline-desc {
   border: 0.5px solid rgba(169, 169, 169, 0.6);
   padding: 15px;
@@ -469,11 +459,13 @@ html {
   color: #dfdfdf;
   background: #212b38;
 }
+
 .year-text {
   padding: 0;
   margin: 0;
   font-family: monospace;
 }
+
 .flex-container {
   display: flex;
   justify-content: center;

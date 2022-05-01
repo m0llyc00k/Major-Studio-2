@@ -10,11 +10,6 @@
         <p>SCROLL TO CONTINUE</p>
       </div>
       <div>
-        <div class="sub-intro first-chapter">
-          <div class="chapter-title">
-            <h2>Chapter 1: Repeating The Past, Again</h2>
-          </div>
-        </div>
         <Scrollama :offset="0.8" @step-enter="handler">
           <div class="step step-app">
             <div class="app-text">
@@ -33,13 +28,33 @@
               <h2>Let's draw the connections between both epidemics</h2>
             </div>
           </div>
+          <div class="sub-intro first-chapter">
+            <div class="chapter-title">
+              <h3>Chapter 1:</h3>
+              <h2>Repeating The Past, Again</h2>
+            </div>
+          </div>
         </Scrollama>
         <arcTimeline class="arc" />
+      </div>
+      <div class="step">
+        <p>
+          Pharmaceutical companies blame <em>'recreational users'</em>, framing
+          them as criminals,<br />
+          while advocating for <em>'medical users'</em>, positioning them as
+          victims. <br />This manipulation of fact plays a role in history
+          repeating itself, but <br />
+          <b
+            >what really happens when your brain becomes addicted to opioids?</b
+          >
+        </p>
+        <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
       </div>
       <div>
         <div class="sub-intro second-chapter">
           <div class="chapter-title">
-            <h2>Chapter 2: Your Brain on Drugs, Actually</h2>
+            <h3>Chapter 2:</h3>
+            <h2>Your Brain on Drugs, Actually</h2>
           </div>
         </div>
         <brain />
@@ -47,7 +62,8 @@
       <div>
         <div class="sub-intro third-chapter">
           <div class="chapter-title">
-            <h2>Chapter 3: Inaccessibility to MAT Treatment, Unfortunately</h2>
+            <h3>Chapter 3:</h3>
+            <h2>MAT treatment is inaccessible, Unfortunately</h2>
           </div>
         </div>
         <matMap />
@@ -108,7 +124,6 @@ export default {
   color: #dfdfdf;
   /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
   font-family: "Inter var", sans-serif;
-
   letter-spacing: 3px;
 }
 
@@ -122,7 +137,9 @@ export default {
   justify-content: center;
   align-items: center;
   color: #dfdfdf;
-  font-family: monospace;
+  font-family: "Inter var", sans-serif;
+  font-size: 1.3em;
+  letter-spacing: 3px;
   vertical-align: baseline;
 }
 
@@ -201,6 +218,24 @@ body {
 .para-text {
   font-size: 1.4em;
   padding: 10px 10px 15px 10px;
+}
+
+.first-chapter {
+  background-image: url("chp-1-title-v2.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.second-chapter {
+  background-image: url("chp2-title.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.third-chapter {
+  background-image: url("chp3-title.jpg");
+  background-position: center;
+  background-size: cover;
 }
 </style>
 
