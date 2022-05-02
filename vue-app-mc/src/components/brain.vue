@@ -368,10 +368,9 @@
         <div class="step-brain" style="opacity: 0"></div>
         <div class="step-brain" data-step-no="1">
           <div class="step-brain-text">
-            <h2 class="brain-title">
-              Phase 1:<br />
-              The Normal Brain
-            </h2>
+            <h3 class="phase-title">Phase 1:</h3>
+            <h2 class="brain-title">The Normal Brain</h2>
+            <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
               Your body naturally produces endorphins, which is the body’s
               natural version of opioids, and this is the same reward circuit
@@ -383,10 +382,9 @@
         </div>
         <div class="step-brain" data-step-no="2">
           <div class="step-brain-text">
-            <h2 class="brain-title">
-              Phase 2:<br />
-              The Mesolimbic Reward System
-            </h2>
+            <h3 class="phase-title">Phase 2:</h3>
+            <h2 class="brain-title">The Mesolimbic Reward System</h2>
+            <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
               When an opioid is first taken, it creates a tidal wave in the
               reward circuits of the brain. It floods your frontal lobe with
@@ -398,10 +396,11 @@
         </div>
         <div class="step-brain" data-step-no="3">
           <div class="step-brain-text">
+            <h3 class="phase-title">Phase 3:</h3>
             <h2 class="brain-title">
-              Phase 3:<br />
               “The Locus Coeruleus” & Dependence to Feel Normal
             </h2>
+            <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
               The locus coeruleus (LC) is an area of the brain that is
               critically involved in the production of opioid dependence and
@@ -417,10 +416,9 @@
         </div>
         <div class="step-brain" data-step-no="4">
           <div class="step-brain-text">
-            <h2 class="brain-title">
-              Phase 4:<br />
-              The Changed Set Point Model
-            </h2>
+            <h3 class="phase-title">Phase 4:</h3>
+            <h2 class="brain-title">The Changed Set Point Model</h2>
+            <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
               Your baseline is altered, no longer producing natural opioids and
               depending entirely on the medication to regulate. This is what
@@ -432,10 +430,11 @@
         </div>
         <div class="step-brain" data-step-no="5">
           <div class="step-brain-text">
+            <h3 class="phase-title">Phase 5:</h3>
             <h2 class="brain-title">
-              Phase 5:<br />
-              The Noralizing Effects of MAT Medications
+              The Normalizing Effects of MAT Medications
             </h2>
+            <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
               Medication Assisted Treatment, or MAT, causes dependence, but
               because of its steadier influence on opioid receptors, it
@@ -453,23 +452,10 @@
         </div>
       </Scrollama>
     </div>
-
-    <!-- <div class="outro">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at velit
-      sint facere ipsam doloremque placeat vel impedit sapiente alias.
-    </div> -->
   </div>
 </template>
 
 <script>
-// const frontalLobe = document.getElementById("front-lobe");
-// const lcCenter = document.getElementById("LC-center");
-// const lcArrows = document.getElementById("LC-arrows-3");
-// const frontArrows = document.getElementById("front-lobe-arrows-2");
-// // const innerWires = document.getElementById('NAc-2');
-// // const VTA = document.getElementById('VTA-2');
-// // const fullBrain = document.getElementById('brain')
-
 import "intersection-observer";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
 import * as d3 from "d3";
@@ -740,8 +726,8 @@ export default {
 }
 
 .main__graphic {
-  display: relative;
-  flex: 2;
+  display: flex;
+  flex: 1;
   top: 0vh;
   position: sticky;
   height: 100vh;
@@ -755,8 +741,20 @@ export default {
   padding: 0;
   pointer-events: all;
   font-family: "Inter var", sans-serif;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.phase-title {
+  /* color: #a4bfe2; */
+  color: #adcdf6;
+  line-height: 0.3;
   text-align: left;
-  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
+}
+
+.brain-title {
+  text-align: left;
+  line-height: 1.2;
 }
 
 .step-brain {
@@ -767,7 +765,7 @@ export default {
   border: 1px solid #ccc;
   display: flex;
   flex: 1;
-  align-items: left;
+  /* align-items: left; */
   justify-content: center;
 }
 
@@ -777,7 +775,19 @@ export default {
   transform: translateY(0);
   position: -webkit-sticky;
 }
+.line-sep-cont {
+  margin: 0px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: left;
+}
 
+.line-sep {
+  width: 50px;
+  height: 1px;
+  background: #8097b5;
+}
 :last-child {
   margin-bottom: 0;
 }

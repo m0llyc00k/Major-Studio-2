@@ -75,14 +75,23 @@
     </div>
     <div class="step" data-step-no="3">
       <div class="step-map">
-        <h2 class="step-title-map">Conclusion</h2>
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
-              As seen, there are not enough MAT centers to sufficiently treat
-              vulnerable counties. To make matters worse, existing providers can
-              only treat about 30 patients within their state, building another
-              barrier to treatment.
+              As seen in the previous maps, there are not enough MAT centers to
+              sufficiently treat vulnerable counties. To make matters worse,
+              while providers can apply to treat up to 100 patients,
+              <span class="emphasize-color"
+                >existing providers can typically only treat 30 patients</span
+              >
+              each within their state, creating yet another barrier to
+              treatment.
+            </p>
+          </div>
+          <div class="flex-child">
+            <p class="map-desc">
+              Toggle between listed providers and those who are listed as
+              currently taking new patients.
             </p>
           </div>
         </div>
@@ -137,6 +146,7 @@ const colorBlue = d3
     "rgb(8,48,107)",
     "rgb(3,19,43)",
   ]);
+
 //pinks
 const colorPink = d3
   .scaleQuantile()
@@ -473,7 +483,8 @@ export default {
 }
 
 .emphasize-color {
-  color: #8097b5;
+  /* color: #8097b5; */
+  color: #adcdf6;
 }
 
 .inline-title {
@@ -521,12 +532,7 @@ label {
 }
 
 .step-title-map {
-  background: -webkit-linear-gradient(left, #bacdcd, #cfbac4);
-  background: -o-linear-gradient(right, #bacdcd, #cfbac4);
-  background: -moz-linear-gradient(right, #bacdcd, #cfbac4);
-  background: linear-gradient(to right, #bacdcd, #cfbac4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #dfdfdf;
   padding-bottom: 5px;
   margin-top: 10px;
   font-size: 20px;
@@ -556,20 +562,6 @@ label {
   display: flex;
   justify-content: left;
   /* align-items: top; */
-}
-
-.flex-child {
-  flex: 1;
-  /* align-items: flex-start; */
-  justify-content: left;
-  color: #cfbac4;
-}
-
-.flex-child:first-child {
-  flex: 1;
-  /* align-items: flex-start; */
-  justify-content: center;
-  color: #bacdcd;
 }
 
 .step {

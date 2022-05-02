@@ -455,7 +455,7 @@ html {
   flex: 1;
   /* align-items: flex-start; */
   justify-content: center;
-  color: #bacdcd;
+  color: rgb(107, 174, 214);
 }
 
 .timeline {

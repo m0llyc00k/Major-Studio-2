@@ -5,13 +5,14 @@
         <div class="intro">
           <div id="intro-title">
             <h1 id="in-crisis">In Crisis, Again</h1>
-            <h2>
+            <h2 id="sub-title">
               Understanding the Endurance of Opioids &<br />Combatting the
               Modern American Epidemic
             </h2>
             <br />
-            <p>Molly Cook</p>
-            <p>SCROLL TO CONTINUE</p>
+            <div class="line-title-cont"><div class="line-title"></div></div>
+            <h3 class="my-name">Molly Cook</h3>
+            <p class="italic">Scroll to continue</p>
           </div>
           <stackedPills />
         </div>
@@ -125,7 +126,7 @@ export default {
       const sleep = (milliseconds) => {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
       };
-      sleep(1200).then(() => {
+      sleep(1000).then(() => {
         //do stuff
 
         allPills
@@ -147,7 +148,11 @@ export default {
         .attr("opacity", 1)
         .transition()
         .duration(3000)
-        .attr("opacity", 0.2);
+        .attr("opacity", 0.05);
+    },
+
+    spillOpacity1() {
+      d3.select("#spilled-pills").attr("opacity", 1);
     },
 
     pillHandler(index) {
@@ -158,6 +163,7 @@ export default {
       if (direction === "down") element.classList.add("active");
       if (index === 0) this.stackedFall();
       if (index === 4) this.spillOpacity0();
+      if (index === 3) this.spillOpacity1();
       console.log(index);
     },
   },
@@ -176,9 +182,6 @@ export default {
 .intro {
   min-height: 100vh;
   text-align: center;
-  /* background: #151c24; */
-  background: #a0a0a0;
-  /* background-color: #3d546b; */
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -188,7 +191,7 @@ export default {
   /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
   font-family: "Inter var", sans-serif;
   letter-spacing: 3px;
-  background-image: url("title-blank-texture.jpg");
+  background-image: linear-gradient(#151c24, #314153, #314153, #151c24);
   background-position: center;
   background-size: cover;
 }
@@ -207,7 +210,10 @@ export default {
   font-size: 1.3em;
   letter-spacing: 3px;
   vertical-align: baseline;
+  position: sticky;
+  top: 0;
 }
+
 #in-crisis {
   font-size: 3.5em;
   color: #dfdfdf;
@@ -218,8 +224,31 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #bfe6e3;
+  color: #c3d7f1;
 }
+
+.my-name {
+  color: #dfdfdf;
+  margin-bottom: 100px;
+  font-size: 1.3em;
+}
+.italic {
+  font-style: italic;
+}
+.line-title-cont {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.line-title {
+  width: 50px;
+  height: 2px;
+  background: #dfdfdf;
+}
+
 .outro {
   padding-top: 50vh;
   padding-bottom: 20vh;
@@ -298,19 +327,24 @@ body {
 }
 
 .first-chapter {
-  background-image: url("chp-1-title-v2.jpg");
+  background-image: url("chp-1-title-gradient.jpg");
+  /* background-image: linear-gradient(
+    rgba(21, 28, 36, 0.7),
+    rgba(49, 65, 83, 0.7)
+  );
+  mix-blend-mode: multiply; */
   background-position: center;
   background-size: cover;
 }
 
 .second-chapter {
-  background-image: url("chp2-title.jpg");
+  background-image: url("chp2-gradient.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .third-chapter {
-  background-image: url("chp3-title.jpg");
+  background-image: url("chp3-v3.jpg");
   background-position: center;
   background-size: cover;
 }
