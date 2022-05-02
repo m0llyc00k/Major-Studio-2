@@ -136,13 +136,13 @@ export default {
       linearGradient
         .append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "#8cacac"); //light blue
+        .attr("stop-color", "rgb(66,146,198)"); //light blue
 
       //Set the color for the end (100%)
       linearGradient
         .append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#af8c9d"); //light purple
+        .attr("stop-color", "#ba8ca0"); //light purple
 
       // Add links between nodes. Here is the tricky part.
       // In my input data, links are provided between nodes -id-, NOT between node names.
@@ -236,31 +236,6 @@ export default {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      //add gradient color to paths
-      var defs = svg.append("defs");
-      var linearGradient = defs
-        .append("linearGradient")
-        .attr("id", "linear-gradient");
-      linearGradient
-        .attr("x1", "0%")
-        .attr("y1", "0%")
-        .attr("x2", "100%")
-        .attr("y2", "0%");
-      //Set the color for the start (0%)
-      linearGradient
-        .append("stop")
-        .attr("offset", "0%")
-        .attr("stop-color", "#adcdf6"); //lightblue
-
-      //Set the color for the end (100%)
-      linearGradient
-        .append("stop")
-        .attr("offset", "100%")
-        .attr("stop-color", "#94104a"); //light pink
-
-      // Add links between nodes. Here is the tricky part.
-      // In my input data, links are provided between nodes -id-, NOT between node names.
-      // So I have to do a link between this id and the name
       var idToNode = {};
       this.nodes.forEach(function (n) {
         idToNode[n.id] = n;
@@ -299,7 +274,7 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 0.7)
+        .attr("opacity", 0.9)
         .attr("class", "drawnArc")
         .attr("stroke-width", 2);
 
@@ -439,13 +414,10 @@ html {
   position: -webkit-sticky;
 }
 
+/* #bacdcd */
+
 .step-title {
-  background: -webkit-linear-gradient(left, #bacdcd, #cfbac4);
-  background: -o-linear-gradient(right, #bacdcd, #cfbac4);
-  background: -moz-linear-gradient(right, #bacdcd, #cfbac4);
-  background: linear-gradient(to right, #bacdcd, #cfbac4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #dfdfdf;
   padding-bottom: 5px;
   margin-top: 10px;
   font-size: 20px;
@@ -502,7 +474,7 @@ html {
 }
 
 .highlight-arc {
-  stroke-width: 6px;
+  stroke-width: 5px;
   opacity: 1;
 }
 </style>

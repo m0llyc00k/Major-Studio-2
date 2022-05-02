@@ -388,13 +388,11 @@
               The Mesolimbic Reward System
             </h2>
             <p>
-              When an opioid is first taken, it “…creates a tidal wave in the
-              reward circuits of the brain”. It floods your frontal lobe with
+              When an opioid is first taken, it creates a tidal wave in the
+              reward circuits of the brain. It floods your frontal lobe with
               dopamine and replaces pain receptors with euphoria- encouraging
               repeated use and making the user seek the same high as their first
-              dose. “The brain balances its own endorphins like a thermostat.
-              When an external source keeps flooding the brain, it throws that
-              system off.” (NYT)
+              dose.
             </p>
           </div>
         </div>
@@ -407,12 +405,12 @@
             <p>
               The locus coeruleus (LC) is an area of the brain that is
               critically involved in the production of opioid dependence and
-              withdrawal. The mesolimbic reward system changes, and dependence
-              means that users no longer feel pleasure in activities they used
-              to without opioids. The brain functions more or less normally when
-              the drugs are present and abnormally when they are not. Opioid
-              tolerance occurs because the brain cells that have opioid
-              receptors on them gradually become less responsive to the opioid
+              withdrawal. At this phase, the mesolimbic reward system changes
+              and dependence means that the user no longer feels pleasure in the
+              activities they used to without opioids. The brain functions more
+              or less normally when the drugs are present and abnormally when
+              they are not. Opioid tolerance occurs because the brain cells that
+              have opioid receptors on them gradually become less responsive to
               stimulation.
             </p>
           </div>
@@ -425,9 +423,9 @@
             </h2>
             <p>
               Your baseline is altered, no longer producing natural opioids and
-              depending entirely on the medication to regulate. This is the
-              addiction. Withdrawal symptoms become unbearable, known as
-              'dopesick'. Cortisol, the stress hormone, is increased, making
+              depending entirely on the medication to regulate. This is what
+              addiction looks like. Withdrawal symptoms become unbearable, known
+              as 'dopesick'. Cortisol, the stress hormone, is increased, making
               stress a driver for many addicts.
             </p>
           </div>
@@ -439,15 +437,14 @@
               The Noralizing Effects of MAT Medications
             </h2>
             <p>
-              Medication-Assisted Treatment, or MAT, causes dependence, but
+              Medication Assisted Treatment, or MAT, causes dependence, but
               because of its steadier influence on opioid receptors, it
               alleviates cravings and compulsive drug use. It moderates the
               exaggerated cortisol stress response that increases the danger of
-              relapse in stressful situations. Pharmacological interventions for
-              opioid addiction are highly effective; however, given the complex
-              biological, psychological, and social aspects of the disease, they
-              are most effective whien combined with appropriate psychosocial
-              treatments.
+              relapse in stressful situations. MAT is highly effective in
+              recovery, but given the complex biological, psychological, and
+              social aspects of the disease, it is most effective when combined
+              with appropriate psychosocial treatments.
             </p>
           </div>
         </div>

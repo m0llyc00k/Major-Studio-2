@@ -79,6 +79,21 @@
         <div class="flex-container">
           <div class="flex-child">
             <p class="map-desc">
+              As seen, there are not enough MAT centers to sufficiently treat
+              vulnerable counties. To make matters worse, existing providers can
+              only treat about 30 patients within their state, building another
+              barrier to treatment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step" data-step-no="3">
+      <div class="step-map">
+        <h2 class="step-title-map">Conclusion</h2>
+        <div class="flex-container">
+          <div class="flex-child">
+            <p class="map-desc">
               The gripping effect that opioids have on the brain combined with
               the inaccessibility of MAT leaves the nation crippled with little
               chance of recovery.
@@ -102,6 +117,7 @@
 import * as d3 from "d3";
 import jenks from "./../jenks.js";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
+import providers from "./../mat_providers.json";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
@@ -126,20 +142,29 @@ const colorPink = d3
   .scaleQuantile()
   .range(["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"]);
 
+var noDataColor = "#253040";
+
 const url =
   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json";
+
+// const url_providers =
+//   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/vue-app-mc/mat_providers.json";
 
 export default {
   name: "matMap",
   components: {
     Scrollama,
     jenks,
+    // providers,
   },
 
   data() {
     return {
       //   geoData: data.features,
       geoData: null,
+      latitude: providers.latitude,
+      longitude: providers.longitude,
+      providers: providers,
       currStep: 0,
       width: MAX_SVG_WIDTH,
       mapHeight: 600,
@@ -151,12 +176,10 @@ export default {
 
   mounted() {
     this.getData();
+    this.getProviderData();
     // this.makeOpacity();
     window.addEventListener("resize", this.onResize);
   },
-  // created() {
-  //   this.getData();
-  // },
 
   props: {
     data: {
@@ -187,6 +210,7 @@ export default {
         this.drawDeaths();
         this.drawPills();
         this.drawMat();
+        this.drawBaseMap();
 
         d3.selectAll("#deaths-overlay").attr("opacity", 0);
         d3.selectAll("#pill-overlay").attr("opacity", 0);
@@ -198,6 +222,18 @@ export default {
         }
       });
     },
+    // async getProviderData() {
+    //   await d3.json(url_providers).then((json) => {
+    //     const providerData = json;
+    //     this.providerData = providerData;
+
+    //     this.drawProviders();
+
+    //     // d3.selectAll("#deaths-overlay").attr("opacity", 0);
+    //     // d3.selectAll("#pill-overlay").attr("opacity", 0);
+    //     // d3.selectAll("#mat-overlay").attr("opacity", 0);
+    //   });
+    // },
 
     deathOpacity1() {
       d3.selectAll("#deaths-overlay").attr("opacity", 1);
@@ -224,16 +260,12 @@ export default {
     },
 
     drawDeaths() {
-      // d3.selectAll("#pill-overlay").remove();
-      // d3.selectAll("#mat-overlay").remove();
-
       var deathGroup = d3
         .select(".map-overlay")
         .append("g")
         .attr("id", "death-group");
 
       // calculate jenks natural breaks'
-      // const colorVariable = pillAccessor;
       const numberOfClasses = colorPink.range().length;
       const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.DEATHSPER),
@@ -246,8 +278,6 @@ export default {
       // set the domain of the color scale based on our data
       colorPink.domain(jenksNaturalBreaks);
 
-      var nullColor = "none";
-
       deathGroup
         .selectAll("path")
         .data(this.geoData)
@@ -259,7 +289,7 @@ export default {
           if (d.properties.DEATHSPER != null) {
             return colorPink(d.properties.DEATHSPER);
           } else {
-            return nullColor;
+            return noDataColor;
           }
         })
         .attr("opacity", 1)
@@ -291,8 +321,6 @@ export default {
       // set the domain of the color scale based on our data
       colorBlue.domain(jenksNaturalBreaks);
 
-      var nullColor = "none";
-
       pillGroup
         .selectAll("path")
         .data(this.geoData)
@@ -311,7 +339,7 @@ export default {
           if (d.properties.PILLS != null) {
             return colorBlue(d.properties.PILLS);
           } else {
-            return nullColor;
+            return noDataColor;
           }
         })
         .attr("id", "pill-overlay");
@@ -343,8 +371,6 @@ export default {
       // set the domain of the color scale based on our data
       colorBlue.domain(jenksNaturalBreaks);
 
-      var nullColor = "none";
-
       matGroup
         .selectAll("path")
         .data(this.geoData)
@@ -363,16 +389,66 @@ export default {
           if (d.properties.MAT != null) {
             return colorBlue(d.properties.MAT);
           } else {
-            return nullColor;
+            return noDataColor;
           }
         })
         .attr("id", "mat-overlay");
     },
 
+    drawBaseMap() {
+      var svgProvider = d3
+        .select(".map-overlay")
+        .append("svg")
+        .attr("width", this.mapWidth)
+        .attr("height", this.mapHeight)
+        .attr("id", "provider-overlay");
+
+      var providerGroup = svgProvider.append("g").attr("id", "provider-group");
+      providerGroup
+        .selectAll("path")
+        .data(this.geoData)
+        .enter()
+        .append("path")
+        .attr("d", this.path)
+        .attr("stroke", "none")
+        .attr("fill", noDataColor)
+        .attr("id", "provider-overlay");
+
+      d3.selectAll("#deaths-overlay").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("opacity", 0);
+      d3.selectAll("#mat-overlay").attr("opacity", 0);
+
+      d3.selectAll("#provider-overlay").attr("opacity", 0);
+    },
+
+    basemapOpacity1() {
+      d3.selectAll("#provider-overlay").attr("opacity", 1);
+    },
+
+    drawProviders() {
+      console.log("draw providers");
+      var svgProvider = d3.select("#provider-overlay");
+      svgProvider
+        .append("g")
+        .selectAll("circle")
+        .data(this.providers)
+        .join("circle")
+        .attr(
+          "transform",
+          (d) => "translate(" + this.projection([d.longitude, d.latitude]) + ")"
+        )
+        .attr("r", 1.5)
+        .attr("fill", "#be64ac")
+        .attr("opacity", 0.7);
+      // .append("title")
+      // .text((d) => d.county);
+    },
+
     handler({ element, index, direction }) {
       if (index == (0 || 1 || 2)) this.deathOpacity1();
       // if (index === 2) this.pillOpacity1();
-      // if (index === 3) this.matOpacity1();
+      if (index === 3) this.basemapOpacity1();
+      if (index === 4) this.drawProviders();
       if (direction === "down") element.classList.add("active");
       console.log(index);
     },
@@ -535,7 +611,7 @@ label {
 }
 
 .notMultiplied {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   opacity: 1;
 }
 

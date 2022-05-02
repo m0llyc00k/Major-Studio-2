@@ -1,16 +1,27 @@
 <template>
   <div class="main">
     <div id="app">
-      <div class="intro">
-        <h1>In Crisis, Again</h1>
-        <h2>
-          Understanding the Endurance of Opioids<br />& Combatting the Modern
-          American Epidemic
-        </h2>
-        <p>SCROLL TO CONTINUE</p>
-      </div>
+      <Scrollama :offset="0.8" @step-enter="pillHandler">
+        <div class="intro">
+          <div id="intro-title">
+            <h1 id="in-crisis">In Crisis, Again</h1>
+            <h2>
+              Understanding the Endurance of Opioids &<br />Combatting the
+              Modern American Epidemic
+            </h2>
+            <br />
+            <p>Molly Cook</p>
+            <p>SCROLL TO CONTINUE</p>
+          </div>
+          <stackedPills />
+        </div>
+      </Scrollama>
+
       <div>
         <Scrollama :offset="0.8" @step-enter="handler">
+          <div class="svg-img-holder">
+            <spilledPills />
+          </div>
           <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
@@ -28,6 +39,7 @@
               <h2>Let's draw the connections between both epidemics</h2>
             </div>
           </div>
+          <div class="step step-app"></div>
           <div class="sub-intro first-chapter">
             <div class="chapter-title">
               <h3>Chapter 1:</h3>
@@ -35,6 +47,7 @@
             </div>
           </div>
         </Scrollama>
+
         <arcTimeline class="arc" />
       </div>
       <div class="step">
@@ -63,7 +76,7 @@
         <div class="sub-intro third-chapter">
           <div class="chapter-title">
             <h3>Chapter 3:</h3>
-            <h2>MAT treatment is inaccessible, Unfortunately</h2>
+            <h2>The Inaccessibility of MAT Treatment, Unfortunately</h2>
           </div>
         </div>
         <matMap />
@@ -77,11 +90,14 @@
 </template>
 
 <script>
+import * as d3 from "d3";
 import arcTimeline from "./components/arcTimeline.vue";
 import brain from "./components/brain.vue";
 import matMap from "./components/matMap.vue";
 import "intersection-observer";
 import Scrollama from "../vue-scrollama/src/Scrollama.vue";
+import stackedPills from "./components/stackedPills.vue";
+import spilledPills from "./components/spilledPills.vue";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
@@ -92,11 +108,56 @@ export default {
     brain,
     matMap,
     Scrollama,
+    stackedPills,
+    spilledPills,
   },
 
   methods: {
+    stackedFall() {
+      // var allPillsStacked = d3.selectAll(
+      //   ".cls-1-stack, .cls-2-stack, .cls-3-stack, .cls-4-stack, .cls-5-stack, .cls-6-stack"
+      // );
+      // var svgSpillPill = d3.select("#spilled-pills");
+      var whitePill = d3.selectAll(".pill");
+      // var bluePill = d3.selectAll(".cls-3-stack, .cls-4-stack, .cls-5-stack");
+      // var bluePillGroup = bluePill.append("g")
+
+      const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      };
+      sleep(300).then(() => {
+        //do stuff
+
+        whitePill
+          .attr("opacity", 1)
+          .transition()
+          .delay(function (d, i) {
+            (d) => d.reverse();
+            return i * 15;
+          })
+          .duration(3000)
+          // .ease(d3.easeExp)
+          // .attr("opacity", 0);
+          .attr("transform", "translate(0,1100)");
+      });
+    },
+
+    spillOpacity0() {
+      d3.select("#spilled-pills")
+        .attr("opacity", 1)
+        .transition()
+        .duration(3000)
+        .attr("opacity", 0.2);
+    },
+
+    pillHandler(index) {
+      if (index) this.stackedFall();
+    },
+
     handler({ element, index, direction }) {
       if (direction === "down") element.classList.add("active");
+      if (index === 0) this.stackedFall();
+      if (index === 4) this.spillOpacity0();
       console.log(index);
     },
   },
@@ -115,7 +176,9 @@ export default {
 .intro {
   min-height: 100vh;
   text-align: center;
-  background-color: #3d546b;
+  /* background: #151c24; */
+  background: #a0a0a0;
+  /* background-color: #3d546b; */
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -125,6 +188,9 @@ export default {
   /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
   font-family: "Inter var", sans-serif;
   letter-spacing: 3px;
+  background-image: url("title-blank-texture.jpg");
+  background-position: center;
+  background-size: cover;
 }
 
 .sub-intro {
@@ -142,7 +208,18 @@ export default {
   letter-spacing: 3px;
   vertical-align: baseline;
 }
-
+#in-crisis {
+  font-size: 3.5em;
+  color: #dfdfdf;
+}
+#intro-title {
+  font-size: 0.8em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #bfe6e3;
+}
 .outro {
   padding-top: 50vh;
   padding-bottom: 20vh;
@@ -236,6 +313,16 @@ body {
   background-image: url("chp3-title.jpg");
   background-position: center;
   background-size: cover;
+}
+
+.svg-img-holder {
+  width: 100vw;
+  height: 100vh;
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  top: 10px;
 }
 </style>
 
