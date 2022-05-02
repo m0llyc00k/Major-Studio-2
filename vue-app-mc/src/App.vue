@@ -118,17 +118,17 @@ export default {
       //   ".cls-1-stack, .cls-2-stack, .cls-3-stack, .cls-4-stack, .cls-5-stack, .cls-6-stack"
       // );
       // var svgSpillPill = d3.select("#spilled-pills");
-      var whitePill = d3.selectAll(".pill");
+      var allPills = d3.selectAll(".pill");
       // var bluePill = d3.selectAll(".cls-3-stack, .cls-4-stack, .cls-5-stack");
       // var bluePillGroup = bluePill.append("g")
 
       const sleep = (milliseconds) => {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
       };
-      sleep(300).then(() => {
+      sleep(1200).then(() => {
         //do stuff
 
-        whitePill
+        allPills
           .attr("opacity", 1)
           .transition()
           .delay(function (d, i) {
