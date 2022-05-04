@@ -40,13 +40,14 @@
               <h2>Let's draw the connections between both epidemics</h2>
             </div>
           </div>
-          <div class="step step-app"></div>
-          <div class="sub-intro first-chapter">
-            <div class="chapter-title">
+          <!-- <div class="step step-app"></div> -->
+        </Scrollama>
+        <Scrollama :offset="0.8" class="slide">
+          <div class="sub-intro first-chapter photo-container"></div>
+            <div class="chapter-title slide">
               <h3>Chapter 1:</h3>
               <h2>Repeating The Past, Again</h2>
             </div>
-          </div>
         </Scrollama>
 
         <arcTimeline class="arc" />
@@ -64,24 +65,22 @@
         </p>
         <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
       </div>
-      <div>
-        <div class="sub-intro second-chapter">
-          <div class="chapter-title">
-            <h3>Chapter 2:</h3>
-            <h2>Your Brain on Drugs, Actually</h2>
+      <Scrollama :offset="0.8" class="slide">
+        <div class="sub-intro second-chapter photo-container"></div>
+          <div class="slide">
+            <h3 class="chapter-num">Chapter 2:</h3>
+            <h2 class="chapter-title">Your Brain on Drugs, Actually</h2>
           </div>
-        </div>
+      </Scrollama>>
         <brain />
-      </div>
-      <div>
-        <div class="sub-intro third-chapter">
-          <div class="chapter-title">
-            <h3>Chapter 3:</h3>
-            <h2>The Inaccessibility of MAT Treatment, Unfortunately</h2>
+      <Scrollama :offset="0.8" class="slide">
+        <div class="sub-intro third-chapter photo-container"></div>
+          <div class="slide">
+            <h3 class="chapter-num">Chapter 3:</h3>
+            <h2 class="chapter-title">The Inaccessibility of MAT Treatment, Unfortunately</h2>
           </div>
-        </div>
+      </Scrollama>
         <matMap />
-      </div>
       <div class="outro">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
         velit sint facere ipsam doloremque placeat vel impedit sapiente alias.
@@ -210,10 +209,22 @@ export default {
   font-size: 1.3em;
   letter-spacing: 3px;
   vertical-align: baseline;
+  top: 0;
+}
+
+.photo-container {
+  height: 100vh;
   position: sticky;
   top: 0;
 }
 
+.slide {
+  height: 50vh;
+  margin: 0 auto;
+  z-index: 10;
+  position: relative;
+  /* max-width: 300px; */
+}
 #in-crisis {
   font-size: 3.5em;
   color: #dfdfdf;
@@ -227,6 +238,13 @@ export default {
   color: #c3d7f1;
 }
 
+.chapter-num {
+  font-size: 1.5em;
+}
+
+.chapter-title {
+  font-size: 2em;
+}
 .my-name {
   color: #dfdfdf;
   margin-bottom: 100px;
@@ -328,13 +346,10 @@ body {
 
 .first-chapter {
   background-image: url("chp-1-title-gradient.jpg");
-  /* background-image: linear-gradient(
-    rgba(21, 28, 36, 0.7),
-    rgba(49, 65, 83, 0.7)
-  );
-  mix-blend-mode: multiply; */
   background-position: center;
   background-size: cover;
+  position: sticky;
+
 }
 
 .second-chapter {
