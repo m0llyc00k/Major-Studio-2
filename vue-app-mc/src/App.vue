@@ -37,17 +37,29 @@
           </div>
           <div class="step step-app">
             <div class="app-text">
+              <h2>
+                X amount of people died from the first opioid epidemic by 1900.
+              </h2>
+              <h2>
+                X amount of people have died from the modern opioid epidemic
+                since 1999
+              </h2>
+            </div>
+          </div>
+          <div class="step step-app">
+            <div class="app-text">
               <h2>Let's draw the connections between both epidemics</h2>
             </div>
           </div>
+          <div class="step step-app"></div>
           <!-- <div class="step step-app"></div> -->
         </Scrollama>
         <Scrollama :offset="0.8" class="slide">
           <div class="sub-intro first-chapter photo-container"></div>
-            <div class="chapter-title slide">
-              <h3>Chapter 1:</h3>
-              <h2>Repeating The Past, Again</h2>
-            </div>
+          <div class="chapter-title slide">
+            <h3>Chapter 1:</h3>
+            <h2>Repeating The Past, Again</h2>
+          </div>
         </Scrollama>
 
         <arcTimeline class="arc" />
@@ -67,24 +79,29 @@
       </div>
       <Scrollama :offset="0.8" class="slide">
         <div class="sub-intro second-chapter photo-container"></div>
-          <div class="slide">
-            <h3 class="chapter-num">Chapter 2:</h3>
-            <h2 class="chapter-title">Your Brain on Drugs, Actually</h2>
-          </div>
-      </Scrollama>>
-        <brain />
+        <div class="chapter-title slide">
+          <h3 class="chapter-num">Chapter 2:</h3>
+          <h2 class="chapter-title">Your Brain on Drugs, Actually</h2>
+        </div>
+      </Scrollama>
+      <brain />
       <Scrollama :offset="0.8" class="slide">
         <div class="sub-intro third-chapter photo-container"></div>
-          <div class="slide">
-            <h3 class="chapter-num">Chapter 3:</h3>
-            <h2 class="chapter-title">The Inaccessibility of MAT Treatment, Unfortunately</h2>
-          </div>
+        <div class="chapter-title slide">
+          <h3 class="chapter-num">Chapter 3:</h3>
+          <h2 class="chapter-title">
+            The Inaccessibility of MAT Treatment, Unfortunately
+          </h2>
+        </div>
       </Scrollama>
-        <matMap />
-      <div class="outro">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
-        velit sint facere ipsam doloremque placeat vel impedit sapiente alias.
+      <matMap />
+      <div id="outro">
+        <p id="outro-title">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
+          velit sint facere ipsam doloremque placeat vel impedit sapiente alias.
+        </p>
       </div>
+      <stackedPills />
     </div>
   </div>
 </template>
@@ -161,8 +178,8 @@ export default {
     handler({ element, index, direction }) {
       if (direction === "down") element.classList.add("active");
       if (index === 0) this.stackedFall();
-      if (index === 4) this.spillOpacity0();
-      if (index === 3) this.spillOpacity1();
+      if (index === 3) this.spillOpacity0();
+      if (index === 2) this.spillOpacity1();
       console.log(index);
     },
   },
@@ -239,11 +256,11 @@ export default {
 }
 
 .chapter-num {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .chapter-title {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .my-name {
   color: #dfdfdf;
@@ -253,6 +270,7 @@ export default {
 .italic {
   font-style: italic;
 }
+
 .line-title-cont {
   margin: 40px 0;
   display: flex;
@@ -267,9 +285,31 @@ export default {
   background: #dfdfdf;
 }
 
-.outro {
+#outro-title {
+  font-size: 0.8em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #c3d7f1;
+}
+
+#outro {
   padding-top: 50vh;
   padding-bottom: 20vh;
+  min-height: 100vh;
+  text-align: center;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #dfdfdf;
+  font-family: "Inter var", sans-serif;
+  letter-spacing: 3px;
+  background-image: linear-gradient(#151c24, #314153, #314153, #151c24);
+  background-position: center;
+  background-size: cover;
 }
 
 .chapter-text {
@@ -278,7 +318,6 @@ export default {
 }
 
 .arc {
-  /* flex: 4; */
   height: 100vh;
   flex-direction: column;
   justify-content: center;
@@ -287,9 +326,6 @@ export default {
   position: sticky;
   display: relative;
   padding: 15vh 0;
-  /* width: 90%; */
-  /* margin: 0 auto 30vh; */
-  /* display: flex; */
 }
 
 :last-child {
@@ -348,8 +384,6 @@ body {
   background-image: url("chp-1-title-gradient.jpg");
   background-position: center;
   background-size: cover;
-  position: sticky;
-
 }
 
 .second-chapter {
@@ -372,6 +406,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   top: 10px;
+  bottom: 0px;
 }
 </style>
 

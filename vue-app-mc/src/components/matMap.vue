@@ -1,132 +1,134 @@
 <template>
-  <Scrollama :offset="0.8" @step-enter="handler">
-    <!-- <Scrollama :offset="0.8"> -->
-    <svg :height="mapHeight" :width="mapWidth" class="map-overlay"></svg>
+  <div class="main-map">
+    <Scrollama :offset="0.8" @step-enter="handler">
+      <svg :height="mapHeight" :width="mapWidth" class="map-overlay"></svg>
 
-    <div class="step" data-step-no="1">
-      <div class="step-map">
-        <p class="map-text">
-          As a result of the overprescription of opioids, overdoses have been
-          steadily increasing since the 1990s. The map below shows national
-
-          <b class="emphasize-color">overdose deaths per 100,000 people</b> from
-          2010 - 2020.
-        </p>
+      <div class="step" data-step-no="1">
+        <div class="step-map">
+          <p class="map-text">
+            As a result of the overprescription of opioids, overdoses have been
+            steadily increasing since the onset of the epidemic. The map below
+            shows national
+            <b class="emphasize-color">overdose deaths per 100,000 people</b>
+            from 2010 - 2020.
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="step" data-step-no="2">
-      <div class="step-map">
-        <div class="flex-container">
-          <div class="map-desc radio-text\">
-            <ul>
-              <li>
-                <p class="inline-title">
-                  MAT Provider vs. Prescription Availability:
-                </p>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="radio"
-                  value="pills"
-                  @change="pillOpacity1"
-                  v-model="medication"
-                />
-                <label for="pills">Pills per person [2012]</label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="radio"
-                  value="mat"
-                  @change="matOpacity1"
-                  v-model="medication"
-                />
-                <label for="deaths">MAT Treatment Providers [2022]</label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="radio"
-                  value="deaths"
-                  @change="noOpacityButDeath"
-                  v-model="medication"
-                />
-                <label for="mat">Remove MAT / Pill Overlay</label>
-              </li>
-            </ul>
-          </div>
-          <div class="flex-child">
-            <p class="map-desc">
-              There is a direct correlation between
-              <b class="emphasize-color">pills prescribed per person</b> and
-              <b class="emphasize-color">overdose deaths</b> from the last
-              decade. In counties where prescriptions were higher, overdoses are
-              also more prevelant. Alternatively, we would expect
-              <b class="emphasize-color">recovery providers</b> to follow the
-              same pattern and be just as available in counties that are
-              vulnerable to overdose deaths. <br /><b class="big-bold"
-                >This unfortunately is not the case.</b
-              >
-            </p>
+      <div class="step" data-step-no="2">
+        <div class="step-map">
+          <div class="flex-container">
+            <div class="map-desc">
+              <ul>
+                <li>
+                  <p class="inline-title">
+                    MAT Provider vs. Prescription Availability:
+                  </p>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="radio"
+                    value="pills"
+                    @change="pillOpacity1"
+                    v-model="medication"
+                  />
+                  <label for="pills">Pills per person [2012]</label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="radio"
+                    value="mat"
+                    @change="matOpacity1"
+                    v-model="medication"
+                  />
+                  <label for="deaths">MAT Treatment Providers [2022]</label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="radio"
+                    value="deaths"
+                    @change="noOpacityButDeath"
+                    v-model="medication"
+                  />
+                  <label for="mat">Remove MAT / Pill Overlay</label>
+                </li>
+              </ul>
+            </div>
+            <div class="flex-child">
+              <p class="map-desc">
+                There is a direct correlation between
+                <b class="emphasize-color">pills prescribed per person</b> and
+                <b class="emphasize-color">overdose deaths</b> from the last
+                decade. In counties where prescriptions were higher, overdoses
+                are also more prevelant. Alternatively, we would expect
+                <b class="emphasize-color">MAT providers</b> to follow the same
+                pattern and be just as available in counties that are vulnerable
+                to overdose deaths.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="step" data-step-no="3">
-      <div class="step-map">
-        <div class="flex-container">
-          <div class="flex-child">
-            <p class="map-desc">
-              As seen in the previous maps, there are not enough MAT centers to
-              sufficiently treat vulnerable counties. To make matters worse,
-              while providers can apply to treat up to 100 patients,
-              <span class="emphasize-color"
-                >existing providers can typically only treat 30 patients</span
-              >
-              each within their state, creating yet another barrier to
-              treatment.
-            </p>
-          </div>
-          <div class="flex-child">
-            <p class="map-desc">
-              Toggle between listed providers and those who are listed as
-              currently taking new patients.
-            </p>
-          </div>
+      <div class="step" data-step-no="3">
+        <div class="step-map">
+          <p class="map-text">
+            As seen in the previous maps, there are not enough MAT centers to
+            sufficiently treat vulnerable counties. To make matters worse, while
+            providers can apply to treat up to 100 patients,
+            <span class="emphasize-color"
+              >existing providers can typically only treat 30 patients</span
+            >
+            each within their state.
+          </p>
         </div>
       </div>
-    </div>
-    <div class="step" data-step-no="3">
-      <div class="step-map">
-        <h2 class="step-title-map">Conclusion</h2>
-        <div class="flex-container">
-          <div class="flex-child">
-            <p class="map-desc">
-              The gripping effect that opioids have on the brain combined with
-              the inaccessibility of MAT leaves the nation crippled with little
-              chance of recovery.
-            </p>
-          </div>
+      <div class="step" data-step-no="3">
+        <div class="step-map">
+          <!-- <h2 class="step-title-map">All MAT Providers:</h2> -->
+          <p class="provider-text">
+            Shown here are all listed MAT providers previously accounted for...
+          </p>
+          <p class="source">
+            Source: Substance Abuse and Mental Health Services Administration
+          </p>
         </div>
       </div>
-    </div>
-
-    <div class="step" data-step-no="7"></div>
-    <div class="step last-step" data-step-no="8">
-      <p>outro</p>
-      <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
-    </div>
-    <!-- <v-btn block> Block Button </v-btn> -->
-    <jenks />
-  </Scrollama>
+      <div class="step" data-step-no="4">
+        <div class="step-map">
+          <!-- <h2 class="step-title-map">
+            MAT Providers Currently Accepting New Patients:
+          </h2> -->
+          <p class="provider-text">
+            ...and here are the providers who haven't met their patient limit.
+          </p>
+          <p class="source">
+            Source: Substance Abuse and Mental Health Services Administration
+          </p>
+        </div>
+      </div>
+      <div class="step" data-step-no="5">
+        <div class="step-map">
+          <p>
+            The gripping effect that opioids have on the brain combined with the
+            inaccessibility of MAT leaves the nation crippled with little chance
+            of recovery.
+          </p>
+        </div>
+      </div>
+      <div class="step step-map" data-step-no="6">
+        <p>outro</p>
+      </div>
+    </Scrollama>
+  </div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import jenks from "./../jenks.js";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
-import providers from "./../mat_providers.json";
+import providers from "../../MAT_edit.json";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
@@ -164,8 +166,6 @@ export default {
   name: "matMap",
   components: {
     Scrollama,
-    jenks,
-    // providers,
   },
 
   data() {
@@ -175,6 +175,7 @@ export default {
       latitude: providers.latitude,
       longitude: providers.longitude,
       providers: providers,
+      availProviders: providers.reachedPatientLimit,
       currStep: 0,
       width: MAX_SVG_WIDTH,
       mapHeight: 600,
@@ -232,26 +233,12 @@ export default {
         }
       });
     },
-    // async getProviderData() {
-    //   await d3.json(url_providers).then((json) => {
-    //     const providerData = json;
-    //     this.providerData = providerData;
-
-    //     this.drawProviders();
-
-    //     // d3.selectAll("#deaths-overlay").attr("opacity", 0);
-    //     // d3.selectAll("#pill-overlay").attr("opacity", 0);
-    //     // d3.selectAll("#mat-overlay").attr("opacity", 0);
-    //   });
-    // },
 
     deathOpacity1() {
       d3.selectAll("#deaths-overlay").attr("opacity", 1);
-      console.log("i'm clicked");
     },
     deathOpacity0() {
       d3.selectAll("#deaths-overlay").attr("opacity", 0);
-      console.log("i'm not clicked");
     },
     noOpacityButDeath() {
       d3.selectAll("#mat-overlay").attr("opacity", 0);
@@ -307,8 +294,6 @@ export default {
     },
 
     drawPills() {
-      // d3.selectAll("#mat-overlay").remove();
-
       var svgPill = d3
         .select(".map-overlay")
         .append("svg")
@@ -356,20 +341,16 @@ export default {
     },
 
     drawMat() {
-      // d3.selectAll("#pill-overlay").remove();
-
       var svgMat = d3
         .select(".map-overlay")
         .append("svg")
         .attr("width", this.mapWidth)
         .attr("height", this.mapHeight)
         .attr("id", "mat-overlay");
-      // .attr("viewBox", [0, 0, 975, 610]);
 
       var matGroup = svgMat.append("g").attr("id", "mat-group");
 
       // calculate jenks natural breaks'
-      // const colorVariable = pillAccessor;
       const numberOfClasses = colorBlue.range().length - 2;
       const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.MAT),
@@ -436,8 +417,8 @@ export default {
     },
 
     drawProviders() {
-      console.log("draw providers");
       var svgProvider = d3.select("#provider-overlay");
+
       svgProvider
         .append("g")
         .selectAll("circle")
@@ -447,18 +428,56 @@ export default {
           "transform",
           (d) => "translate(" + this.projection([d.longitude, d.latitude]) + ")"
         )
-        .attr("r", 1.5)
+        .attr("mix-blend-mode", "multiply")
+        .attr("r", 1.2)
         .attr("fill", "#be64ac")
-        .attr("opacity", 0.7);
-      // .append("title")
-      // .text((d) => d.county);
+        .attr("opacity", 0.6)
+        .attr("class", "all-providers");
+    },
+
+    drawProvidersAvail() {
+      var svgProvider = d3.select("#provider-overlay");
+      var allProviders = d3.selectAll(".all-providers");
+      var availData = Array.from(
+        this.providers.filter(function (d) {
+          return d.reachedPatientLimit === "N";
+        })
+      );
+      allProviders.remove();
+
+      svgProvider
+        .append("g")
+        .selectAll("circle")
+        .data(availData)
+        .join("circle")
+        .attr(
+          "transform",
+          (d) => "translate(" + this.projection([d.longitude, d.latitude]) + ")"
+        )
+        .attr("r", 1.2)
+        .attr("fill", "#be64ac")
+        .attr("opacity", 0.6)
+        .attr("class", "provider-avail");
+    },
+
+    providerMap0() {
+      d3.selectAll("#provider-overlay").attr("opacity", 0);
+      d3.selectAll(".provider-avail").attr("opacity", 0);
+      d3.selectAll(".all-providers").attr("opacity", 0);
+    },
+
+    redrawBasemap() {
+      d3.selectAll(".provider-avail").attr("opacity", 0);
+      d3.selectAll(".all-providers").attr("opacity", 0);
     },
 
     handler({ element, index, direction }) {
-      if (index == (0 || 1 || 2)) this.deathOpacity1();
-      // if (index === 2) this.pillOpacity1();
-      if (index === 3) this.basemapOpacity1();
+      if (index == 0) this.deathOpacity1(), this.providerMap0();
+      if (index == 1) this.providerMap0();
+      if (index == 2) this.providerMap0();
+      if (index === 3) this.basemapOpacity1(), this.redrawBasemap();
       if (index === 4) this.drawProviders();
+      if (index === 5) this.drawProvidersAvail();
       if (direction === "down") element.classList.add("active");
       console.log(index);
     },
@@ -488,7 +507,8 @@ export default {
 }
 
 .inline-title {
-  /* padding: 2px; */
+  padding: 0;
+  margin: 0 auto;
   line-height: 2.5;
   font-weight: 600;
   font-size: 1.2em;
@@ -527,7 +547,6 @@ label {
   padding: 0px 10px 15px 10px;
   pointer-events: all;
   font-family: "Inter var", sans-serif;
-  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
   background: #151c24;
 }
 
@@ -539,23 +558,29 @@ label {
 }
 
 .map-desc {
-  /* border: 0.5px solid rgba(169, 169, 169, 0.6); */
   padding: 5px 5px 0px 5px;
   margin: 12px;
   border-radius: 10px;
   color: #dfdfdf;
   line-height: 1.4;
-  text-align: justify;
+  text-align: left;
+  font-size: 0.9 em;
 }
 
 .map-text {
-  padding: 15px;
+  padding: 10px;
   margin: 12px;
   /* border-radius: 10px; */
   color: #dfdfdf;
-  font-size: 1.4em;
-  line-height: 1.4;
-  text-align: justify;
+  font-size: 1.2em;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.provider-text {
+  padding: 15px;
+  margin: 12px;
+  font-size: 1.3em;
 }
 
 .flex-container {
@@ -563,7 +588,6 @@ label {
   justify-content: left;
   /* align-items: top; */
 }
-
 .step {
   padding: 2vh 0;
   /* height: 100vh; */
@@ -574,9 +598,6 @@ label {
   margin-right: 5vw;
   display: flex;
   /* align-items: flex-start; */
-  font-family: monospace;
-  font-weight: 00;
-  font-size: 15px;
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
@@ -586,7 +607,7 @@ label {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: sticky;
+  position: relative;
   top: 0;
 }
 
@@ -636,5 +657,10 @@ label {
   /* width: 90%; */
   /* margin: 0 auto 30vh; */
   /* display: flex; */
+}
+
+.source {
+  font-size: 0.7em;
+  font-style: italic;
 }
 </style>

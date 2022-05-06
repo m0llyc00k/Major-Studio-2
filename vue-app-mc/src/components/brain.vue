@@ -741,7 +741,7 @@ export default {
   padding: 0;
   pointer-events: all;
   font-family: "Inter var", sans-serif;
-  text-align: justify;
+  text-align: left;
   line-height: 1.5;
 }
 
@@ -765,7 +765,6 @@ export default {
   border: 1px solid #ccc;
   display: flex;
   flex: 1;
-  /* align-items: left; */
   justify-content: center;
 }
 
@@ -775,6 +774,7 @@ export default {
   transform: translateY(0);
   position: -webkit-sticky;
 }
+
 .line-sep-cont {
   margin: 0px 0;
   display: flex;
@@ -795,6 +795,7 @@ export default {
 .brain-svg {
   width: 1000px;
   height: 1000px;
+  height: 100vh;
 }
 
 .cls-1,
