@@ -476,7 +476,7 @@ export default {
   methods: {
     brainHandler({ element, index, direction }) {
       if (direction === "down") element.classList.add("active");
-      console.log(index);
+      // console.log(index);
       if (index === 0) this.phase0();
       if (index === 1) this.phase0();
       if (index === 2) this.phase2();
@@ -535,7 +535,10 @@ export default {
         // reveal the arrowheads
         .transition()
         .duration(6000)
-        .attr("opacity", 1);
+        .attr("opacity", 1)
+        .attr("transform", function () {
+          return "translate(" + this.x + "," + this.y + ")";
+        });
 
       d3.select("#LC-center").attr("opacity", 1);
     },
@@ -579,7 +582,10 @@ export default {
         // reveal the arrowheads
         .transition()
         .duration(6000)
-        .attr("opacity", 1);
+        .attr("opacity", 1)
+        .attr("transform", function () {
+          return "translate(" + this.x + "," + this.y + ")";
+        });
     },
     phase4() {
       const arrowLineDrawn = d3.selectAll(".cls-5").attr("opacity", 1);
@@ -635,6 +641,9 @@ export default {
         });
 
       arrowDrawn
+        .attr("transform", function () {
+          return "translate(" + this.x + "," + this.y + ")";
+        })
         .transition()
         .delay(350)
         .on("start", function repeat() {

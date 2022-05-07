@@ -109,17 +109,10 @@
         </div>
       </div>
       <div class="step" data-step-no="5">
-        <div class="step-map">
-          <p>
-            The gripping effect that opioids have on the brain combined with the
-            inaccessibility of MAT leaves the nation crippled with little chance
-            of recovery.
-          </p>
-        </div>
+        <div></div>
       </div>
-      <div class="step step-map" data-step-no="6">
-        <p>outro</p>
-      </div>
+
+      <div class="step" data-step-no="5"></div>
     </Scrollama>
   </div>
 </template>
@@ -128,7 +121,6 @@
 import * as d3 from "d3";
 import jenks from "./../jenks.js";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
-import providers from "../../MAT_edit.json";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
@@ -159,8 +151,8 @@ var noDataColor = "#253040";
 const url =
   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json";
 
-// const url_providers =
-//   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/vue-app-mc/mat_providers.json";
+const urlProviders =
+  "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/vue-app-mc/MAT_edit.json";
 
 export default {
   name: "matMap",
@@ -170,12 +162,8 @@ export default {
 
   data() {
     return {
-      //   geoData: data.features,
       geoData: null,
-      latitude: providers.latitude,
-      longitude: providers.longitude,
-      providers: providers,
-      availProviders: providers.reachedPatientLimit,
+      providerData: null,
       currStep: 0,
       width: MAX_SVG_WIDTH,
       mapHeight: 600,
@@ -188,7 +176,6 @@ export default {
   mounted() {
     this.getData();
     this.getProviderData();
-    // this.makeOpacity();
     window.addEventListener("resize", this.onResize);
   },
 
@@ -231,6 +218,14 @@ export default {
           console.log("Number of features:", geojson.features.length);
           // console.log(geoData);
         }
+      });
+    },
+
+    async getProviderData() {
+      await d3.json(urlProviders).then((json) => {
+        const data = json;
+        this.providerData = data;
+        console.log(this.providerData);
       });
     },
 
@@ -422,7 +417,7 @@ export default {
       svgProvider
         .append("g")
         .selectAll("circle")
-        .data(this.providers)
+        .data(this.providerData)
         .join("circle")
         .attr(
           "transform",
@@ -439,7 +434,7 @@ export default {
       var svgProvider = d3.select("#provider-overlay");
       var allProviders = d3.selectAll(".all-providers");
       var availData = Array.from(
-        this.providers.filter(function (d) {
+        this.providerData.filter(function (d) {
           return d.reachedPatientLimit === "N";
         })
       );
@@ -473,13 +468,17 @@ export default {
 
     handler({ element, index, direction }) {
       if (index == 0) this.deathOpacity1(), this.providerMap0();
-      if (index == 1) this.providerMap0();
-      if (index == 2) this.providerMap0();
+      if (index == 1) this.deathOpacity1(), this.providerMap0();
+      if (index == 2) this.deathOpacity1(), this.providerMap0();
       if (index === 3) this.basemapOpacity1(), this.redrawBasemap();
-      if (index === 4) this.drawProviders();
-      if (index === 5) this.drawProvidersAvail();
+      if (index === 4)
+        this.drawProviders(),
+          d3.selectAll("#deaths-overlay").attr("opacity", 0);
+      if (index === 5)
+        this.drawProvidersAvail(),
+          d3.selectAll("#deaths-overlay").attr("opacity", 0);
       if (direction === "down") element.classList.add("active");
-      console.log(index);
+      // console.log(index);
     },
 
     onResize() {

@@ -1,7 +1,11 @@
 <template>
   <div class="main">
     <div id="app">
-      <Scrollama :offset="0.8" @step-enter="pillHandler">
+      <Scrollama
+        :offset="0.8"
+        @step-enter="pillHandler"
+        @step-exit="resetContent"
+      >
         <div class="intro">
           <div id="intro-title">
             <h1 id="in-crisis">In Crisis, Again</h1>
@@ -19,7 +23,7 @@
       </Scrollama>
 
       <div>
-        <Scrollama :offset="0.8" @step-enter="handler">
+        <Scrollama :offset="0.5" @step-enter="handler">
           <div class="svg-img-holder">
             <spilledPills />
           </div>
@@ -54,7 +58,7 @@
           <div class="step step-app"></div>
           <!-- <div class="step step-app"></div> -->
         </Scrollama>
-        <Scrollama :offset="0.8" class="slide">
+        <Scrollama :offset="0.5" class="slide">
           <div class="sub-intro first-chapter photo-container"></div>
           <div class="chapter-title slide">
             <h3>Chapter 1:</h3>
@@ -64,7 +68,7 @@
 
         <arcTimeline class="arc" />
       </div>
-      <div class="step">
+      <div class="step step-app">
         <p>
           Pharmaceutical companies blame <em>'recreational users'</em>, framing
           them as criminals,<br />
@@ -77,7 +81,7 @@
         </p>
         <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
       </div>
-      <Scrollama :offset="0.8" class="slide">
+      <Scrollama :offset="0.5" class="slide">
         <div class="sub-intro second-chapter photo-container"></div>
         <div class="chapter-title slide">
           <h3 class="chapter-num">Chapter 2:</h3>
@@ -85,7 +89,7 @@
         </div>
       </Scrollama>
       <brain />
-      <Scrollama :offset="0.8" class="slide">
+      <Scrollama :offset="0.5" class="slide">
         <div class="sub-intro third-chapter photo-container"></div>
         <div class="chapter-title slide">
           <h3 class="chapter-num">Chapter 3:</h3>
@@ -95,13 +99,45 @@
         </div>
       </Scrollama>
       <matMap />
-      <div id="outro">
-        <p id="outro-title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, at
-          velit sint facere ipsam doloremque placeat vel impedit sapiente alias.
-        </p>
-      </div>
-      <stackedPills />
+      <!-- <Scrollama :offset="0.8" class="slide">
+        <div class="sub-intro first-chapter photo-container"></div>
+        <div class="chapter-title slide">
+          <h3>Chapter 1:</h3>
+          <h2>Repeating The Past, Again</h2>
+        </div>
+      </Scrollama> -->
+      <Scrollama :offset="0.8" @step-enter="restackPillHandler">
+        <restackedPills class="stack-container" />
+        <div id="outro">
+          <div id="outro-text slide">
+            <div class="resources-container">
+              <div class="resource-box">
+                <div id="step step-app outro-title" class="resource-group">
+                  <p>
+                    The gripping effect that opioids have on the brain combined
+                    with the inaccessibility of MAT leaves the nation crippled
+                    with little chance of recovery. <br />
+                    Alleviating future escalation of the modern opioid crisis
+                    requires understanding the onset of the first opioid
+                    epidemic, sympathizing with the physiology of addiction, and
+                    making proven treatments such as MAT, or Medication-Assisted
+                    Treatment, widely available.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Scrollama>
+      <footer>
+        <div class="footer-links">
+          <div class="link-container">
+            <p class="footer-text">
+              <a id="top-btn" href=".intro">Back to top</a>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
 </template>
@@ -115,8 +151,11 @@ import "intersection-observer";
 import Scrollama from "../vue-scrollama/src/Scrollama.vue";
 import stackedPills from "./components/stackedPills.vue";
 import spilledPills from "./components/spilledPills.vue";
+import restackedPills from "./components/restackedPills.vue";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
+
+// d3.select("#spilled-pills").moveToFront();
 
 export default {
   name: "App",
@@ -127,23 +166,18 @@ export default {
     Scrollama,
     stackedPills,
     spilledPills,
+    restackedPills,
   },
 
   methods: {
     stackedFall() {
-      // var allPillsStacked = d3.selectAll(
-      //   ".cls-1-stack, .cls-2-stack, .cls-3-stack, .cls-4-stack, .cls-5-stack, .cls-6-stack"
-      // );
-      // var svgSpillPill = d3.select("#spilled-pills");
       var allPills = d3.selectAll(".pill");
-      // var bluePill = d3.selectAll(".cls-3-stack, .cls-4-stack, .cls-5-stack");
-      // var bluePillGroup = bluePill.append("g")
 
       const sleep = (milliseconds) => {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
       };
       sleep(1000).then(() => {
-        //do stuff
+        //wait a second and then let pills fall
 
         allPills
           .attr("opacity", 1)
@@ -171,16 +205,52 @@ export default {
       d3.select("#spilled-pills").attr("opacity", 1);
     },
 
+    restackPills() {
+      var stackedPills = d3.selectAll(".restack-pill");
+      console.log("restacking");
+      stackedPills
+        .attr("transform", "translate(0,-1100)")
+        .transition()
+        .duration(3000)
+        .delay(function (d, i) {
+          (d) => d.reverse();
+          return i * 15;
+        })
+        .attr("transform", function () {
+          return "translate(" + this.x + "," + this.y + ")";
+        });
+    },
+
     pillHandler(index) {
       if (index) this.stackedFall();
     },
 
-    handler({ element, index, direction }) {
+    restackPillHandler(index) {
+      if (index == 0) this.restackPills();
+      console.log("restack handler");
+    },
+
+    handler({ element, index, direction, event }) {
       if (direction === "down") element.classList.add("active");
       if (index === 0) this.stackedFall();
       if (index === 3) this.spillOpacity0();
       if (index === 2) this.spillOpacity1();
+      if (index === 1) this.spillOpacity1();
+
+      console.log(event.element);
+      let step = event.element.getAttribute("data-step-no");
+      let subStep = event.element.getAttribute("data-substep");
+      console.log(step);
+      this.currStep = step;
+      this.subStep = subStep;
+      this.scrollDirection = event.direction;
+
+      // if (index === 4) this.restackPills();
       console.log(index);
+    },
+    resetContent(event) {
+      console.log(event.direction);
+      console.log(event.element);
     },
   },
 };
@@ -196,7 +266,7 @@ export default {
   /* margin-top: 60px; */
 }
 .intro {
-  min-height: 100vh;
+  min-height: 90vh;
   text-align: center;
   padding: 3rem;
   display: flex;
@@ -235,6 +305,18 @@ export default {
   top: 0;
 }
 
+.stack-container {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  top: 10px;
+  bottom: 0px;
+}
+
 .slide {
   height: 50vh;
   margin: 0 auto;
@@ -253,6 +335,11 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   color: #c3d7f1;
+}
+
+#spilled-pills {
+  width: 100%;
+  z-index: 99999999999999999999999;
 }
 
 .chapter-num {
@@ -285,7 +372,7 @@ export default {
   background: #dfdfdf;
 }
 
-#outro-title {
+#outro-text {
   font-size: 0.8em;
   position: absolute;
   top: 50%;
@@ -293,25 +380,11 @@ export default {
   transform: translate(-50%, -50%);
   color: #c3d7f1;
 }
-
 #outro {
-  padding-top: 50vh;
-  padding-bottom: 20vh;
-  min-height: 100vh;
-  text-align: center;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #dfdfdf;
-  font-family: "Inter var", sans-serif;
-  letter-spacing: 3px;
   background-image: linear-gradient(#151c24, #314153, #314153, #151c24);
   background-position: center;
   background-size: cover;
 }
-
 .chapter-text {
   position: sticky;
   bottom: 0;
@@ -348,7 +421,6 @@ body {
   margin-right: 5vw;
   display: flex;
   /* align-items: flex-start; */
-  font-weight: 00;
   font-size: 15px;
   pointer-events: none;
   visibility: hidden;
@@ -407,6 +479,99 @@ body {
   justify-content: flex-end;
   top: 10px;
   bottom: 0px;
+}
+footer {
+  font-size: 15px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10px;
+}
+.footer-text {
+  flex-basis: 40%;
+  padding: 20px;
+  color: rgb(142, 160, 160);
+  text-align: center;
+}
+
+.footer-links {
+  padding: 20px;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
+.footer-links a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+.footer-links a:hover {
+  color: #c3d7f1;
+}
+
+.link-container {
+  margin-bottom: 10px;
+  position: relative;
+  text-align: center;
+}
+
+#top-btn {
+  background-color: rgb(197, 197, 197);
+  border-radius: 10px;
+  padding: 8px 20px;
+  color: rgb(37, 45, 46);
+  font-size: 15px;
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+#top-btn:hover {
+  background: #c3d7f1;
+}
+
+.resource-box {
+  flex-basis: 40%;
+  height: 350px;
+  padding: 20px;
+  margin: 4%;
+  background-color: #151c24;
+  color: #c3d7f1;
+  border-radius: 10px;
+
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.134),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.16),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.25);
+}
+
+.resource-group {
+  text-align: center;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.resource-links a {
+  font-weight: 500;
+  color: rgb(180, 188, 190);
+  text-decoration: none;
+}
+/* .resource-links a:hover {
+    color: #ff784f;
+  } */
+.resources-container {
+  display: flex;
+  width: 100vw;
+  padding: 0%;
+  padding-bottom: 30vw;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+  top: 300px;
+  z-index: 10;
 }
 </style>
 

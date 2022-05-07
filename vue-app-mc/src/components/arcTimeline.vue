@@ -313,13 +313,11 @@ export default {
           currArc[index - 1].classList.add("highlight-arc");
         }
       }
-
-      // console.log(currArc[index - 1]);
     },
 
-    onResize() {
-      this.width = Math.min(MAX_SVG_WIDTH, window.innerWidth);
-    },
+    // onResize() {
+    //   this.width = Math.min(MAX_SVG_WIDTH, window.innerWidth);
+    // },
   },
 
   mounted() {
@@ -328,11 +326,11 @@ export default {
     console.log("i am mounted");
     // console.log(this.links[0]);
     this.currTitle = this.links[0].title;
-    window.addEventListener("resize", this.onResize);
+    // window.addEventListener("resize", this.onResize);
   },
 
   beforeUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    // window.removeEventListener("resize", this.onResize);
   },
 };
 </script>
