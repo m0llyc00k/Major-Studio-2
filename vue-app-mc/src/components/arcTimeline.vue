@@ -1,5 +1,5 @@
 <template>
-  <Scrollama :offset="0.5" @step-enter="handler">
+  <Scrollama :offset="0.5" @step-enter="arcHandler">
     <svg :height="height" :width="width" class="arc">
       <g class="arc"></g>
     </svg>
@@ -18,9 +18,22 @@
         </div>
       </div>
     </div>
+    <div class="step step-arc">
+      <div class="last-step-text">
+        <p>
+          Pharmaceutical companies blame <em>'recreational users'</em>, framing
+          them as criminals,<br />
+          while advocating for <em>'medical users'</em>, positioning them as
+          victims. <br /><br />This manipulation of fact plays a role in history
+          repeating itself, but <br />
+          <span class="emphasize-color"
+            >what really happens when your brain becomes addicted to
+            opioids?</span
+          >
+        </p>
+      </div>
+    </div>
     <div class="step step-arc"></div>
-    <div class="step"></div>
-    <!-- <v-btn block> Block Button </v-btn> -->
   </Scrollama>
 </template>
 
@@ -297,11 +310,15 @@ export default {
       return svg.node();
     },
 
-    handler({ element, index, direction }) {
+    arcHandler({ element, index, direction }) {
       const currArc = document.getElementsByClassName("drawnArc");
       // let highlightArc = document.getElementsByClassName("highlight-arc");
-
+      console.log(index);
       if (index === 0 && direction === "down") this.drawChart();
+      if (index === 10)
+        d3.selectAll(".arc").transition().duration(1000).attr("opacity", 0);
+      if (index === 9) d3.selectAll(".arc").attr("opacity", 1);
+
       if (index === index && direction === "down") this.tracePath(index);
       if (direction === "down") element.classList.add("active");
       if (index) {
@@ -354,6 +371,23 @@ html {
   pointer-events: all;
   font-family: "Inter var", sans-serif;
   /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
+}
+
+.last-step-text {
+  max-width: 75%;
+  border-radius: 10px;
+  background: #151c24;
+  backface-visibility: inherit;
+  padding: 15px 25px 30px 25px;
+  font-family: "Inter var", sans-serif;
+  font-size: 1.2em;
+  line-height: 1.5;
+  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
+
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.134),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.16),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.25);
 }
 
 .step-text-intro {

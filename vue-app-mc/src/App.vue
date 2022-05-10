@@ -30,29 +30,31 @@
           <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
-                The United States faced what would be the first national opioid
-                crisis a century before the infamous mismarketing of OxyContin
-                devastated communities with widespread opioid addiction.
-                <br /><br />The onset of both crises follow similar arcs in
-                history, yet the first epidemic has faded into distant memory
-                and recovery from the current crisis has yet to be seen.
+                Over a century before the mis-marketing of OxyContin dominated
+                news outlets, the nation faced its first widespread opioid
+                epidemic.
+                <br /><br />
+                The emergence, exploitation, and eruption of both epidemics
+                follow the same arcs in history, yet the de-escalation of the
+                19th century epidemic has faded into distant memory and recovery
+                from the most recent has yet to be seen.
               </p>
             </div>
           </div>
-          <div class="step step-app">
+          <!-- <div class="step step-app">
             <div class="app-text">
-              <h2>
-                X amount of people died from the first opioid epidemic by 1900.
-              </h2>
-              <h2>
-                X amount of people have died from the modern opioid epidemic
-                since 1999
-              </h2>
+              <p class="para-text">
+                By 1890, its approximated that several hundred thousand
+                Americans had become addicted to opioids.
+                <br /><br />
+                According to the CDC, more than 500,000 people have died from
+                the modern opioid epidemic since 1999.
+              </p>
             </div>
-          </div>
+          </div> -->
           <div class="step step-app">
             <div class="app-text">
-              <h2>Let's draw the connections between both epidemics</h2>
+              <h2>Let's draw the connections between both epidemics...</h2>
             </div>
           </div>
           <div class="step step-app"></div>
@@ -68,19 +70,7 @@
 
         <arcTimeline class="arc" />
       </div>
-      <div class="step step-app">
-        <p>
-          Pharmaceutical companies blame <em>'recreational users'</em>, framing
-          them as criminals,<br />
-          while advocating for <em>'medical users'</em>, positioning them as
-          victims. <br />This manipulation of fact plays a role in history
-          repeating itself, but <br />
-          <b
-            >what really happens when your brain becomes addicted to opioids?</b
-          >
-        </p>
-        <!-- <p>BRAIN IMAGE/ SNEAK PEAK/ BUTTON</p> -->
-      </div>
+
       <Scrollama :offset="0.5" class="slide">
         <div class="sub-intro second-chapter photo-container"></div>
         <div class="chapter-title slide">
@@ -99,30 +89,35 @@
         </div>
       </Scrollama>
       <matMap />
-      <!-- <Scrollama :offset="0.8" class="slide">
-        <div class="sub-intro first-chapter photo-container"></div>
-        <div class="chapter-title slide">
-          <h3>Chapter 1:</h3>
-          <h2>Repeating The Past, Again</h2>
-        </div>
-      </Scrollama> -->
       <Scrollama :offset="0.8" @step-enter="restackPillHandler">
         <restackedPills class="stack-container" />
         <div id="outro">
-          <div id="outro-text slide">
-            <div class="resources-container">
-              <div class="resource-box">
-                <div id="step step-app outro-title" class="resource-group">
-                  <p>
-                    The gripping effect that opioids have on the brain combined
-                    with the inaccessibility of MAT leaves the nation crippled
-                    with little chance of recovery. <br />
-                    Alleviating future escalation of the modern opioid crisis
-                    requires understanding the onset of the first opioid
-                    epidemic, sympathizing with the physiology of addiction, and
-                    making proven treatments such as MAT, or Medication-Assisted
-                    Treatment, widely available.
-                  </p>
+          <div class="flex-container">
+            <div id="outro-step slide">
+              <div class="resources-container">
+                <div class="resource-box">
+                  <div id="outro-title" class="resource-group">
+                    <p>
+                      The gripping effect that opioids have on the brain
+                      combined with the inaccessibility of MAT leaves the nation
+                      crippled with little chance of recovery.
+                    </p>
+                    <div class="line-sep-cont">
+                      <div class="line-sep"></div>
+                    </div>
+                    <p>
+                      Alleviating future escalation of the modern opioid crisis
+                      requires
+                      <span class="emphasize-color">understanding</span> the
+                      onset of the first opioid epidemic and the stigma it left
+                      behind,
+                      <span class="emphasize-color">sympathizing</span> with the
+                      physiology of addiction, and
+                      <span class="emphasize-color"
+                        >making MAT treatment accessible.</span
+                      >
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,8 +149,6 @@ import spilledPills from "./components/spilledPills.vue";
 import restackedPills from "./components/restackedPills.vue";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
-
-// d3.select("#spilled-pills").moveToFront();
 
 export default {
   name: "App",
@@ -208,42 +201,49 @@ export default {
     restackPills() {
       var stackedPills = d3.selectAll(".restack-pill");
       console.log("restacking");
-      stackedPills
-        .attr("transform", "translate(0,-1100)")
-        .transition()
-        .duration(3000)
-        .delay(function (d, i) {
-          (d) => d.reverse();
-          return i * 15;
-        })
-        .attr("transform", function () {
-          return "translate(" + this.x + "," + this.y + ")";
-        });
+      const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      };
+      sleep(1000).then(() => {
+        stackedPills
+          .attr("transform", "translate(0,-2000)")
+          .transition()
+          .duration(3000)
+          .delay(function (d, i) {
+            (d) => d.reverse();
+            return i * 15;
+          })
+          .attr("transform", function () {
+            return "translate(" + this.x + "," + this.y + ")";
+          })
+          .attr("opacity", 1);
+      });
     },
 
     pillHandler(index) {
       if (index) this.stackedFall();
     },
 
-    restackPillHandler(index) {
-      if (index == 0) this.restackPills();
-      console.log("restack handler");
+    restackPillHandler(index, element) {
+      if (index) this.restackPills();
+      console.log("restack handler", index, element);
     },
 
-    handler({ element, index, direction, event }) {
+    handler({ element, index, direction }) {
       if (direction === "down") element.classList.add("active");
-      if (index === 0) this.stackedFall();
-      if (index === 3) this.spillOpacity0();
-      if (index === 2) this.spillOpacity1();
+      if (index === 0)
+        this.stackedFall(), d3.selectAll(".restack-pill").attr("opacity", 0);
+      if (index === 2) this.spillOpacity0();
+      // if (index === 2) this.spillOpacity1();
       if (index === 1) this.spillOpacity1();
 
-      console.log(event.element);
-      let step = event.element.getAttribute("data-step-no");
-      let subStep = event.element.getAttribute("data-substep");
-      console.log(step);
-      this.currStep = step;
-      this.subStep = subStep;
-      this.scrollDirection = event.direction;
+      // console.log(event.element);
+      // let step = event.element.getAttribute("data-step-no");
+      // let subStep = event.element.getAttribute("data-substep");
+      // console.log(step);
+      // this.currStep = step;
+      // this.subStep = subStep;
+      // this.scrollDirection = event.direction;
 
       // if (index === 4) this.restackPills();
       console.log(index);
@@ -372,7 +372,7 @@ export default {
   background: #dfdfdf;
 }
 
-#outro-text {
+#outro-step {
   font-size: 0.8em;
   position: absolute;
   top: 50%;
@@ -380,6 +380,7 @@ export default {
   transform: translate(-50%, -50%);
   color: #c3d7f1;
 }
+
 #outro {
   background-image: linear-gradient(#151c24, #314153, #314153, #151c24);
   background-position: center;
@@ -432,7 +433,6 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  /* top: 50; */
 }
 
 .app-text {
@@ -444,7 +444,12 @@ body {
   padding: 0px 10px 15px 10px;
   pointer-events: all;
   font-family: "Inter var", sans-serif;
-  border: 0.5px solid rgba(169, 169, 169, 0.2);
+  /* border: 0.5px solid rgba(169, 169, 169, 0.2); */
+
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.134),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.16),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.25);
 }
 
 .para-text {
@@ -453,19 +458,19 @@ body {
 }
 
 .first-chapter {
-  background-image: url("chp-1-title-gradient.jpg");
+  background-image: url("chp-1-title-may8_v3.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .second-chapter {
-  background-image: url("chp2-gradient.jpg");
+  background-image: url("brain-may8-v2.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .third-chapter {
-  background-image: url("chp3-v3.jpg");
+  background-image: url("chp-3-may8-v3.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -547,10 +552,33 @@ footer {
     0 100px 80px rgba(0, 0, 0, 0.25);
 }
 
+.box-shadow {
+  /* flex-basis: 40%; */
+  /* height: 350px; */
+  padding: 20px;
+  margin: 4%;
+  background-color: #151c24;
+  color: #c3d7f1;
+  border-radius: 10px;
+
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.134),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.16),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.25);
+}
+
 .resource-group {
   text-align: center;
   font-weight: 500;
-  margin-top: 20px;
+  /* margin-top: 40px; */
+  padding: 15px;
+  margin-top: 30px;
+  margin: 12px;
+  /* border-radius: 10px; */
+  color: #dfdfdf;
+  font-size: 1.1em;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .resource-links a {
@@ -565,13 +593,37 @@ footer {
   display: flex;
   width: 100vw;
   padding: 0%;
-  padding-bottom: 30vw;
+  padding-bottom: 20vw;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   /* position: absolute; */
   top: 300px;
   z-index: 10;
+}
+
+.outro-title {
+  padding: 10px;
+  margin: 12px;
+  /* border-radius: 10px; */
+  color: #dfdfdf;
+  font-size: 1.2em;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.line-sep-cont-app {
+  margin: 0px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.line-sep-app {
+  width: 50px;
+  height: 1px;
+  background: #8097b5;
 }
 </style>
 

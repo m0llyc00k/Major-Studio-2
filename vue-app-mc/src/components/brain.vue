@@ -397,12 +397,10 @@
         <div class="step-brain" data-step-no="3">
           <div class="step-brain-text">
             <h3 class="phase-title">Phase 3:</h3>
-            <h2 class="brain-title">
-              “The Locus Coeruleus” & Dependence to Feel Normal
-            </h2>
+            <h2 class="brain-title">The Dependence to Feel Normal</h2>
             <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
-              The locus coeruleus (LC) is an area of the brain that is
+              The Locus Coeruleus (LC) is an area of the brain that is
               critically involved in the production of opioid dependence and
               withdrawal. At this phase, the mesolimbic reward system changes
               and dependence means that the user no longer feels pleasure in the

@@ -1,7 +1,9 @@
 <template>
   <div class="main-map">
-    <Scrollama :offset="0.8" @step-enter="handler">
+    <Scrollama :offset="0.25" @step-enter="handler">
       <svg :height="mapHeight" :width="mapWidth" class="map-overlay"></svg>
+
+      <!-- <img id="bivariate-legend" src="../legend.png" /> -->
 
       <div class="step" data-step-no="1">
         <div class="step-map">
@@ -127,24 +129,36 @@ import "intersection-observer";
 
 const MAX_SVG_WIDTH = 1400;
 //blues
-const colorBlue = d3
-  .scaleQuantile()
-  .range([
-    "rgb(222,235,247)",
-    "rgb(198,219,239)",
-    "rgb(158,202,225)",
-    "rgb(107,174,214)",
-    "rgb(66,146,198)",
-    "rgb(33,113,181)",
-    "rgb(8,81,156)",
-    "rgb(8,48,107)",
-    "rgb(3,19,43)",
-  ]);
+const colorBlue = d3.scaleQuantile().range([
+  "rgb(222,235,247)",
+  // "rgb(198,219,239)",
+  "rgb(158,202,225)",
+  // "rgb(107,174,214)",
+  "rgb(66,146,198)",
+  // "rgb(33,113,181)",
+  "rgb(8,81,156)",
+  // "rgb(8,48,107)",
+  "rgb(3, 19, 102)",
+]);
+
+// const blues = [
+//   "rgb(222,235,247)",
+//   // "rgb(198,219,239)",
+//   "rgb(158,202,225)",
+//   // "rgb(107,174,214)",
+//   "rgb(66,146,198)",
+//   // "rgb(33,113,181)",
+//   "rgb(8,81,156)",
+//   // "rgb(8,48,107)",
+//   "rgb(3, 19, 102)",
+// ];
 
 //pinks
 const colorPink = d3
   .scaleQuantile()
   .range(["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"]);
+
+const pinks = ["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"];
 
 var noDataColor = "#253040";
 
@@ -167,7 +181,7 @@ export default {
       currStep: 0,
       width: MAX_SVG_WIDTH,
       mapHeight: 600,
-      mapWidth: 1000,
+      mapWidth: 1200,
       medication: null,
       checked: null,
     };
@@ -225,30 +239,7 @@ export default {
       await d3.json(urlProviders).then((json) => {
         const data = json;
         this.providerData = data;
-        console.log(this.providerData);
       });
-    },
-
-    deathOpacity1() {
-      d3.selectAll("#deaths-overlay").attr("opacity", 1);
-    },
-    deathOpacity0() {
-      d3.selectAll("#deaths-overlay").attr("opacity", 0);
-    },
-    noOpacityButDeath() {
-      d3.selectAll("#mat-overlay").attr("opacity", 0);
-      d3.selectAll("#pill-overlay").attr("opacity", 0);
-      d3.selectAll("#deaths-overlay").attr("opacity", 1);
-    },
-
-    pillOpacity1() {
-      d3.selectAll("#mat-overlay").attr("opacity", 0);
-      d3.selectAll("#pill-overlay").attr("opacity", 1);
-    },
-
-    matOpacity1() {
-      d3.selectAll("#pill-overlay").attr("opacity", 0);
-      d3.selectAll("#mat-overlay").attr("opacity", 1);
     },
 
     drawDeaths() {
@@ -286,6 +277,55 @@ export default {
         })
         .attr("opacity", 1)
         .attr("id", "deaths-overlay");
+
+      var deathSvg = d3.select(".map-overlay");
+
+      const legendWidth = 25;
+      const legendHeight = 25;
+
+      deathSvg
+        .append("text")
+        .attr("x", 25)
+        .attr("y", 25)
+        .html("Overdose Deaths per 100,000")
+        .style("fill", "#dfdfdf")
+        .style("font-size", "10px")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "death-legend");
+
+      deathSvg
+        .append("text")
+        .attr("x", 25)
+        .attr("y", 36)
+        .html("[2010 - 2010]")
+        .style("fill", "#dfdfdf")
+        .style("font-size", "10px")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "death-legend");
+
+      jenksNaturalBreaks.map((d, i) =>
+        deathSvg
+          .append("text")
+          .attr("x", 60)
+          .attr("y", i * 31 + 30)
+          .text(d)
+          .style("fill", "#dfdfdf")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle")
+          .attr("class", "death-legend")
+      );
+
+      pinks.map((d, i) =>
+        deathSvg
+          .append("rect")
+          .attr("x", 25)
+          .attr("y", i * 30 + 50)
+          .attr("width", legendWidth)
+          .attr("height", legendHeight)
+          .style("fill", d)
+          .attr("class", "death-legend")
+      );
+      d3.selectAll(".death-legend").attr("opacity", 0);
     },
 
     drawPills() {
@@ -300,7 +340,7 @@ export default {
       var pillGroup = svgPill.append("g").attr("id", "pill-group");
 
       // calculate jenks natural breaks'
-      const numberOfClasses = colorBlue.range().length - 2;
+      const numberOfClasses = colorBlue.range().length;
       const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.PILLS),
         numberOfClasses
@@ -346,7 +386,7 @@ export default {
       var matGroup = svgMat.append("g").attr("id", "mat-group");
 
       // calculate jenks natural breaks'
-      const numberOfClasses = colorBlue.range().length - 2;
+      const numberOfClasses = colorBlue.range().length;
       const jenksNaturalBreaks = jenks(
         this.geoData.map((d) => d.properties.MAT),
         numberOfClasses
@@ -407,10 +447,6 @@ export default {
       d3.selectAll("#provider-overlay").attr("opacity", 0);
     },
 
-    basemapOpacity1() {
-      d3.selectAll("#provider-overlay").attr("opacity", 1);
-    },
-
     drawProviders() {
       var svgProvider = d3.select("#provider-overlay");
 
@@ -466,29 +502,61 @@ export default {
       d3.selectAll(".all-providers").attr("opacity", 0);
     },
 
+    deathOpacity1() {
+      d3.selectAll("#deaths-overlay").attr("opacity", 1);
+      this.deathLegendVisible();
+    },
+
+    deathOpacity0() {
+      d3.selectAll("#deaths-overlay").attr("opacity", 0);
+      this.deathLegendNotVisible();
+    },
+
+    noOpacityButDeath() {
+      d3.selectAll("#mat-overlay").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("opacity", 0);
+      d3.selectAll("#deaths-overlay").attr("opacity", 1);
+    },
+
+    pillOpacity1() {
+      d3.selectAll("#mat-overlay").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("opacity", 1);
+    },
+
+    matOpacity1() {
+      d3.selectAll("#pill-overlay").attr("opacity", 0);
+      d3.selectAll("#mat-overlay").attr("opacity", 1);
+    },
+    basemapOpacity1() {
+      d3.selectAll("#provider-overlay").attr("opacity", 1);
+    },
+    deathLegendVisible() {
+      d3.selectAll(".death-legend").attr("opacity", 1);
+    },
+    deathLegendNotVisible() {
+      d3.selectAll(".death-legend").attr("opacity", 0);
+    },
+
     handler({ element, index, direction }) {
       if (index == 0) this.deathOpacity1(), this.providerMap0();
       if (index == 1) this.deathOpacity1(), this.providerMap0();
       if (index == 2) this.deathOpacity1(), this.providerMap0();
       if (index === 3) this.basemapOpacity1(), this.redrawBasemap();
-      if (index === 4)
-        this.drawProviders(),
-          d3.selectAll("#deaths-overlay").attr("opacity", 0);
-      if (index === 5)
-        this.drawProvidersAvail(),
-          d3.selectAll("#deaths-overlay").attr("opacity", 0);
+      if (index === 4) this.drawProviders(), this.deathOpacity0();
+      if (index === 5) this.drawProvidersAvail(), this.deathOpacity0();
+      if (index === 6) this.deathOpacity0();
       if (direction === "down") element.classList.add("active");
-      // console.log(index);
+      console.log(index);
     },
 
-    onResize() {
-      this.mapWidth = Math.min(MAX_SVG_WIDTH, window.innerWidth);
-    },
+    // onResize() {
+    //   this.mapWidth = Math.min(MAX_SVG_WIDTH, window.innerWidth);
+    // },
   },
 
-  beforeUnmount() {
-    window.removeEventListener("resize", this.onResize);
-  },
+  // beforeUnmount() {
+  //   window.removeEventListener("resize", this.onResize);
+  // },
 };
 </script>
 
@@ -500,6 +568,9 @@ export default {
   line-height: 2;
 }
 
+#bivariate-legend {
+  position: sticky;
+}
 .emphasize-color {
   /* color: #8097b5; */
   color: #adcdf6;
@@ -547,6 +618,7 @@ label {
   pointer-events: all;
   font-family: "Inter var", sans-serif;
   background: #151c24;
+  z-index: 999999;
 }
 
 .step-title-map {
@@ -608,6 +680,7 @@ label {
   align-items: center;
   position: relative;
   top: 0;
+  z-index: 1999999;
 }
 
 .step.active {
