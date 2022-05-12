@@ -1,11 +1,11 @@
 <template>
   <div class="main-map">
-    <Scrollama :offset="0.25" @step-enter="handler">
+    <Scrollama :offset="0.9" @step-enter="handler">
       <svg
         :height="mapHeight"
         :width="mapWidth"
         class="map-overlay"
-        style="padding-top: 50px; padding-bottom: 0px"
+        style="padding-top: 70px; padding-bottom: 0px"
       >
         <defs>
           <marker
@@ -82,12 +82,15 @@
               <p class="map-desc">
                 There is a direct correlation between
                 <b class="emphasize-color">pills prescribed per 100 people</b>
-                and <b class="emphasize-color-pink">overdose deaths</b> from the
-                last decade. In counties where prescriptions were higher,
-                overdoses are also more prevelant. Alternatively, we would
-                expect <b class="emphasize-color">MAT providers</b> to follow
-                the same pattern and be just as available in counties that are
-                vulnerable.
+                and
+                <b class="emphasize-color-pink"
+                  >overdose deaths per 100,000 people</b
+                >
+                from the last decade. In counties where prescriptions were
+                higher, overdoses are also more prevelant. Alternatively, we
+                would expect <b class="emphasize-color">MAT providers</b> to
+                follow the same pattern and be just as available in counties
+                that are vulnerable.
               </p>
             </div>
           </div>
@@ -205,8 +208,8 @@ export default {
       providerData: null,
       currStep: 0,
       width: MAX_SVG_WIDTH,
-      mapHeight: 600,
-      mapWidth: 1200,
+      mapHeight: 800,
+      mapWidth: 1400,
       medication: null,
       checked: null,
     };
@@ -543,7 +546,7 @@ export default {
 
       svgMat
         .append("line")
-        .attr("x1", 110)
+        .attr("x1", 90)
         .attr("y1", 610)
         .attr("x2", 195)
         .attr("y2", 610)
@@ -686,12 +689,11 @@ export default {
     basemapOpacity1() {
       d3.selectAll("#provider-overlay").attr("opacity", 1);
     },
-    // deathLegendVisible() {
-    //   d3.selectAll(".death-legend").attr("opacity", 1);
-    // },
-    // deathLegendNotVisible() {
-    //   d3.selectAll(".death-legend").attr("opacity", 0);
-    // },
+    allLegendsInvisible() {
+      d3.selectAll(".death-legend").attr("opacity", 0);
+      d3.selectAll(".pill-legend").attr("opacity", 0);
+      d3.selectAll(".mat-legend").attr("opacity", 0);
+    },
 
     handler({ element, index, direction }) {
       if (index == 0)
@@ -709,10 +711,14 @@ export default {
       if (index === 3)
         this.basemapOpacity1(),
           this.redrawBasemap(),
-          d3.selectAll(".death-legend").attr("opacity", 0);
-      if (index === 4) this.drawProviders(), this.deathOpacity0();
-      if (index === 5) this.drawProvidersAvail(), this.deathOpacity0();
-      if (index === 6) this.deathOpacity0();
+          this.allLegendsInvisible();
+      if (index === 4)
+        this.drawProviders(), this.deathOpacity0(), this.allLegendsInvisible();
+      if (index === 5)
+        this.drawProvidersAvail(),
+          this.deathOpacity0(),
+          this.allLegendsInvisible();
+      if (index === 6) this.deathOpacity0(), this.allLegendsInvisible();
       if (direction === "down") element.classList.add("active");
       console.log(index);
     },
@@ -735,6 +741,12 @@ export default {
   font-weight: 500;
   line-height: 2;
 }
+
+/* input[type="radio"]:checked + label {
+  background: #2196f3;
+  color: #fff;
+  border-color: #2196f3;
+} */
 
 #bivariate-legend {
   position: sticky;
@@ -782,7 +794,7 @@ label {
 }
 
 .step-map {
-  max-width: 80%;
+  max-width: 55%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;
@@ -790,7 +802,7 @@ label {
   pointer-events: all;
   font-family: "Inter var", sans-serif;
   background: #151c24;
-  z-index: 999999;
+  z-index: 10000000;
 }
 
 .step-title-map {
@@ -842,8 +854,8 @@ label {
   display: flex;
   /* align-items: flex-start; */
   pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
+  /* visibility: hidden; */
+  /* opacity: 0; */
   transform: scale(0.8);
   transition: all 1000ms;
   transform: translateY(60px);
@@ -852,14 +864,15 @@ label {
   align-items: center;
   position: relative;
   top: 0;
-  z-index: 1999999;
+  /* z-index: 1999999; */
 }
 
 .step.active {
-  visibility: visible;
+  /* visibility: visible; */
   opacity: 1;
   transform: translateY(50);
   position: -webkit-sticky;
+  z-index: 10000000;
 }
 
 .multiplied {

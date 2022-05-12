@@ -400,14 +400,12 @@
             <h2 class="brain-title">The Dependence to Feel Normal</h2>
             <div class="line-sep-cont"><div class="line-sep"></div></div>
             <p>
-              The Locus Coeruleus (LC) is an area of the brain that is
-              critically involved in the production of opioid dependence and
-              withdrawal. At this phase, the mesolimbic reward system changes
-              and dependence means that the user no longer feels pleasure in the
-              activities they used to without opioids. The brain functions more
-              or less normally when the drugs are present and abnormally when
-              they are not. Opioid tolerance occurs because the brain cells that
-              have opioid receptors on them gradually become less responsive to
+              At this phase, the mesolimbic reward system changes and dependence
+              means that the user no longer feels pleasure in the activities
+              they used to without opioids. The brain functions more or less
+              normally when the drugs are present and abnormally when they are
+              not. Opioid tolerance increases because the brain cells that have
+              opioid receptors on them gradually become less responsive to
               stimulation.
             </p>
           </div>
@@ -438,10 +436,9 @@
               because of its steadier influence on opioid receptors, it
               alleviates cravings and compulsive drug use. It moderates the
               exaggerated cortisol stress response that increases the danger of
-              relapse in stressful situations. MAT is highly effective in
-              recovery, but given the complex biological, psychological, and
-              social aspects of the disease, it is most effective when combined
-              with appropriate psychosocial treatments.
+              relapse in stressful situations. MAT is the medical standard in
+              recovery and is most effective when combined with appropriate
+              psychosocial treatments.
             </p>
           </div>
         </div>

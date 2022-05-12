@@ -27,7 +27,7 @@
           <div class="svg-img-holder">
             <spilledPills />
           </div>
-          <div class="step step-app">
+          <!-- <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
                 Over a century before the mis-marketing of OxyContin dominated
@@ -40,7 +40,7 @@
                 from the most recent has yet to be seen.
               </p>
             </div>
-          </div>
+          </div> -->
           <!-- <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
@@ -128,7 +128,7 @@
         <div class="footer-links">
           <div class="link-container">
             <p class="footer-text">
-              <a id="top-btn" href=".intro">Back to top</a>
+              <a id="top-btn" @click="toTop">Back to top</a>
             </p>
           </div>
         </div>
@@ -161,8 +161,30 @@ export default {
     spilledPills,
     restackedPills,
   },
-
+  data() {
+    return {
+      scTimer: 0,
+      scY: 0,
+    };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
   methods: {
+    handleScroll: function () {
+      if (this.scTimer) return;
+      this.scTimer = setTimeout(() => {
+        this.scY = window.scrollY;
+        clearTimeout(this.scTimer);
+        this.scTimer = 0;
+      }, 100);
+    },
+    toTop: function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
     stackedFall() {
       var allPills = d3.selectAll(".pill");
 
