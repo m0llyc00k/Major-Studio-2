@@ -1,6 +1,11 @@
 <template>
   <Scrollama :offset="0.5" @step-enter="arcHandler">
-    <svg :height="height" :width="width" class="arc">
+    <svg
+      :height="height"
+      :width="width"
+      class="arc"
+      style="padding-top: 0px; padding-bottom: 0px"
+    >
       <g class="arc"></g>
     </svg>
     <div class="step step-arc" v-for="link in links" :key="link">
@@ -45,7 +50,7 @@ import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
-const MAX_SVG_WIDTH = 1400;
+const MAX_SVG_WIDTH = 1200;
 
 const rectWidth = 12;
 const rectHeight = 12;
@@ -64,7 +69,7 @@ export default {
       currStep: 0,
       currLink: data.links.target,
       width: MAX_SVG_WIDTH,
-      height: 800,
+      height: 750,
     };
   },
   props: {

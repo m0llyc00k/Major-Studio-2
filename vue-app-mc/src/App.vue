@@ -411,6 +411,9 @@ body {
   padding: 0;
   /* background-color: rgba(35, 49, 64); */
   background: #151c24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .step-app {

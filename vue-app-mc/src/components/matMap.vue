@@ -1,9 +1,27 @@
 <template>
   <div class="main-map">
     <Scrollama :offset="0.25" @step-enter="handler">
-      <svg :height="mapHeight" :width="mapWidth" class="map-overlay"></svg>
-
-      <!-- <img id="bivariate-legend" src="../legend.png" /> -->
+      <svg
+        :height="mapHeight"
+        :width="mapWidth"
+        class="map-overlay"
+        style="padding-top: 50px; padding-bottom: 0px"
+      >
+        <defs>
+          <marker
+            id="arrow"
+            markerUnits="strokeWidth"
+            markerWidth="12"
+            markerHeight="12"
+            viewBox="0 0 12 12"
+            refX="6"
+            refY="6"
+            orient="auto"
+          >
+            <path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #dfdfdf"></path>
+          </marker>
+        </defs>
+      </svg>
 
       <div class="step" data-step-no="1">
         <div class="step-map">
@@ -11,7 +29,9 @@
             As a result of the overprescription of opioids, overdoses have been
             steadily increasing since the onset of the epidemic. The map below
             shows national
-            <b class="emphasize-color">overdose deaths per 100,000 people</b>
+            <b class="emphasize-color-pink"
+              >overdose deaths per 100,000 people</b
+            >
             from 2010 - 2020.
           </p>
         </div>
@@ -34,7 +54,7 @@
                     @change="pillOpacity1"
                     v-model="medication"
                   />
-                  <label for="pills">Pills per person [2012]</label>
+                  <label for="pills">Pills per 100 People [2012]</label>
                 </li>
                 <li>
                   <input
@@ -61,13 +81,13 @@
             <div class="flex-child">
               <p class="map-desc">
                 There is a direct correlation between
-                <b class="emphasize-color">pills prescribed per person</b> and
-                <b class="emphasize-color">overdose deaths</b> from the last
-                decade. In counties where prescriptions were higher, overdoses
-                are also more prevelant. Alternatively, we would expect
-                <b class="emphasize-color">MAT providers</b> to follow the same
-                pattern and be just as available in counties that are vulnerable
-                to overdose deaths.
+                <b class="emphasize-color">pills prescribed per 100 people</b>
+                and <b class="emphasize-color-pink">overdose deaths</b> from the
+                last decade. In counties where prescriptions were higher,
+                overdoses are also more prevelant. Alternatively, we would
+                expect <b class="emphasize-color">MAT providers</b> to follow
+                the same pattern and be just as available in counties that are
+                vulnerable.
               </p>
             </div>
           </div>
@@ -141,17 +161,17 @@ const colorBlue = d3.scaleQuantile().range([
   "rgb(3, 19, 102)",
 ]);
 
-// const blues = [
-//   "rgb(222,235,247)",
-//   // "rgb(198,219,239)",
-//   "rgb(158,202,225)",
-//   // "rgb(107,174,214)",
-//   "rgb(66,146,198)",
-//   // "rgb(33,113,181)",
-//   "rgb(8,81,156)",
-//   // "rgb(8,48,107)",
-//   "rgb(3, 19, 102)",
-// ];
+const blues = [
+  "rgb(222,235,247)",
+  // "rgb(198,219,239)",
+  "rgb(158,202,225)",
+  // "rgb(107,174,214)",
+  "rgb(66,146,198)",
+  // "rgb(33,113,181)",
+  "rgb(8,81,156)",
+  // "rgb(8,48,107)",
+  "rgb(3, 19, 102)",
+];
 
 //pinks
 const colorPink = d3
@@ -161,6 +181,11 @@ const colorPink = d3
 const pinks = ["#e0cedc", "#d8b4d1", "#cf9ac5", "#c780b9", "#be64ac"];
 
 var noDataColor = "#253040";
+
+const blueLegendWidth = 22;
+const blueLegendHeight = 135;
+const pinkLegendWidth = 135;
+const pinkLegendHeight = 22;
 
 const url =
   "https://raw.githubusercontent.com/m0llyc00k/Thesis-2022/main/mainland_counties.json";
@@ -254,9 +279,6 @@ export default {
         this.geoData.map((d) => d.properties.DEATHSPER),
         numberOfClasses
       );
-      // console.log( this.geoData.map((d) => d.properties.DEATHSPER)
-      console.log("numberOfClasses", numberOfClasses);
-      console.log("jenksNaturalBreaks", jenksNaturalBreaks);
 
       // set the domain of the color scale based on our data
       colorPink.domain(jenksNaturalBreaks);
@@ -280,51 +302,62 @@ export default {
 
       var deathSvg = d3.select(".map-overlay");
 
-      const legendWidth = 25;
-      const legendHeight = 25;
-
-      deathSvg
-        .append("text")
-        .attr("x", 25)
-        .attr("y", 25)
-        .html("Overdose Deaths per 100,000")
-        .style("fill", "#dfdfdf")
-        .style("font-size", "10px")
-        .attr("alignment-baseline", "middle")
-        .attr("class", "death-legend");
-
-      deathSvg
-        .append("text")
-        .attr("x", 25)
-        .attr("y", 36)
-        .html("[2010 - 2010]")
-        .style("fill", "#dfdfdf")
-        .style("font-size", "10px")
-        .attr("alignment-baseline", "middle")
-        .attr("class", "death-legend");
-
       jenksNaturalBreaks.map((d, i) =>
         deathSvg
           .append("text")
-          .attr("x", 60)
-          .attr("y", i * 31 + 30)
-          .text(d)
+          .attr("x", 10)
+          .attr("y", i * 24 + 475)
+          .text(
+            jenksNaturalBreaks[i - 1] === undefined
+              ? ""
+              : Number(jenksNaturalBreaks[i - 1]) + " - " + d
+          )
           .style("fill", "#dfdfdf")
           .style("font-size", "10px")
           .attr("alignment-baseline", "middle")
           .attr("class", "death-legend")
       );
 
-      pinks.map((d, i) =>
-        deathSvg
-          .append("rect")
-          .attr("x", 25)
-          .attr("y", i * 30 + 50)
-          .attr("width", legendWidth)
-          .attr("height", legendHeight)
-          .style("fill", d)
-          .attr("class", "death-legend")
+      ///pink legend for deaths
+      pinks.map(
+        (d, i) =>
+          deathSvg
+            .append("rect")
+            .attr("x", 65)
+            .attr("y", i * 22 + 490)
+            .attr("width", pinkLegendWidth)
+            .attr("height", pinkLegendHeight)
+            .style("fill", d)
+            .attr("opacity", 0.7)
+            .attr("class", "death-legend")
+        // .attr("class", "multiplied")
       );
+
+      ///draw arrow///
+      deathSvg
+        .append("line")
+        .attr("x1", 215)
+        .attr("y1", 490)
+        .attr("x2", 215)
+        .attr("y2", 595)
+        .attr("stroke", "#dfdfdf")
+        .attr("stroke-width", 1)
+        .attr("class", "death-legend")
+
+        .attr("marker-end", "url(#arrow)");
+
+      ///title for arrow
+      deathSvg
+        .append("text")
+        .text("High Death Rate")
+        .attr("x", -580)
+        .attr("y", 227)
+        .attr("transform", "rotate(-90)")
+        .style("fill", "#dfdfdf")
+        .style("font-size", "10px")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "death-legend");
+
       d3.selectAll(".death-legend").attr("opacity", 0);
     },
 
@@ -341,15 +374,13 @@ export default {
 
       // calculate jenks natural breaks'
       const numberOfClasses = colorBlue.range().length;
-      const jenksNaturalBreaks = jenks(
+      const jenksNaturalBreaksPills = jenks(
         this.geoData.map((d) => d.properties.PILLS),
         numberOfClasses
       );
-      console.log("numberOfClasses", numberOfClasses);
-      console.log("jenksNaturalBreaks", jenksNaturalBreaks);
 
       // set the domain of the color scale based on our data
-      colorBlue.domain(jenksNaturalBreaks);
+      colorBlue.domain(jenksNaturalBreaksPills);
 
       pillGroup
         .selectAll("path")
@@ -373,6 +404,66 @@ export default {
           }
         })
         .attr("id", "pill-overlay");
+
+      var pillSvg = d3.select(".map-overlay");
+
+      ///legend text
+      jenksNaturalBreaksPills.map((d, i) =>
+        pillSvg
+          .append("text")
+          .attr("x", -450)
+          .attr("y", i * 24 + 75)
+          .attr("transform", "rotate(-90)")
+          .text(
+            jenksNaturalBreaksPills[i - 1] === undefined
+              ? ""
+              : Number(jenksNaturalBreaksPills[i - 1]) + " - " + d
+          )
+          .style("fill", "#dfdfdf")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle")
+          .attr("class", "pill-legend")
+      );
+
+      ///create blues
+      blues.map((d, i) =>
+        pillSvg
+          .append("rect")
+          // .attr("opacity", 0.3)
+          .attr("x", i * 22 + 90)
+          .attr("y", 465)
+          .attr("width", blueLegendWidth)
+          .attr("height", blueLegendHeight)
+          .style("fill", d)
+          .style("mix-blend-mode", "multiply")
+          .attr("class", "pill-legend")
+      );
+      // .attr("class", "pill-legend");
+
+      ///draw arrow
+      pillSvg
+        .append("line")
+        .attr("x1", 90)
+        .attr("y1", 615)
+        .attr("x2", 195)
+        .attr("y2", 615)
+        .attr("stroke", "#dfdfdf")
+        .attr("stroke-width", 1)
+        .attr("marker-end", "url(#arrow)")
+        .attr("class", "pill-legend");
+
+      ///title for arrow
+      pillSvg
+        .append("text")
+        .text("High Pill Rate")
+        .attr("x", 110)
+        .attr("y", 625)
+        .style("fill", "#dfdfdf")
+        .style("font-size", "10px")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "pill-legend");
+
+      d3.selectAll(".pill-legend").attr("opacity", 0);
     },
 
     drawMat() {
@@ -385,17 +476,15 @@ export default {
 
       var matGroup = svgMat.append("g").attr("id", "mat-group");
 
-      // calculate jenks natural breaks'
+      // calculate jenks natural breaks
       const numberOfClasses = colorBlue.range().length;
-      const jenksNaturalBreaks = jenks(
+      const jenksNaturalBreaksMat = jenks(
         this.geoData.map((d) => d.properties.MAT),
         numberOfClasses
       );
-      console.log("numberOfClasses", numberOfClasses);
-      console.log("jenksNaturalBreaks", jenksNaturalBreaks);
 
       // set the domain of the color scale based on our data
-      colorBlue.domain(jenksNaturalBreaks);
+      colorBlue.domain(jenksNaturalBreaksMat);
 
       matGroup
         .selectAll("path")
@@ -419,6 +508,63 @@ export default {
           }
         })
         .attr("id", "mat-overlay");
+
+      jenksNaturalBreaksMat.map((d, i) =>
+        svgMat
+          .append("text")
+          .attr("x", -450)
+          .attr("y", i * 24 + 75)
+          .attr("transform", "rotate(-90)")
+          .text(
+            jenksNaturalBreaksMat[i - 1] === undefined
+              ? ""
+              : Number(jenksNaturalBreaksMat[i - 1]) + " - " + d
+          )
+          .style("fill", "#dfdfdf")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle")
+          .attr("class", "mat-legend")
+      );
+
+      ///blue legend rects
+      blues.map((d, i) =>
+        svgMat
+          .append("rect")
+          .attr("opacity", 0.7)
+          .attr("x", i * 22 + 90)
+          .attr("y", 465)
+          .attr("opacity", 0.8)
+          .attr("width", blueLegendWidth)
+          .attr("height", blueLegendHeight)
+          .style("fill", d)
+          .style("mix-blend-mode", "multiply")
+          .attr("class", "mat-legend")
+      );
+
+      svgMat
+        .append("line")
+        .attr("x1", 110)
+        .attr("y1", 610)
+        .attr("x2", 195)
+        .attr("y2", 610)
+        .attr("stroke", "#dfdfdf")
+        .attr("stroke-width", 1)
+        .attr("marker-end", "url(#arrow)")
+        .attr("class", "mat-legend");
+
+      ///title for arrow
+      svgMat
+        .append("text")
+        .text("High MAT Rate")
+        .attr("x", 110)
+        .attr("y", 625)
+        .style("fill", "#dfdfdf")
+        .style("font-size", "10px")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "mat-legend");
+
+      // d3.selectAll(".pill-legend").attr("opacity", 0);
+      d3.selectAll(".mat-legend").attr("opacity", 0);
     },
 
     drawBaseMap() {
@@ -495,6 +641,9 @@ export default {
       d3.selectAll("#provider-overlay").attr("opacity", 0);
       d3.selectAll(".provider-avail").attr("opacity", 0);
       d3.selectAll(".all-providers").attr("opacity", 0);
+      d3.selectAll(".pill-legend").attr("opacity", 0);
+      d3.selectAll(".mat-legend").attr("opacity", 0);
+      d3.selectAll(".death-legend").attr("opacity", 0);
     },
 
     redrawBasemap() {
@@ -503,45 +652,64 @@ export default {
     },
 
     deathOpacity1() {
-      d3.selectAll("#deaths-overlay").attr("opacity", 1);
-      this.deathLegendVisible();
+      d3.selectAll("#deaths-overlay").attr("opacity", 1),
+        d3.selectAll(".death-legend").attr("opacity", 1);
     },
 
     deathOpacity0() {
       d3.selectAll("#deaths-overlay").attr("opacity", 0);
-      this.deathLegendNotVisible();
+      d3.selectAll(".death-legend").attr("opacity", 0);
     },
 
     noOpacityButDeath() {
       d3.selectAll("#mat-overlay").attr("opacity", 0);
       d3.selectAll("#pill-overlay").attr("opacity", 0);
       d3.selectAll("#deaths-overlay").attr("opacity", 1);
+      d3.selectAll(".pill-legend").attr("opacity", 0);
+      d3.selectAll(".mat-legend").attr("opacity", 0);
+      d3.selectAll(".death-legend").attr("opacity", 1);
     },
 
     pillOpacity1() {
       d3.selectAll("#mat-overlay").attr("opacity", 0);
       d3.selectAll("#pill-overlay").attr("opacity", 1);
+      d3.selectAll(".pill-legend").attr("opacity", 0.8);
+      d3.selectAll(".mat-legend").attr("opacity", 0);
     },
 
     matOpacity1() {
       d3.selectAll("#pill-overlay").attr("opacity", 0);
       d3.selectAll("#mat-overlay").attr("opacity", 1);
+      d3.selectAll(".mat-legend").attr("opacity", 0.8);
+      d3.selectAll(".pill-legend").attr("opacity", 0);
     },
     basemapOpacity1() {
       d3.selectAll("#provider-overlay").attr("opacity", 1);
     },
-    deathLegendVisible() {
-      d3.selectAll(".death-legend").attr("opacity", 1);
-    },
-    deathLegendNotVisible() {
-      d3.selectAll(".death-legend").attr("opacity", 0);
-    },
+    // deathLegendVisible() {
+    //   d3.selectAll(".death-legend").attr("opacity", 1);
+    // },
+    // deathLegendNotVisible() {
+    //   d3.selectAll(".death-legend").attr("opacity", 0);
+    // },
 
     handler({ element, index, direction }) {
-      if (index == 0) this.deathOpacity1(), this.providerMap0();
-      if (index == 1) this.deathOpacity1(), this.providerMap0();
-      if (index == 2) this.deathOpacity1(), this.providerMap0();
-      if (index === 3) this.basemapOpacity1(), this.redrawBasemap();
+      if (index == 0)
+        this.deathOpacity1(),
+          this.providerMap0(),
+          d3.selectAll(".death-legend").attr("opacity", 0.8);
+      if (index == 1)
+        this.deathOpacity1(),
+          this.providerMap0(),
+          d3.selectAll(".death-legend").attr("opacity", 0.8);
+      if (index == 2)
+        this.deathOpacity1(),
+          this.providerMap0(),
+          d3.selectAll(".death-legend").attr("opacity", 0.8);
+      if (index === 3)
+        this.basemapOpacity1(),
+          this.redrawBasemap(),
+          d3.selectAll(".death-legend").attr("opacity", 0);
       if (index === 4) this.drawProviders(), this.deathOpacity0();
       if (index === 5) this.drawProvidersAvail(), this.deathOpacity0();
       if (index === 6) this.deathOpacity0();
@@ -574,6 +742,10 @@ export default {
 .emphasize-color {
   /* color: #8097b5; */
   color: #adcdf6;
+}
+
+.emphasize-color-pink {
+  color: #d8b4d1;
 }
 
 .inline-title {
@@ -610,7 +782,7 @@ label {
 }
 
 .step-map {
-  max-width: 70%;
+  max-width: 80%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;
@@ -686,7 +858,7 @@ label {
 .step.active {
   visibility: visible;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(50);
   position: -webkit-sticky;
 }
 
