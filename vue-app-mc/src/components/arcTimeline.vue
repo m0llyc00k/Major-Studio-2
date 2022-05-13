@@ -1,7 +1,6 @@
 <template>
-  <Scrollama :offset="0.3" @step-enter="arcHandler">
-    <svg :height="height" :width="width" class="arc">
-      <!-- style="padding-top: 40px; padding-bottom: 0px" -->
+  <Scrollama :offset="0.9" @step-enter="arcHandler">
+    <svg :height="height" :width="width" class="arc" style="padding-top: 100px">
       <g class="arc"></g>
     </svg>
     <div class="step step-arc" v-for="link in links" :key="link">
@@ -19,7 +18,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="step step-arc">
+    <div class="step step-arc">
       <div class="last-step-text">
         <p>
           Pharmaceutical companies blame <em>'recreational users'</em>, framing
@@ -33,7 +32,7 @@
           >
         </p>
       </div>
-    </div> -->
+    </div>
     <div class="step step-arc"></div>
   </Scrollama>
 </template>
@@ -46,7 +45,7 @@ import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
-const MAX_SVG_WIDTH = 1200;
+const MAX_SVG_WIDTH = 1300;
 
 const rectWidth = 12;
 const rectHeight = 12;
@@ -65,8 +64,7 @@ export default {
       currStep: 0,
       currLink: data.links.target,
       width: MAX_SVG_WIDTH,
-      height: 1000,
-      // height: 800,
+      height: 800,
     };
   },
   props: {
@@ -113,8 +111,7 @@ export default {
         .transition()
         .ease(d3.easeBounce)
         .duration((d, i) => i * 200)
-        .attr("y", this.height - 955)
-        // .attr("y", this.height - 752)
+        .attr("y", this.height - 752)
         .attr("class", "timelineNodes");
 
       // And give them a label
@@ -290,7 +287,7 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 0.75)
+        .attr("opacity", 0.9)
         .attr("class", "drawnArc")
         .attr("stroke-width", 2);
 
@@ -366,7 +363,7 @@ html {
   font-size: 1.2em;
 }
 .step-text {
-  max-width: 75%;
+  max-width: 80%;
   border-radius: 10px;
   background: #151c24;
   backface-visibility: inherit;
@@ -430,8 +427,8 @@ html {
   font-weight: 00;
   font-size: 15px;
   pointer-events: none;
-  /* visibility: hidden;
-  opacity: 0; */
+  /* visibility: hidden; */
+  /* opacity: 0; */
   transform: scale(0.8);
   transition: all 1000ms;
   transform: translateY(60px);

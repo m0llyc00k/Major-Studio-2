@@ -27,7 +27,7 @@
           <div class="svg-img-holder">
             <spilledPills />
           </div>
-          <!-- <div class="step step-app">
+          <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
                 Over a century before the mis-marketing of OxyContin dominated
@@ -40,7 +40,7 @@
                 from the most recent has yet to be seen.
               </p>
             </div>
-          </div> -->
+          </div>
           <!-- <div class="step step-app">
             <div class="app-text">
               <p class="para-text">

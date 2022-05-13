@@ -1,11 +1,11 @@
 <template>
   <div class="main-map">
-    <Scrollama :offset="0.9" @step-enter="handler">
+    <Scrollama :offset="0.25" @step-enter="handler">
       <svg
         :height="mapHeight"
         :width="mapWidth"
         class="map-overlay"
-        style="padding-top: 70px; padding-bottom: 0px"
+        style="padding-top: 50px; padding-bottom: 0px"
       >
         <defs>
           <marker
@@ -208,8 +208,8 @@ export default {
       providerData: null,
       currStep: 0,
       width: MAX_SVG_WIDTH,
-      mapHeight: 800,
-      mapWidth: 1400,
+      mapHeight: 630,
+      mapWidth: 1200,
       medication: null,
       checked: null,
     };
@@ -794,7 +794,7 @@ label {
 }
 
 .step-map {
-  max-width: 55%;
+  max-width: 80%;
   border-radius: 10px;
   background: #212b38;
   backface-visibility: inherit;
