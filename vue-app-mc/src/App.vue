@@ -27,7 +27,7 @@
           <div class="svg-img-holder">
             <spilledPills />
           </div>
-          <div class="step step-app">
+          <!-- <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
                 Over a century before the mis-marketing of OxyContin dominated
@@ -40,7 +40,7 @@
                 from the most recent has yet to be seen.
               </p>
             </div>
-          </div>
+          </div> -->
           <!-- <div class="step step-app">
             <div class="app-text">
               <p class="para-text">
@@ -52,11 +52,11 @@
               </p>
             </div>
           </div> -->
-          <div class="step step-app">
+          <!-- <div class="step step-app">
             <div class="app-text">
               <h2>Let's draw the connections between both epidemics...</h2>
             </div>
-          </div>
+          </div> -->
           <div class="step step-app"></div>
           <!-- <div class="step step-app"></div> -->
         </Scrollama>
@@ -95,9 +95,10 @@
           <div class="flex-container">
             <div id="outro-step slide">
               <div class="resources-container">
-                <div class="resource-box">
-                  <div id="outro-title" class="resource-group">
-                    <p>
+                <!-- <div class="resource-box">
+                  <div id="outro-title" class="resource-group"> -->
+
+                <!-- <p>
                       The gripping effect that opioids have on the brain
                       combined with the inaccessibility of MAT leaves the nation
                       crippled with little chance of recovery.
@@ -116,15 +117,15 @@
                       <span class="emphasize-color"
                         >making MAT treatment accessible.</span
                       >
-                    </p>
-                  </div>
-                </div>
+                    </p> -->
+                <!-- </div>
+                </div> -->
               </div>
             </div>
           </div>
         </div>
       </Scrollama>
-      <footer>
+      <!-- <footer>
         <div class="footer-links">
           <div class="link-container">
             <p class="footer-text">
@@ -132,7 +133,7 @@
             </p>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </div>
 </template>
@@ -255,7 +256,7 @@ export default {
       if (direction === "down") element.classList.add("active");
       if (index === 0)
         this.stackedFall(), d3.selectAll(".restack-pill").attr("opacity", 0);
-      if (index === 2) this.spillOpacity0();
+      if (index === 1) this.spillOpacity0();
       // if (index === 2) this.spillOpacity1();
       if (index === 1) this.spillOpacity1();
 
@@ -404,7 +405,7 @@ export default {
 }
 
 #outro {
-  background-image: linear-gradient(#151c24, #314153, #314153, #151c24);
+  background-image: linear-gradient(#151c24, #314153, #314153);
   background-position: center;
   background-size: cover;
 }

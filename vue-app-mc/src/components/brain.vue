@@ -10,7 +10,7 @@
           x="0px"
           y="0px"
           viewBox="-3 -3 27 27"
-          style="enable-background: new 0 0 50 50"
+          style="enable-background: new 0 0 50 50; padding-left: 450px"
           xml:space="preserve"
           class="brain-svg"
         >
@@ -359,47 +359,48 @@
           </g>
         </svg>
       </div>
-      <Scrollama
-        :debug="false"
-        :offset="0.5"
-        @step-enter="brainHandler"
-        class="main__scrollama"
-      >
-        <div class="step-brain" style="opacity: 0"></div>
-        <div class="step-brain" data-step-no="1">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 1:</h3>
-            <h2 class="brain-title">The Normal Brain</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
+      <div class="brain-steps">
+        <Scrollama
+          :debug="false"
+          :offset="0.5"
+          @step-enter="brainHandler"
+          class="main_scrollama_brain"
+        >
+          <div class="step-brain" style="opacity: 0"></div>
+          <div class="step-brain" data-step-no="1">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 1:</h3>
+              <h2 class="brain-title">The Brain Before Opioids</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <!-- <p>
               Your body naturally produces endorphins, which is the body’s
               natural version of opioids, and this is the same reward circuit
               that is accessed after working out, falling in love, or eating a
               good meal. They relieve pain and a create a general feeling of
               wellbeing.
-            </p>
+            </p> -->
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="2">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 2:</h3>
-            <h2 class="brain-title">The Mesolimbic Reward System</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
+          <div class="step-brain" data-step-no="2">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 2:</h3>
+              <h2 class="brain-title">The Reward System</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <!-- <p>
               When an opioid is first taken, it creates a tidal wave in the
               reward circuits of the brain. It floods your frontal lobe with
               dopamine and replaces pain receptors with euphoria- encouraging
               repeated use and making the user seek the same high as their first
               dose.
-            </p>
+            </p> -->
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="3">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 3:</h3>
-            <h2 class="brain-title">The Dependence to Feel Normal</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
+          <div class="step-brain" data-step-no="3">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 3:</h3>
+              <h2 class="brain-title">The Dependence to Feel Normal</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <!-- <p>
               At this phase, the mesolimbic reward system changes and dependence
               means that the user no longer feels pleasure in the activities
               they used to without opioids. The brain functions more or less
@@ -407,31 +408,32 @@
               not. Opioid tolerance increases because the brain cells that have
               opioid receptors on them gradually become less responsive to
               stimulation.
-            </p>
+            </p> -->
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="4">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 4:</h3>
-            <h2 class="brain-title">The Changed Set Point Model</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
+          <div class="step-brain" data-step-no="4">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 4:</h3>
+              <h2 class="brain-title">The Changed Set Point Model</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <!-- <p>
               Your baseline is altered, no longer producing natural opioids and
               depending entirely on the medication to regulate. This is what
               addiction looks like. Withdrawal symptoms become unbearable, known
               as 'dopesick'. Cortisol, the stress hormone, is increased, making
               stress a driver for many addicts.
-            </p>
+            </p> -->
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="5">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 5:</h3>
-            <h2 class="brain-title">
-              The Normalizing Effects of MAT Medications
-            </h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
+          <div class="step-brain" data-step-no="5">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 5:</h3>
+              <h2 class="brain-title">
+                The Normalizing Effects of MAT <br />
+                <span class="smaller">[Medication-Assisted Treatment]</span>
+              </h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <!-- <p>
               Medication Assisted Treatment, or MAT, causes dependence, but
               because of its steadier influence on opioid receptors, it
               alleviates cravings and compulsive drug use. It moderates the
@@ -439,13 +441,17 @@
               relapse in stressful situations. MAT is the medical standard in
               recovery and is most effective when combined with appropriate
               psychosocial treatments.
-            </p>
+            </p> -->
+            </div>
           </div>
-        </div>
-        <div class="step-brain invisible" data-step-no="6">
-          <div class="step-brain-text"></div>
-        </div>
-      </Scrollama>
+          <div class="step-brain invisible" data-step-no="6">
+            <div class="step-brain-text"></div>
+          </div>
+          <div class="step-brain invisible" data-step-no="6">
+            <div class="step-brain-text"></div>
+          </div>
+        </Scrollama>
+      </div>
     </div>
   </div>
 </template>
@@ -726,19 +732,26 @@ export default {
 
 <style type="text/css">
 .main {
-  display: flex;
+  display: relative;
+}
+
+.smaller {
+  font-size: 23px;
 }
 
 .main__graphic {
-  display: flex;
+  display: relative;
   flex: 1;
-  top: 0vh;
+  top: 5vh;
   position: sticky;
-  height: 100vh;
+  height: 200vh;
 }
 
+.brain-steps {
+  padding-left: 150px;
+}
 .step-brain-text {
-  max-width: 80%;
+  max-width: 100%;
   border-radius: 10px;
   /* background: white; */
   backface-visibility: inherit;
@@ -758,18 +771,19 @@ export default {
 
 .brain-title {
   text-align: left;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 
 .step-brain {
-  padding: 10vh 0;
+  padding: 5vh;
   margin: 0 3rem;
   margin-bottom: 80vh;
   background-color: #212b38;
   border: 1px solid #ccc;
-  display: flex;
+  display: relative;
   flex: 1;
-  justify-content: center;
+  justify-content: left;
+  max-width: 22%;
 }
 
 .step.active {
@@ -781,9 +795,9 @@ export default {
 
 .line-sep-cont {
   margin: 0px 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  /* display: flex; */
+  /* flex-direction: row;
+  flex-wrap: nowrap; */
   justify-content: left;
 }
 

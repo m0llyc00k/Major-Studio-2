@@ -24,8 +24,8 @@
       </svg>
 
       <div class="step" data-step-no="1">
-        <div class="step-map">
-          <p class="map-text">
+        <div>
+          <!-- <p class="map-text">
             As a result of the overprescription of opioids, overdoses have been
             steadily increasing since the onset of the epidemic. The map below
             shows national
@@ -33,7 +33,7 @@
               >overdose deaths per 100,000 people</b
             >
             from 2010 - 2020.
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="step" data-step-no="2">
@@ -79,7 +79,7 @@
               </ul>
             </div>
             <div class="flex-child">
-              <p class="map-desc">
+              <!-- <p class="map-desc">
                 There is a direct correlation between
                 <b class="emphasize-color">pills prescribed per 100 people</b>
                 and
@@ -91,14 +91,14 @@
                 would expect <b class="emphasize-color">MAT providers</b> to
                 follow the same pattern and be just as available in counties
                 that are vulnerable.
-              </p>
+              </p> -->
             </div>
           </div>
         </div>
       </div>
       <div class="step" data-step-no="3">
-        <div class="step-map">
-          <p class="map-text">
+        <div>
+          <!-- <p class="map-text">
             As seen in the previous maps, there are not enough MAT centers to
             sufficiently treat vulnerable counties. To make matters worse, while
             providers can apply to treat up to 100 patients,
@@ -106,7 +106,7 @@
               >existing providers can typically only treat 30 patients</span
             >
             each within their state.
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="step" data-step-no="3">
@@ -208,8 +208,8 @@ export default {
       providerData: null,
       currStep: 0,
       width: MAX_SVG_WIDTH,
-      mapHeight: 630,
-      mapWidth: 1200,
+      mapHeight: 900,
+      mapWidth: 1600,
       medication: null,
       checked: null,
     };
@@ -234,8 +234,8 @@ export default {
     projection() {
       return d3
         .geoAlbersUsa()
-        .translate([this.mapWidth / 2, this.mapHeight / 2])
-        .scale([1300]);
+        .translate([this.mapWidth / 1.8, this.mapHeight / 2])
+        .scale([1600]);
     },
     path() {
       return d3.geoPath().projection(this.projection);
@@ -353,11 +353,11 @@ export default {
       deathSvg
         .append("text")
         .text("High Death Rate")
-        .attr("x", -580)
-        .attr("y", 227)
+        .attr("x", -590)
+        .attr("y", 235)
         .attr("transform", "rotate(-90)")
         .style("fill", "#dfdfdf")
-        .style("font-size", "10px")
+        .style("font-size", "12px")
         .attr("alignment-baseline", "middle")
         .attr("class", "death-legend");
 
@@ -414,9 +414,15 @@ export default {
       jenksNaturalBreaksPills.map((d, i) =>
         pillSvg
           .append("text")
-          .attr("x", -450)
-          .attr("y", i * 24 + 75)
-          .attr("transform", "rotate(-90)")
+          // .attr("x", -450)
+          // .attr("y", i * 24 + 75)
+          .attr("x", 74 + i * 24)
+          .attr("y", 450)
+          .attr("transform", function () {
+            var xRot = d3.select(this).attr("x");
+            var yRot = d3.select(this).attr("y");
+            return `rotate(-60, ${xRot},  ${yRot} )`; //rotate text to make legible
+          })
           .text(
             jenksNaturalBreaksPills[i - 1] === undefined
               ? ""
@@ -425,7 +431,7 @@ export default {
           .style("fill", "#dfdfdf")
           .style("font-size", "10px")
           .attr("alignment-baseline", "middle")
-          .attr("class", "pill-legend")
+          .attr("class", "pill-legend breaks")
       );
 
       ///create blues
@@ -459,10 +465,10 @@ export default {
       pillSvg
         .append("text")
         .text("High Pill Rate")
-        .attr("x", 110)
-        .attr("y", 625)
+        .attr("x", 106)
+        .attr("y", 630)
         .style("fill", "#dfdfdf")
-        .style("font-size", "10px")
+        .style("font-size", "12px")
         .attr("alignment-baseline", "middle")
         .attr("class", "pill-legend");
 
@@ -515,9 +521,13 @@ export default {
       jenksNaturalBreaksMat.map((d, i) =>
         svgMat
           .append("text")
-          .attr("x", -450)
-          .attr("y", i * 24 + 75)
-          .attr("transform", "rotate(-90)")
+          .attr("x", 74 + i * 24)
+          .attr("y", 450)
+          .attr("transform", function () {
+            var xRot = d3.select(this).attr("x");
+            var yRot = d3.select(this).attr("y");
+            return `rotate(-60, ${xRot},  ${yRot} )`; //rotate text to make legible
+          })
           .text(
             jenksNaturalBreaksMat[i - 1] === undefined
               ? ""
@@ -547,9 +557,9 @@ export default {
       svgMat
         .append("line")
         .attr("x1", 90)
-        .attr("y1", 610)
+        .attr("y1", 614)
         .attr("x2", 195)
-        .attr("y2", 610)
+        .attr("y2", 614)
         .attr("stroke", "#dfdfdf")
         .attr("stroke-width", 1)
         .attr("marker-end", "url(#arrow)")
@@ -559,10 +569,10 @@ export default {
       svgMat
         .append("text")
         .text("High MAT Rate")
-        .attr("x", 110)
-        .attr("y", 625)
+        .attr("x", 105)
+        .attr("y", 630)
         .style("fill", "#dfdfdf")
-        .style("font-size", "10px")
+        .style("font-size", "12px")
         .attr("alignment-baseline", "middle")
         .attr("class", "mat-legend");
 

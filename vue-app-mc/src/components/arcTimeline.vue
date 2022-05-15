@@ -3,23 +3,33 @@
     <svg :height="height" :width="width" class="arc" style="padding-top: 100px">
       <g class="arc"></g>
     </svg>
-    <div class="step step-arc" v-for="link in links" :key="link">
-      <div class="step-text">
-        <h2 class="step-title">{{ link.title }}</h2>
+    <div class="step step-arc" v-for="link in linksRev" :key="link">
+      <div>
+        <!-- <h1 class="step-title">{{ link.title }}</h1> -->
         <div class="flex-container">
-          <div class="flex-child">
-            <h3 class="year-text">{{ link.year1 }}</h3>
+          <!-- <div class="flex-child">
+            <h2
+              class="year-text"
+              style="padding-right: 200px; height: 30px; width: 200px"
+            >
+              {{ link.year1 }}
+            </h2>
             <p class="timeline-desc">{{ link.text1 }}</p>
           </div>
           <div class="flex-child">
-            <h3 class="year-text">{{ link.year2 }}</h3>
+            <h2
+              class="year-text"
+              style="padding-left: 200px; height: 30px; width: 200px"
+            >
+              {{ link.year2 }}
+            </h2>
             <p class="timeline-desc">{{ link.text2 }}</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <div class="step step-arc">
-      <div class="last-step-text">
+      <!-- <div class="last-step-text">
         <p>
           Pharmaceutical companies blame <em>'recreational users'</em>, framing
           them as criminals,<br />
@@ -31,8 +41,9 @@
             opioids?</span
           >
         </p>
-      </div>
+      </div> -->
     </div>
+    <div class="step step-arc"></div>
     <div class="step step-arc"></div>
   </Scrollama>
 </template>
@@ -40,12 +51,13 @@
 <script>
 import * as d3 from "d3";
 import data from "../../timeline-data.json";
+import dataRev from "../../timeline-data-rev.json";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
 import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
-const MAX_SVG_WIDTH = 1300;
+const MAX_SVG_WIDTH = 1500;
 
 const rectWidth = 12;
 const rectHeight = 12;
@@ -59,14 +71,17 @@ export default {
 
   data() {
     return {
+      linksRev: dataRev.links,
+      nodesRev: dataRev.nodes,
       links: data.links,
       nodes: data.nodes,
       currStep: 0,
       currLink: data.links.target,
       width: MAX_SVG_WIDTH,
-      height: 800,
+      height: 900,
     };
   },
+
   props: {
     data: {
       nodes: Array,
@@ -111,7 +126,7 @@ export default {
         .transition()
         .ease(d3.easeBounce)
         .duration((d, i) => i * 200)
-        .attr("y", this.height - 752)
+        .attr("y", this.height - 852)
         .attr("class", "timelineNodes");
 
       // And give them a label
@@ -199,6 +214,7 @@ export default {
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
         .attr("opacity", 0.1)
+        .attr("class", "base-arcs")
         .attr("stroke-width", 1);
 
       // do the animation; see the posts on arc animation for explanation
@@ -219,8 +235,9 @@ export default {
 
       // console.log(selectedArc);
 
-      // // hide them again
+      // // // hide them again
       // .transition()
+      // // .duration(2000)
       // .attr("stroke-dasharray", function () {
       //   return this.getTotalLength();
       // })
@@ -232,7 +249,7 @@ export default {
     },
 
     tracePath(index) {
-      var allNodes = this.nodes.map(function (d) {
+      var allNodes = this.nodesRev.map(function (d) {
         return d.name;
       });
 
@@ -282,12 +299,12 @@ export default {
 
       const arcs = svg
         .selectAll("arcs")
-        .data(this.links.slice(index - 1, index))
+        .data(this.linksRev.slice(index - 1, index))
         .enter()
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 0.9)
+        .attr("opacity", 0)
         .attr("class", "drawnArc")
         .attr("stroke-width", 2);
 
@@ -309,27 +326,35 @@ export default {
 
       return svg.node();
     },
+    allArcsVisible() {
+      d3.selectAll(".base-arcs", ".drawnArc")
+        .transition()
+        .duration(3000)
+        .attr("opacity", 1)
+        .attr("stroke-width", 2);
+    },
 
     arcHandler({ element, index, direction }) {
       const currArc = document.getElementsByClassName("drawnArc");
       // let highlightArc = document.getElementsByClassName("highlight-arc");
       console.log(index);
       if (index === 0 && direction === "down") this.drawChart();
-      if (index === 10)
-        d3.selectAll(".arc").transition().duration(1000).attr("opacity", 0);
-      if (index === 9) d3.selectAll(".arc").attr("opacity", 1);
-
+      // if (index === 10)
+      // d3.selectAll(".arc").transition().duration(1000).attr("opacity", 0);
       if (index === index && direction === "down") this.tracePath(index);
       if (direction === "down") element.classList.add("active");
-      if (index) {
+      if (index < 6) {
         let highlightArc = document.getElementsByClassName("highlight-arc");
         if (highlightArc.length == 0) {
           currArc[index - 1].classList.add("highlight-arc");
+          // currArc[index].classList.add("arc-fade");
         } else {
-          highlightArc[0].classList.remove("highlight-arc");
+          // highlightArc[0].classList.remove("highlight-arc");
           currArc[index - 1].classList.add("highlight-arc");
+          currArc[index - 2].classList.add("arc-fade");
         }
       }
+      if (index === 6) this.allArcsVisible();
     },
 
     // onResize() {
@@ -452,7 +477,7 @@ html {
   color: #dfdfdf;
   padding-bottom: 5px;
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .timeline-desc {
@@ -465,9 +490,10 @@ html {
 }
 
 .year-text {
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
   font-family: monospace;
+  font-size: 20px;
 }
 
 .flex-container {
@@ -478,12 +504,14 @@ html {
 
 .flex-child {
   flex: 1;
+  padding-right: 20px;
   /* align-items: flex-start; */
   justify-content: center;
   color: #cfbac4;
 }
 
 .flex-child:first-child {
+  padding-left: 20px;
   flex: 1;
   /* align-items: flex-start; */
   justify-content: center;
@@ -506,7 +534,15 @@ html {
 }
 
 .highlight-arc {
-  stroke-width: 5px;
+  stroke-width: 2px;
   opacity: 1;
+  visibility: visible;
+  /* transition-duration: 4s; */
+}
+
+.arc-fade {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
 }
 </style>
