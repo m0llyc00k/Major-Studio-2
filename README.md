@@ -2,9 +2,15 @@
 <h3>Understanding the Endurance of Opioids and Combatting the Modern Epidemic</h3>
 
 
+![landing_page](https://user-images.githubusercontent.com/86888346/168472975-ce9980ec-2f42-45ca-a654-0cf6fa2ffb04.png)
+
+![arc_simple](https://user-images.githubusercontent.com/86888346/168472994-75e404e4-6acb-4d4c-83b6-fa6bfc2115e1.png)
+
 <img src="./brain-animate_3.gif"/>
 
+<img width="961" alt="Screen Shot 2022-05-15 at 8 06 08 AM" src="https://user-images.githubusercontent.com/86888346/168473056-b33474bc-7b68-4d8a-889a-40a7b38a2a7e.png">
 
+<img width="961" alt="Screen Shot 2022-05-15 at 8 06 43 AM" src="https://user-images.githubusercontent.com/86888346/168473062-ca3a3c07-ff57-4628-a9ff-aa44f7bb6452.png">
 
 ![image](https://user-images.githubusercontent.com/86888346/155444223-a9ef2489-11ef-4f80-830e-64d260d26a7c.png)
 
