@@ -1,6 +1,6 @@
 <template>
   <div class="main-map">
-    <Scrollama :offset="0.25" @step-enter="handler">
+    <Scrollama :offset="0.3" @step-enter="handler">
       <svg
         :height="mapHeight"
         :width="mapWidth"
@@ -49,7 +49,7 @@
                 <li>
                   <input
                     type="radio"
-                    id="radio"
+                    id="radio-pills"
                     value="pills"
                     @change="pillOpacity1"
                     v-model="medication"
@@ -59,7 +59,7 @@
                 <li>
                   <input
                     type="radio"
-                    id="radio"
+                    id="radio-mat"
                     value="mat"
                     @change="matOpacity1"
                     v-model="medication"
@@ -69,7 +69,7 @@
                 <li>
                   <input
                     type="radio"
-                    id="radio"
+                    id="radio-death"
                     value="deaths"
                     @change="noOpacityButDeath"
                     v-model="medication"
@@ -252,9 +252,9 @@ export default {
         this.drawMat();
         this.drawBaseMap();
 
-        d3.selectAll("#deaths-overlay").attr("opacity", 0);
-        d3.selectAll("#pill-overlay").attr("opacity", 0);
-        d3.selectAll("#mat-overlay").attr("opacity", 0);
+        d3.selectAll("#deaths-overlay").attr("visibility", "hidden");
+        d3.selectAll("#pill-overlay").attr("visibility", "hidden");
+        d3.selectAll("#mat-overlay").attr("visibility", "hidden");
 
         if (geojson.features) {
           console.log("Number of features:", geojson.features.length);
@@ -301,6 +301,7 @@ export default {
           }
         })
         .attr("opacity", 1)
+        // .style("mix-blend-mode", "multiply")
         .attr("id", "deaths-overlay");
 
       var deathSvg = d3.select(".map-overlay");
@@ -331,7 +332,7 @@ export default {
             .attr("width", pinkLegendWidth)
             .attr("height", pinkLegendHeight)
             .style("fill", d)
-            .attr("opacity", 0.7)
+            .attr("opacity", 1)
             .attr("class", "death-legend")
         // .attr("class", "multiplied")
       );
@@ -361,7 +362,7 @@ export default {
         .attr("alignment-baseline", "middle")
         .attr("class", "death-legend");
 
-      d3.selectAll(".death-legend").attr("opacity", 0);
+      d3.selectAll(".death-legend").attr("visibility", "hidden");
     },
 
     drawPills() {
@@ -371,6 +372,7 @@ export default {
         .attr("width", this.mapWidth)
         .attr("height", this.mapHeight)
         .attr("id", "pill-overlay");
+
       // .attr("viewBox", [0, 0, 975, 610]);
 
       var pillGroup = svgPill.append("g").attr("id", "pill-group");
@@ -394,6 +396,11 @@ export default {
         .attr("class", function (d) {
           if (d.properties.PILLS != null && d.properties.DEATHSPER == null) {
             return "notMultiplied";
+          } else if (
+            d.properties.PILLS == null &&
+            d.properties.DEATHSPER == null
+          ) {
+            return "opacity0";
           } else {
             return "multiplied";
           }
@@ -432,7 +439,6 @@ export default {
       blues.map((d, i) =>
         pillSvg
           .append("rect")
-          // .attr("opacity", 0.3)
           .attr("x", i * 22 + 90)
           .attr("y", 465)
           .attr("width", blueLegendWidth)
@@ -440,6 +446,7 @@ export default {
           .style("fill", d)
           .style("mix-blend-mode", "multiply")
           .attr("class", "pill-legend")
+          .attr("opacity", 0.75)
       );
       // .attr("class", "pill-legend");
 
@@ -447,9 +454,9 @@ export default {
       pillSvg
         .append("line")
         .attr("x1", 90)
-        .attr("y1", 615)
+        .attr("y1", 610)
         .attr("x2", 195)
-        .attr("y2", 615)
+        .attr("y2", 610)
         .attr("stroke", "#dfdfdf")
         .attr("stroke-width", 1)
         .attr("marker-end", "url(#arrow)")
@@ -466,7 +473,7 @@ export default {
         .attr("alignment-baseline", "middle")
         .attr("class", "pill-legend");
 
-      d3.selectAll(".pill-legend").attr("opacity", 0);
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
     },
 
     drawMat() {
@@ -496,7 +503,7 @@ export default {
         .append("path")
         .attr("d", this.path)
         .attr("class", function (d) {
-          if (d.properties.MAT != null && d.properties.DEATHSPER == null) {
+          if (d.properties.MAT != null && d.properties.DEATHSPER != null) {
             return "multiplied-mat";
           } else {
             return "notMultiplied-mat";
@@ -533,10 +540,9 @@ export default {
       blues.map((d, i) =>
         svgMat
           .append("rect")
-          .attr("opacity", 0.7)
           .attr("x", i * 22 + 90)
           .attr("y", 465)
-          .attr("opacity", 0.8)
+          .attr("opacity", 0.75)
           .attr("width", blueLegendWidth)
           .attr("height", blueLegendHeight)
           .style("fill", d)
@@ -566,8 +572,7 @@ export default {
         .attr("alignment-baseline", "middle")
         .attr("class", "mat-legend");
 
-      // d3.selectAll(".pill-legend").attr("opacity", 0);
-      d3.selectAll(".mat-legend").attr("opacity", 0);
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
     },
 
     drawBaseMap() {
@@ -589,14 +594,15 @@ export default {
         .attr("fill", noDataColor)
         .attr("id", "provider-overlay");
 
-      d3.selectAll("#deaths-overlay").attr("opacity", 0);
-      d3.selectAll("#pill-overlay").attr("opacity", 0);
-      d3.selectAll("#mat-overlay").attr("opacity", 0);
-
-      d3.selectAll("#provider-overlay").attr("opacity", 0);
+      d3.selectAll("#deaths-overlay").attr("visibility", "hidden");
+      d3.selectAll("#pill-overlay").attr("visibility", "hidden");
+      d3.selectAll("#mat-overlay").attr("visibility", "hidden");
+      d3.selectAll("#provider-overlay").attr("visibility", "hidden");
     },
 
     drawProviders() {
+      d3.selectAll("#provider-overlay").attr("visibility", "visible");
+
       var svgProvider = d3.select("#provider-overlay");
 
       svgProvider
@@ -616,6 +622,8 @@ export default {
     },
 
     drawProvidersAvail() {
+      d3.selectAll("#provider-overlay").attr("visibility", "visible");
+
       var svgProvider = d3.select("#provider-overlay");
       var allProviders = d3.selectAll(".all-providers");
       var availData = Array.from(
@@ -641,77 +649,84 @@ export default {
     },
 
     providerMap0() {
-      d3.selectAll("#provider-overlay").attr("opacity", 0);
-      d3.selectAll(".provider-avail").attr("opacity", 0);
-      d3.selectAll(".all-providers").attr("opacity", 0);
-      d3.selectAll(".pill-legend").attr("opacity", 0);
-      d3.selectAll(".mat-legend").attr("opacity", 0);
-      d3.selectAll(".death-legend").attr("opacity", 0);
+      d3.selectAll("#provider-overlay").attr("visibility", "hidden");
+      d3.selectAll(".provider-avail").attr("visibility", "hidden");
+      d3.selectAll(".all-providers").attr("visibility", "hidden");
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
+      d3.selectAll(".death-legend").attr("visibility", "hidden");
+    },
+
+    // deathOpacity1() {
+    //   d3.selectAll("#deaths-overlay").attr("visibility", "visible");
+    //   document.getElementById("radio-mat").checked = false;
+    //   document.getElementById("radio-pills").checked = false;
+    //   document.getElementById("radio-death").checked = true;
+    // },
+
+    deathOpacity0() {
+      d3.selectAll("#deaths-overlay").attr("visibility", "hidden");
+      d3.selectAll(".death-legend").attr("visibility", "hidden");
+    },
+
+    //remove all items except for overdose base map, return radio buttons to default
+    noOpacityButDeath() {
+      d3.selectAll("#deaths-overlay").attr("visibility", "visible");
+      d3.selectAll("#mat-overlay").attr("visibility", "hidden");
+      d3.selectAll("#pill-overlay").attr("visibility", "hidden");
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
+      d3.selectAll(".death-legend").attr("visibility", "visible");
+      document.getElementById("radio-mat").checked = false;
+      document.getElementById("radio-pills").checked = false;
+      document.getElementById("radio-death").checked = true;
+    },
+
+    /// function for Pill radio button
+    pillOpacity1() {
+      d3.selectAll("#mat-overlay").attr("visibility", "hidden");
+      d3.selectAll("#pill-overlay").attr("visibility", "visible");
+      d3.selectAll(".pill-legend").attr("visibility", "visible");
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
+    },
+
+    /// function for MAT radio button
+    matOpacity1() {
+      d3.selectAll("#pill-overlay").attr("visibility", "hidden");
+      d3.selectAll("#mat-overlay").attr("visibility", "visible");
+      d3.selectAll(".mat-legend").attr("visibility", "visible");
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
     },
 
     redrawBasemap() {
-      d3.selectAll(".provider-avail").attr("opacity", 0);
-      d3.selectAll(".all-providers").attr("opacity", 0);
+      d3.selectAll("#pill-overlay").attr("visibility", "hidden");
+      d3.selectAll("#mat-overlay").attr("visibility", "hidden");
+      d3.selectAll("#death-overlay").attr("visibility", "hidden");
+      d3.selectAll("#provider-overlay").attr("visibility", "visible");
+      d3.selectAll(".provider-avail").attr("visibility", "hidden");
+      d3.selectAll(".all-providers").attr("visibility", "hidden");
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
+      d3.selectAll(".death-legend").attr("visibility", "hidden");
     },
 
-    deathOpacity1() {
-      d3.selectAll("#deaths-overlay").attr("opacity", 1),
-        d3.selectAll(".death-legend").attr("opacity", 1);
-    },
-
-    deathOpacity0() {
-      d3.selectAll("#deaths-overlay").attr("opacity", 0);
-      d3.selectAll(".death-legend").attr("opacity", 0);
-    },
-
-    noOpacityButDeath() {
-      d3.selectAll("#mat-overlay").attr("opacity", 0);
-      d3.selectAll("#pill-overlay").attr("opacity", 0);
-      d3.selectAll("#deaths-overlay").attr("opacity", 1);
-      d3.selectAll(".pill-legend").attr("opacity", 0);
-      d3.selectAll(".mat-legend").attr("opacity", 0);
-      d3.selectAll(".death-legend").attr("opacity", 1);
-    },
-
-    pillOpacity1() {
-      d3.selectAll("#mat-overlay").attr("opacity", 0);
-      d3.selectAll("#pill-overlay").attr("opacity", 1);
-      d3.selectAll(".pill-legend").attr("opacity", 0.8);
-      d3.selectAll(".mat-legend").attr("opacity", 0);
-    },
-
-    matOpacity1() {
-      d3.selectAll("#pill-overlay").attr("opacity", 0);
-      d3.selectAll("#mat-overlay").attr("opacity", 1);
-      d3.selectAll(".mat-legend").attr("opacity", 0.8);
-      d3.selectAll(".pill-legend").attr("opacity", 0);
-    },
-    basemapOpacity1() {
-      d3.selectAll("#provider-overlay").attr("opacity", 1);
-    },
     allLegendsInvisible() {
-      d3.selectAll(".death-legend").attr("opacity", 0);
-      d3.selectAll(".pill-legend").attr("opacity", 0);
-      d3.selectAll(".mat-legend").attr("opacity", 0);
+      d3.selectAll(".death-legend").attr("visibility", "hidden");
+      d3.selectAll(".pill-legend").attr("visibility", "hidden");
+      d3.selectAll(".mat-legend").attr("visibility", "hidden");
     },
 
     handler({ element, index, direction }) {
-      if (index == 0)
-        this.deathOpacity1(),
-          this.providerMap0(),
-          d3.selectAll(".death-legend").attr("opacity", 0.8);
+      if (index == 0) this.noOpacityButDeath(), this.providerMap0();
       if (index == 1)
-        this.deathOpacity1(),
+        this.noOpacityButDeath(),
           this.providerMap0(),
-          d3.selectAll(".death-legend").attr("opacity", 0.8);
+          d3.selectAll(".death-legend").attr("visibility", "visible");
       if (index == 2)
-        this.deathOpacity1(),
+        this.noOpacityButDeath(),
           this.providerMap0(),
-          d3.selectAll(".death-legend").attr("opacity", 0.8);
-      if (index === 3)
-        this.basemapOpacity1(),
-          this.redrawBasemap(),
-          this.allLegendsInvisible();
+          d3.selectAll(".death-legend").attr("visibility", "visible");
+      if (index === 3) this.redrawBasemap(), this.allLegendsInvisible();
       if (index === 4)
         this.drawProviders(), this.deathOpacity0(), this.allLegendsInvisible();
       if (index === 5)
@@ -741,12 +756,6 @@ export default {
   font-weight: 500;
   line-height: 2;
 }
-
-/* input[type="radio"]:checked + label {
-  background: #2196f3;
-  color: #fff;
-  border-color: #2196f3;
-} */
 
 #bivariate-legend {
   position: sticky;
@@ -877,7 +886,7 @@ label {
 
 .multiplied {
   mix-blend-mode: multiply;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 .notMultiplied {
@@ -885,14 +894,18 @@ label {
   opacity: 1;
 }
 
-.multiplied-mat {
-  mix-blend-mode: multiply;
+.notMultiplied-mat {
+  mix-blend-mode: normal;
   opacity: 0;
 }
 
-.notMultiplied-mat {
+.multiplied-mat {
   mix-blend-mode: multiply;
-  opacity: 0.7;
+  opacity: 0.75;
+}
+
+.opacity0 {
+  opacity: 0;
 }
 
 /* .path-null {

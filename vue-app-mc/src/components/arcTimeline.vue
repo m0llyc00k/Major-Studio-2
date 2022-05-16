@@ -1,5 +1,5 @@
 <template>
-  <Scrollama :offset="0.9" @step-enter="arcHandler">
+  <Scrollama :offset="0.5" @step-enter="arcHandler">
     <svg :height="height" :width="width" class="arc" style="padding-top: 100px">
       <g class="arc"></g>
     </svg>
