@@ -186,28 +186,28 @@ export default {
         behavior: "smooth",
       });
     },
-    stackedFall() {
-      var allPills = d3.selectAll(".pill");
+    // stackedFall() {
+    //   var allPills = d3.selectAll(".pill");
 
-      const sleep = (milliseconds) => {
-        return new Promise((resolve) => setTimeout(resolve, milliseconds));
-      };
-      sleep(1000).then(() => {
-        //wait a second and then let pills fall
+    //   const sleep = (milliseconds) => {
+    //     return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    //   };
+    //   sleep(1000).then(() => {
+    //     //wait a second and then let pills fall
 
-        allPills
-          .attr("opacity", 1)
-          .transition()
-          .delay(function (d, i) {
-            (d) => d.reverse();
-            return i * 15;
-          })
-          .duration(3000)
-          // .ease(d3.easeExp)
-          // .attr("opacity", 0);
-          .attr("transform", "translate(0,1100)");
-      });
-    },
+    //     allPills
+    //       .attr("opacity", 1)
+    //       .transition()
+    //       .delay(function (d, i) {
+    //         (d) => d.reverse();
+    //         return i * 15;
+    //       })
+    //       .duration(3000)
+    //       // .ease(d3.easeExp)
+    //       // .attr("opacity", 0);
+    //       .attr("transform", "translate(0,1100)");
+    //   });
+    // },
 
     spillOpacity0() {
       d3.select("#spilled-pills")
@@ -255,7 +255,8 @@ export default {
     handler({ element, index, direction }) {
       if (direction === "down") element.classList.add("active");
       if (index === 0)
-        this.stackedFall(), d3.selectAll(".restack-pill").attr("opacity", 0);
+        // this.stackedFall(),
+        d3.selectAll(".restack-pill").attr("opacity", 0);
       if (index === 1) this.spillOpacity0();
       // if (index === 2) this.spillOpacity1();
       if (index === 1) this.spillOpacity1();
