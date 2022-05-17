@@ -60,5 +60,6 @@ Alleviating future escalation of the modern opioid crisis requires understanding
 </li>
   <li>Trickey, Erick. “Inside the Story of America’s 19th-Century Opiate Addiction.” Smithsonian. Smithsonian.com, January 4, 2018. https://www.smithsonianmag.com/history/inside-story-americas-19th-century-opiate-addiction-180967673/.
 </li>
+ <li>Ruane, Michael E. “America’s First Opioid Crisis Grew out of the Carnage of the Civil War.” Washington Post, December 1, 2021. https://www.washingtonpost.com/history/2021/12/01/opioid-crisis-civil-war-addiction/.</li>
 </ul>
 
