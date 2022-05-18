@@ -410,7 +410,7 @@ export default {
       if (index === 0 && direction === "down") this.drawChart();
       if (index === 10)
         d3.selectAll(".arc").transition().duration(1000).attr("opacity", 0);
-      if (index === 9)
+      if (index === 9 && direction === "up")
         d3.selectAll(".arc").transition().duration(1000).attr("opacity", 1);
 
       if (index === index && direction === "down") this.tracePath(index);

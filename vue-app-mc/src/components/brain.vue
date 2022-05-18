@@ -576,7 +576,7 @@ export default {
       arrowDrawn
         // reveal the arrowheads
         .transition()
-        .duration(4000)
+        .duration(6000)
         .attr("opacity", 1)
         .attr("transform", function () {
           return "translate(" + this.x + "," + this.y + ")";
@@ -689,14 +689,7 @@ export default {
       d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#front-lobe-arrows-2").attr("opacity", 0);
 
-      arrowDrawn
-        // reveal the arrowheads
-        .transition()
-        .duration(4000)
-        .attr("opacity", 1)
-        .attr("transform", function () {
-          return "translate(" + this.x + "," + this.y + ")";
-        });
+      //animate arrows
     },
 
     phase5() {
