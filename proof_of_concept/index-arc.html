@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+    <script src="http://d3js.org/d3.v4.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Assistant&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="chart"></div>
+</body>
+
+<script>
+
+    var drawGraph = function (error, data) {
+        if (error) throw error;
+
+        //fonts and colors
+        var fontFamily = "Assistant";
+        var svgBackgroundColor = "#3d405b";
+        var color = ["#739dff", "#2fe0cb", "#C879FF", "#f4a261", "#e76f51", "#a3f7b5", "#d264b6", "#e9c46a"];
+        var circleBackground = "#3d405b";
+        var circleOpacity = 0.9;
+        var arcOpacity = 0.7
+
+        //size of the container div
+        d3.select("#chart")
+            .style("width", "400px")
+            .style("height", "400px");
+
+        const margin = { top: 500, right: 135, bottom: 250, left: 135 },
+            width = 2000 - margin.right - margin.left,
+            height = 2000 - margin.top - margin.bottom;
+
+        //get node names
+        var nodes = d3.map(data, function (d, i) { return d.do_name; }).keys();
+
+        //x axis
+        var x = d3.scalePoint()
+            .range([0, width])
+            .domain(nodes);
+
+        //the max count of rides - used to scale the arc thickness
+        var maxCount = d3.max(data.map((d) => { return d.count }));
+
+        //scale thickness of arc lines
+        var lineScale = d3.scaleLinear()
+            .domain([0, maxCount])
+            .range([2, 700]);
+
+        var svg = d3.select("#chart")
+            .append('div')
+            .classed('svg-container', true)
+            .append('svg')
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 2000 2000")
+            .classed('svg-content-responsive', true)
+            .style('background-color', svgBackgroundColor)
+            .append('g')
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        //arcs between the nodes
+        svg
+            .selectAll('links')
+            .data(data)
+            .enter()
+            .append('path')
+            .attr('d', function (d) {
+                start = x(d.pu_name) // x position of start node
+                end = x(d.do_name)   // x position of end node
+                var arc = ['M', start, (height / 2) - 100, 'A', (start - end) / 2, (start - end) / 2, 0, 0, 0, end, (height / 2) - 100].join(' ');
+                return arc;
+            })
+            .style("fill", "none")
+            .attr("stroke", function (d) { return color[nodes.indexOf(d.pu_name)]; })
+            .attr("stroke-width", function (d) { return lineScale(d.count); })
+            .attr("opacity", arcOpacity);
+
+        //circles
+        var labels = svg.append("g");
+
+        var node = labels
+            .selectAll("nodes")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) { return (x(d)) })
+            .attr("cy", (height / 2) - 120)
+            .attr("r", 80)
+            .attr("fill", circleBackground)
+            .attr("stroke", function (d) { return color[nodes.indexOf(d)]; })
+            .attr("stroke-width", 10)
+            .attr("opacity", circleOpacity);
+
+        //add text labels
+        svg
+            .selectAll("labels")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .attr("x", function (d) { return (x(d)) })
+            .attr("y", (height / 2) - 110)
+            .text(function (d) { var s = d.replace(' Airport', ''); return (s); })
+            .attr("fill", function (d) { return color[nodes.indexOf(d)] })
+            .attr("stroke", function (d) { return color[nodes.indexOf(d)] })
+            .style("text-anchor", "middle")
+            .style("font-weight", "bold")
+            .style("font-family", fontFamily)
+            .style("font-size", "1.65em");
+    }
+
+    d3.queue()
+        .defer(d3.json, "taxi_data.json")
+        .await(drawGraph)
+
+</script>
+
+</html>
