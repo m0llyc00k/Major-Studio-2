@@ -811,7 +811,7 @@ label {
   pointer-events: all;
   font-family: "Inter var", sans-serif;
   background: #151c24;
-  z-index: 10000000;
+  z-index: 9999;
 }
 
 .step-title-map {
@@ -873,7 +873,7 @@ label {
   align-items: center;
   position: relative;
   top: 0;
-  /* z-index: 1999999; */
+  z-index: 9999;
 }
 
 .step.active {
@@ -881,7 +881,7 @@ label {
   opacity: 1;
   transform: translateY(50);
   position: -webkit-sticky;
-  z-index: 10000000;
+  z-index: 9999;
 }
 
 .multiplied {
@@ -907,7 +907,15 @@ label {
 .opacity0 {
   opacity: 0;
 }
-
+#death-overlay {
+  z-index: -1;
+}
+#mat-overlay {
+  z-index: -1;
+}
+#pill-overlay {
+  z-index: -1;
+}
 /* .path-null {
   stroke: white;
   stroke-width: 0.25px;

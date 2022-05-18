@@ -1,5 +1,5 @@
 <template>
-  <Scrollama :offset="0.5" @step-enter="arcHandler">
+  <Scrollama :offset="0.9" @step-enter="arcHandler">
     <svg :height="height" :width="width" class="arc" style="padding-top: 100px">
       <g class="arc"></g>
     </svg>
@@ -45,7 +45,7 @@ import "intersection-observer";
 
 <style src="vue-scrollama/dist/vue-scrollama.css"></style>;
 
-const MAX_SVG_WIDTH = 1300;
+const MAX_SVG_WIDTH = 1250;
 
 const rectWidth = 12;
 const rectHeight = 12;
@@ -287,9 +287,17 @@ export default {
         .append("path")
         .style("fill", "none")
         .attr("d", (d) => buildArc(d))
-        .attr("opacity", 0.9)
+        .attr("opacity", 1)
         .attr("class", "drawnArc")
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 5);
+
+      var currentArc = d3.selectAll(".drawnArc");
+      currentArc
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(1000)
+        .attr("stroke-width", 1)
+        .attr("opacity", 0.8);
 
       // do the animation; see the posts on arc animation for explanation
       arcs
@@ -306,30 +314,118 @@ export default {
         .transition()
         .duration(4000)
         .attr("stroke-dashoffset", 0);
+      return svg.node();
+    },
 
+    drawArcsUp(index) {
+      var allNodes = this.nodes.map(function (d) {
+        return d.name;
+      });
+
+      var x = d3
+        .scalePoint()
+        .range([0, this.width - margin.right - margin.left])
+        .domain(allNodes);
+
+      var svg = d3
+        .select(".arc")
+        .selectAll("g.arc")
+        .attr("width", this.width - margin.right - margin.left)
+        .attr("height", this.height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var idToNode = {};
+      this.nodes.forEach(function (n) {
+        idToNode[n.id] = n;
+      });
+
+      // Add the links
+      function buildArc(d) {
+        const start = x(idToNode[d.source].name); // X position of start node on the X axis
+        const end = x(idToNode[d.target].name);
+
+        // X position of end node
+        const arcPath = [
+          "M",
+          start,
+          50, // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
+          "A", // This means we're gonna build an elliptical arc
+          (start - end) / 4,
+          ",", // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
+          (start - end) / 4,
+          0,
+          0,
+          ",",
+          end < start ? 0 : 0,
+          end,
+          ",",
+          50,
+        ] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
+          .join(" ");
+        return arcPath;
+      }
+
+      const arcs = svg
+        .selectAll("arcs")
+        .data(this.links.slice(index - 2, index - 1))
+        .enter()
+        .append("path")
+        .style("fill", "none")
+        .attr("d", (d) => buildArc(d))
+        .attr("opacity", 1)
+        .attr("class", "drawnArc")
+        .attr("stroke-width", 5);
+
+      var currentArc = d3.selectAll(".drawnArc");
+      currentArc
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(1000)
+        .attr("stroke-width", 1)
+        .attr("opacity", 0.8);
+
+      // do the animation; see the posts on arc animation for explanation
+      arcs
+        // hide the arcs
+        .attr("stroke-dasharray", function () {
+          return this.getTotalLength();
+        })
+        .attr("stroke-dashoffset", function () {
+          return this.getTotalLength();
+        })
+        .attr("stroke", "url(#linear-gradient")
+
+        // reveal the arcs
+        .transition()
+        .duration(4000)
+        .attr("stroke-dashoffset", 0);
       return svg.node();
     },
 
     arcHandler({ element, index, direction }) {
-      const currArc = document.getElementsByClassName("drawnArc");
+      // const currArc = document.getElementsByClassName("drawnArc");
       // let highlightArc = document.getElementsByClassName("highlight-arc");
-      console.log(index);
+      // console.log(index);
       if (index === 0 && direction === "down") this.drawChart();
       if (index === 10)
         d3.selectAll(".arc").transition().duration(1000).attr("opacity", 0);
-      if (index === 9) d3.selectAll(".arc").attr("opacity", 1);
+      if (index === 9)
+        d3.selectAll(".arc").transition().duration(1000).attr("opacity", 1);
 
       if (index === index && direction === "down") this.tracePath(index);
+      if (index === index && direction === "up") this.drawArcsUp(index);
+
       if (direction === "down") element.classList.add("active");
-      if (index) {
-        let highlightArc = document.getElementsByClassName("highlight-arc");
-        if (highlightArc.length == 0) {
-          currArc[index - 1].classList.add("highlight-arc");
-        } else {
-          highlightArc[0].classList.remove("highlight-arc");
-          currArc[index - 1].classList.add("highlight-arc");
-        }
-      }
+      // if (index) {
+      //   let highlightArc = document.getElementsByClassName("highlight-arc");
+      //   if (highlightArc.length == 0) {
+      //     currArc[index - 1].classList.add("highlight-arc");
+      //   } else {
+      //     highlightArc[0].classList.remove("highlight-arc");
+      //     currArc[index - 1].classList.add("highlight-arc");
+      //   }
+      // }
     },
 
     // onResize() {
@@ -504,9 +600,13 @@ html {
   /* margin: 0 auto 30vh; */
   /* display: flex; */
 }
+/* .previousArcs {
 
+} */
+/* 
 .highlight-arc {
-  stroke-width: 5px;
+  stroke-width: 2px;
   opacity: 1;
-}
+  stroke: yellow;
+} */
 </style>

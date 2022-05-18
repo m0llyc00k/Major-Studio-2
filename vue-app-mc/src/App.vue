@@ -2,7 +2,7 @@
   <div class="main">
     <div id="app">
       <Scrollama
-        :offset="0.8"
+        :offset="0.85"
         @step-enter="pillHandler"
         @step-exit="resetContent"
       >
@@ -177,12 +177,19 @@ export default {
         this.scY = window.scrollY;
         clearTimeout(this.scTimer);
         this.scTimer = 0;
+        // location.reload();
       }, 100);
     },
     toTop: function () {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
+      });
+      const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      };
+      sleep(2000).then(() => {
+        location.reload();
       });
     },
     stackedFall() {
@@ -223,23 +230,23 @@ export default {
     restackPills() {
       var stackedPills = d3.selectAll(".restack-pill");
       console.log("restacking");
-      const sleep = (milliseconds) => {
-        return new Promise((resolve) => setTimeout(resolve, milliseconds));
-      };
-      sleep(1000).then(() => {
-        stackedPills
-          .attr("transform", "translate(0,-2000)")
-          .transition()
-          .duration(3000)
-          .delay(function (d, i) {
-            (d) => d.reverse();
-            return i * 15;
-          })
-          .attr("transform", function () {
-            return "translate(" + this.x + "," + this.y + ")";
-          })
-          .attr("opacity", 1);
-      });
+      // const sleep = (milliseconds) => {
+      //   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+      // };
+      // sleep(1000).then(() => {
+      stackedPills
+        .attr("transform", "translate(0,-2000)")
+        .transition()
+        .duration(3000)
+        .delay(function (d, i) {
+          (d) => d.reverse();
+          return i * 15;
+        })
+        .attr("transform", function () {
+          return "translate(" + this.x + "," + this.y + ")";
+        })
+        .attr("opacity", 1);
+      // });
     },
 
     pillHandler(index) {
@@ -361,7 +368,7 @@ export default {
 
 #spilled-pills {
   width: 100%;
-  z-index: 99999999999999999999999;
+  z-index: -1;
 }
 
 .chapter-num {
