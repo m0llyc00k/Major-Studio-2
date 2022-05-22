@@ -5,6 +5,7 @@
 During the first epidemic, pharmaceutical companies and federal regulations laid the groundwork for the stigmatization of opioid addiction that created an isolating environment for those struggling with opioid dependence today.  Accessible recovery in conjunction with de-stigmatizing what was left by the earlier epidemic is needed to prevent future devastation and build a system that can prevent history from repeating itself once again.<br><br>
 Alleviating future escalation of the modern opioid crisis requires understanding the onset of the first opioid epidemic, sympathizing with the physiology of addiction, and making proven treatments such as MAT, or Medication-Assisted Treatment, widely available. In Crisis, Again visualizes each of these factors necessary for the nation’s recovery and tells the story of opioid’s overwhelming grip on the United States since its inception.</p>
 
+<p>To find the disk build of this project, see here: https://github.com/m0llyc00k/Thesis-2022/tree/dist</p>
 
 ![landing_page](https://user-images.githubusercontent.com/86888346/168472975-ce9980ec-2f42-45ca-a654-0cf6fa2ffb04.png)
 
