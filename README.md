@@ -20,6 +20,7 @@ Alleviating future escalation of the modern opioid crisis requires understanding
 <!-- ![image](https://user-images.githubusercontent.com/86888346/155444223-a9ef2489-11ef-4f80-830e-64d260d26a7c.png)
  -->
 
+![Molly_Thesis_Sketch](https://user-images.githubusercontent.com/86888346/186528100-8e4ec720-7d28-426b-8de7-e428ee7ca44f.jpeg)
 
 
 <h4>Data Sources</h4>
