@@ -3,8 +3,8 @@ module.exports = {
     disableHostCheck: true
   },
   publicPath:
-    process.env.NODE_ENV === 'production'
-      ? '/' + require('./package.json').name + '/'
-      : '/'
+  // publicPath: process.env.NODE_ENV === 'production'
+    // ? '/Thesis-2022/'
+     '/'
 }
 
