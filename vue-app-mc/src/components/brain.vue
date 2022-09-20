@@ -10,7 +10,7 @@
           x="0px"
           y="0px"
           viewBox="-3 -3 27 27"
-          style="enable-background: new 0 0 50 50"
+          style="enable-background: new 0 0 50 50; padding-left: 450px"
           xml:space="preserve"
           class="brain-svg"
         >
@@ -40,11 +40,7 @@
                 d="M102.62,93.44c4.14-2.83,10.38-3.74,15.25-4.4.54-.6,1.11-1.21,1.73-1.82,5.71-5.58,10.85-10.81,19-12.35,1.75-.32,3.76,2.78,4.51,5,3.47,1.54,17.91,21.23,17.87,21.44-.74,3.88-2.44,5-6.42,4.9-1.11-.3-7.12,10.68-8.2,10.56-2.16-.24-2.35-1.43-4.25-2.4,2,5.57-2.74,7.4-5.46,9.43-3.18,2.39-33.22-10.1-33.95-14.64,0,0-.35.18-2.29-5.16C99.15,100.41,99.11,95.84,102.62,93.44Z"
                 transform="translate(-0.63 0.13)"
               />
-              <!-- <path
-                class="cls-1"
-                d="M92.69,87.55q3,5.9,5.62,12c.2.48,9.82,29.29,11.21,32,3.11,6.11,12.94,1.31,13.62,1.36.87.06,1.69.38,2.57.41,3.42.1,20.41-11.4,19.63-13.87.62.79,2.78-.4,4.19-.45s2.79-8.11,4.14-8.44a3.63,3.63,0,0,0,2.62-1.55,1.84,1.84,0,0,0,.65.62c1.53.88,3.93-.86,4.88-1.92,1.33-1.49,2.93-1,2-2.68a17.75,17.75,0,0,0-3.3-4.22c-1-1-11.68-29.11-13.25-28.19S126.24,81.72,124.87,83a26.23,26.23,0,0,0-3.24,3.89,10.77,10.77,0,0,1-3.28,3.53,11.49,11.49,0,0,1-5.08,1.05c-1.94.12-3.89.2-5.82.36-3.17.26-6.21,1.21-7.64,4.29-.56,1.21-4.54-4.33-6.57-8.32C92.93,87.23,92.06,86.31,92.69,87.55Zm5.62,12c-.07-2.75,2.37-2.66,4.66-4.32a11.2,11.2,0,0,1,5.88-1.65c2.35-.17,4.72-.21,7.07-.45,1.21-.12,3.47,3.32,10.16.35,5.1-2.27,15.15-11.23,15.33-10.88.4.74,5.11,12.5,5.36,12.84a10.51,10.51,0,0,0,1.58,1.24c.17.11.35-2.44,1.71-1,5.47,5.75,4.85,9.55,10.05,7.77,1-.33,2,1.13.71,2.55a6.5,6.5,0,0,1-2.14,1.61c-.26.12-1.39,0-2.2-1.37-.92-1.5-4.42,1.28-6.14,5.47-.43,1-3.38,5.68-4.55,5.1-.85-.42-3.22-3.18-3-2.6.78,1.83-1.61,5.66-2.84,7.17-1,1.19-15.81,8.72-17.33,9-1.11.2-5.46,3-8.48,2.06a7.47,7.47,0,0,1-3.4-1.59C109.51,129.51,98.83,100.8,98.31,99.54Z"
-                transform="translate(-0.63 0.13)"
-              /> -->
+
               <path
                 class="cls-2"
                 d="M21.78,60.35a24.51,24.51,0,0,1,.36-3.28c2.62-8.39,6.65-19.21,16.63-22.52,2.33-.78,4.77-1.25,7.11-2,2.72-.9,5.08-2.45,7.78-3.37a21.59,21.59,0,0,1,7-1.06,2.44,2.44,0,0,1,.07-.39c.72-2.25,6.18-1.11,8.12-1.06,2.87.07,6.35.65,9-.59-.1-.72-.06-1.24.23-1.26a7.53,7.53,0,0,1,2.36.3c0-.45,0-.73,0-.73.57,0,1.1.54,1.57,1.35a23.45,23.45,0,0,1,2.87,1.78.22.22,0,0,1,.25,0,22.17,22.17,0,0,0,5.21,1.74L103.11,31a22.11,22.11,0,0,1,6.54-.17c9.1,1.48,16.18,8.14,22.21,13.92A8.23,8.23,0,0,1,133.42,47c1.55,1.5,2.24,4.3,2.79,6.14,0,.17.18.79.29,1.51.21.4.41.81.6,1.21a15.37,15.37,0,0,1,3.17,3.57A24.86,24.86,0,0,1,143.59,64a24.47,24.47,0,0,1,2,4c.17.48,1,2.25-.3,2l-.5.57c.39,1.06.52,1.92.22,2.28a32.91,32.91,0,0,1-11.74,8.9c-2.49,2.4-4.9,4.9-7.55,7.25-3.1,2.76-6.14,3.85-10.37,4.79-2.91.65-6.47.69-9.33,1.74-.38.71-7.32,2.78-7.71,3.92,0,.12-5.5-12-5.84-12.86s-2.47,4.08-5.68,2c0,.68-14.34-1.08-19.21-.93a1,1,0,0,1-.24,0l-.69.38-.35.19s0,.08,0,.08h-.07l-.53.56c-.07.07-.18,0-.31-.18l-.08,0s0,0,0,0h-.06c-1.73.81-4.36,2-4.38,1.56-.1-1.58.56-3,.82-4.53a11,11,0,0,0-.46-5.06h0c-1-1.52-2-3-2.79-4.61L58.25,76l-.28-.3c-1.1-.82-3,.61-4.15.12-3.18,0-5.5-2.06-8.67-1.86a1,1,0,0,1-.77-.38,26,26,0,0,1-4.61.81c0,.18-.11.3-.23.3a20,20,0,0,1-7.2-1c-2.18-.84-3.08-2.44-4.73-3.81-.59-.49-3.38-3-3.56-3.13-.43-.27-1.1-.57-1.67-.93C21.74,66.06,21.6,61.68,21.78,60.35Z"
@@ -85,26 +81,13 @@
                 d="M60.2,51.31l5.9-3.07s4.72-3.66,4.85-6.52c.07-1.72-4-5.16-4-5.16l.12,1.66A31.44,31.44,0,0,1,69.46,41c.87,1.25-.17,2.11-1.15,3.45a9.78,9.78,0,0,1-6,3.79c1.08-5.47-2.59-3.16-2.25-3.16C63.23,45.12,60,51.38,60.2,51.31Z"
                 transform="translate(-0.63 0.13)"
               />
-              <!-- <path
-                class="cls-1"
-                d="M54.12,60l.61-1.68c-9.73,0-6.27,4.3-6.39,4C47.26,59.36,54.25,60.15,54.12,60Z"
-                transform="translate(-0.63 0.13)"
-              /> -->
-              <!-- <path
-                class="cls-1"
-                d="M81.88,33.33c.12-.06-6-.61-6.2-.58.21,0-6.6.1-6.2,0s3.7.06,3.7.06c-3.29.54,1.58,5,1,4.19C71.33,32.81,75,33,75.13,33,75.56,33,81.71,33.4,81.88,33.33Z"
-                transform="translate(-0.63 0.13)"
-              /> -->
+
               <path
                 class="cls-1"
                 d="M92.47,70c-2.39-3.94-5.17-3.59-6.09-2.23-.13.18-2.26,4-2.37,4.14a12.57,12.57,0,0,0-3.58,1c-6.24,2.6-1.59,9.73-1.25,9.5s-3.14-7.84,4-8.85a28.49,28.49,0,0,0-1.09,2.83c-.13.39.76,1.43.82,1.37.28-.33,4.24-8.48,4.8-8.69a3.36,3.36,0,0,1,2.88,1.37C91,70.89,92.56,70.13,92.47,70Z"
                 transform="translate(-0.63 0.13)"
               />
-              <!-- <path
-                class="cls-1"
-                d="M57.53,69.72c-.05-.42-2.16,6.27-9.85,2.89,1,0,3-2.64,3-2.64.4-.06-2.45.66-2.53.7-.48.21-5.85,1.75-5.5-3,0-.36-1.39-1.34-1.39-1.34C38,76.35,58.38,77.86,57.53,69.72Z"
-                transform="translate(-0.63 0.13)"
-              /> -->
+
               <path
                 class="cls-3"
                 d="M84.66,98.24A74,74,0,0,1,76,104a4.79,4.79,0,0,0-2.71,5l1.17,6.86S55.33,114.33,46,110.14l-4.31-3s-1.74-1.58-1.48-2.49c2-7.22,5.12-6.49,5.12-6.49l.83-.06c3.91-.3,7.34-2,10.9-3.85l1.8-.86s2.62-2.71,9.17-6.49C76.33,82.13,83.89,82.69,84.66,98.24Z"
@@ -359,105 +342,109 @@
           </g>
         </svg>
       </div>
-      <Scrollama
-        :debug="false"
-        :offset="0.5"
-        @step-enter="brainHandler"
-        class="main__scrollama"
-      >
-        <div class="step-brain" style="opacity: 0"></div>
-        <div class="step-brain" data-step-no="1">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 1:</h3>
-            <h2 class="brain-title">The Normal Brain</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
-              Your body naturally produces endorphins, which is the body’s
-              natural version of opioids, and this is the same reward circuit
-              that is accessed after working out, falling in love, or eating a
-              good meal. They relieve pain and a create a general feeling of
-              wellbeing.
-            </p>
+      <div class="brain-steps">
+        <Scrollama
+          :debug="false"
+          :offset="0.5"
+          @step-enter="brainHandler"
+          class="main_scrollama_brain"
+        >
+          <div class="step-brain" style="opacity: 0"></div>
+          <div class="step-brain" data-step-no="1">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 1:</h3>
+              <h2 class="brain-title">The Brain Before Opioids</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <p>
+                Your body naturally produces endorphins, which is the body’s
+                natural version of opioids, and this is the same reward circuit
+                that is accessed after working out, falling in love, or eating a
+                good meal. They relieve pain and a create a general feeling of
+                wellbeing.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="2">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 2:</h3>
-            <h2 class="brain-title">The Mesolimbic Reward System</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
-              When an opioid is first taken, it creates a tidal wave in the
-              reward circuits of the brain. It floods your frontal lobe with
-              dopamine and replaces pain receptors with euphoria- encouraging
-              repeated use and making the user seek the same high as their first
-              dose.
-            </p>
+          <div class="step-brain" data-step-no="2">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 2:</h3>
+              <h2 class="brain-title">The Reward System</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <p>
+                When an opioid is first taken, it creates a tidal wave in the
+                reward circuits of the brain. It floods your frontal lobe with
+                dopamine and replaces pain receptors with euphoria- encouraging
+                repeated use and making the user seek the same high as their
+                first dose.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="3">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 3:</h3>
-            <h2 class="brain-title">The Dependence to Feel Normal</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
-              At this phase, the mesolimbic reward system changes and dependence
-              means that the user no longer feels pleasure in the activities
-              they used to without opioids. The brain functions more or less
-              normally when the drugs are present and abnormally when they are
-              not. Opioid tolerance increases because the brain cells that have
-              opioid receptors on them gradually become less responsive to
-              stimulation.
-            </p>
+          <div class="step-brain" data-step-no="3">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 3:</h3>
+              <h2 class="brain-title">The Dependence to Feel Normal</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <p>
+                At this phase, the mesolimbic reward system changes and
+                dependence means that the user no longer feels pleasure in the
+                activities they used to without opioids. The brain functions
+                more or less normally when the drugs are present and abnormally
+                when they are not. Opioid tolerance increases because the brain
+                cells that have opioid receptors on them gradually become less
+                responsive to stimulation.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="4">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 4:</h3>
-            <h2 class="brain-title">The Changed Set Point Model</h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
-              Your baseline is altered, no longer producing natural opioids and
-              depending entirely on the medication to regulate. This is what
-              addiction looks like. Withdrawal symptoms become unbearable, known
-              as 'dopesick'. Cortisol, the stress hormone, is increased, making
-              stress a driver for many addicts.
-            </p>
+          <div class="step-brain" data-step-no="4">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 4:</h3>
+              <h2 class="brain-title">The Changed Set Point Model</h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <p>
+                Your baseline is altered, no longer producing natural opioids
+                and depending entirely on the medication to regulate. This is
+                what addiction looks like. Withdrawal symptoms become
+                unbearable, known as 'dopesick'. Cortisol, the stress hormone,
+                is increased, making stress a driver for many addicts.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="step-brain" data-step-no="5">
-          <div class="step-brain-text">
-            <h3 class="phase-title">Phase 5:</h3>
-            <h2 class="brain-title">
-              The Normalizing Effects of MAT Medications
-            </h2>
-            <div class="line-sep-cont"><div class="line-sep"></div></div>
-            <p>
-              Medication Assisted Treatment, or MAT, causes dependence, but
-              because of its steadier influence on opioid receptors, it
-              alleviates cravings and compulsive drug use. It moderates the
-              exaggerated cortisol stress response that increases the danger of
-              relapse in stressful situations. MAT is the medical standard in
-              recovery and is most effective when combined with appropriate
-              psychosocial treatments.
-            </p>
+          <div class="step-brain" data-step-no="5">
+            <div class="step-brain-text">
+              <h3 class="phase-title">Phase 5:</h3>
+              <h2 class="brain-title">
+                The Normalizing Effects of MAT <br />
+                <span class="smaller">[Medication-Assisted Treatment]</span>
+              </h2>
+              <div class="line-sep-cont"><div class="line-sep"></div></div>
+              <p>
+                Medication Assisted Treatment, or MAT, causes dependence, but
+                because of its steadier influence on opioid receptors, it
+                alleviates cravings and compulsive drug use. It moderates the
+                exaggerated cortisol stress response that increases the danger
+                of relapse in stressful situations. MAT is the medical standard
+                in recovery and is most effective when combined with appropriate
+                psychosocial treatments.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="step-brain invisible" data-step-no="6">
-          <div class="step-brain-text"></div>
-        </div>
-      </Scrollama>
+          <div class="step-brain invisible" data-step-no="6">
+            <div class="step-brain-text"></div>
+          </div>
+          <div class="step-brain invisible" data-step-no="6">
+            <div class="step-brain-text"></div>
+          </div>
+        </Scrollama>
+      </div>
     </div>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import "intersection-observer";
 import Scrollama from "../../vue-scrollama/src/Scrollama.vue";
 import * as d3 from "d3";
-
 const brainFill1 = d3.selectAll(".cls-2");
 const brainFill2 = d3.selectAll(".cls-3");
-
 export default {
   name: "App",
   components: {
@@ -479,7 +466,6 @@ export default {
       if (index === 4) this.phase4();
       if (index === 5) this.phase5();
     },
-
     brainStart() {
       d3.select("#front-lobe").attr("opacity", 0);
       d3.select("#LC-arrows-3").attr("opacity", 0);
@@ -488,7 +474,6 @@ export default {
       d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#brain-base").attr("opacity", 0.85);
     },
-
     phase0() {
       d3.select("#front-lobe").attr("opacity", 0);
       d3.select("#LC-arrows-3").attr("opacity", 0);
@@ -502,7 +487,6 @@ export default {
         .attr("opacity", 0.85);
       brainFill1.style("fill", "#f6adcd");
     },
-
     phase2() {
       d3.select("#brain-base")
         .transition()
@@ -534,10 +518,8 @@ export default {
         .attr("transform", function () {
           return "translate(" + this.x + "," + this.y + ")";
         });
-
       d3.select("#LC-center").attr("opacity", 1);
     },
-
     phase3() {
       d3.select("#brain-base")
         .transition()
@@ -634,7 +616,6 @@ export default {
             .attr("stroke-dashoffset", 0)
             .on("start", repeat);
         });
-
       arrowDrawn
         .attr("transform", function () {
           return "translate(" + this.x + "," + this.y + ")";
@@ -660,7 +641,6 @@ export default {
             .delay(350)
             .on("start", repeat);
         });
-
       d3.select("#brain-base")
         .transition()
         .delay(350)
@@ -683,22 +663,18 @@ export default {
             .delay(350)
             .on("start", repeat);
         });
-
       d3.select("#front-lobe").attr("opacity", 0);
       d3.select("#LC-arrows-3").attr("opacity", 1);
       d3.select("#VTA-2").attr("opacity", 0);
       d3.select("#front-lobe-arrows-2").attr("opacity", 0);
-
       //animate arrows
     },
-
     phase5() {
       d3.select("#brain-base")
         .transition()
         .ease(d3.easeLinear)
         .duration(2000)
         .attr("opacity", 0.7);
-
       //animate arrows
       const arrowLineDrawn = d3.selectAll(".cls-5").attr("opacity", 1);
       const arrowDrawn = d3.selectAll(".cls-6");
@@ -723,22 +699,26 @@ export default {
   },
 };
 </script>
-
-<style type="text/css">
+  
+  <style type="text/css">
 .main {
-  display: flex;
+  display: relative;
 }
-
+.smaller {
+  font-size: 23px;
+}
 .main__graphic {
-  display: flex;
+  display: relative;
   flex: 1;
-  top: 0vh;
+  top: 5vh;
   position: sticky;
-  height: 100vh;
+  height: 200vh;
 }
-
+.brain-steps {
+  padding-left: 150px;
+}
 .step-brain-text {
-  max-width: 80%;
+  max-width: 100%;
   border-radius: 10px;
   /* background: white; */
   backface-visibility: inherit;
@@ -748,45 +728,40 @@ export default {
   text-align: left;
   line-height: 1.5;
 }
-
 .phase-title {
   /* color: #a4bfe2; */
   color: #adcdf6;
   line-height: 0.3;
   text-align: left;
 }
-
 .brain-title {
   text-align: left;
-  line-height: 1.2;
+  line-height: 1.5;
 }
-
 .step-brain {
-  padding: 10vh 0;
+  padding: 5vh;
   margin: 0 3rem;
   margin-bottom: 80vh;
   background-color: #212b38;
   border: 1px solid #ccc;
-  display: flex;
+  display: relative;
   flex: 1;
-  justify-content: center;
+  justify-content: left;
+  max-width: 22%;
 }
-
 .step.active {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
   position: -webkit-sticky;
 }
-
 .line-sep-cont {
   margin: 0px 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  /* display: flex; */
+  /* flex-direction: row;
+	flex-wrap: nowrap; */
   justify-content: left;
 }
-
 .line-sep {
   width: 50px;
   height: 1px;
@@ -795,19 +770,16 @@ export default {
 :last-child {
   margin-bottom: 0;
 }
-
 .brain-svg {
   width: 1000px;
   height: 1000px;
   height: 100vh;
 }
-
 .cls-1,
 .cls-4,
 .cls-5 {
   fill: none;
 }
-
 /* stroke for brain */
 .cls-1,
 .cls-3 {
@@ -821,7 +793,6 @@ export default {
 .cls-7 {
   stroke-miterlimit: 5;
 }
-
 /* brain fill color */
 .cls-2,
 .cls-3 {
@@ -844,7 +815,6 @@ export default {
 .cls-7 {
   fill: #ed516b;
 }
-
 .invisible {
   opacity: 0;
 }
